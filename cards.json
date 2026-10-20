@@ -1544,7 +1544,7 @@
       "amount": 1
     },
     "connections": [
-      "todo1",
+      "smocza_jaskinia",
       "koloseum_magow"
     ],
     "cost": {
@@ -1568,7 +1568,7 @@
       "amount": 1
     },
     "connections": [
-      "todo1",
+      "smocza_jaskinia",
       "koloseum_magow"
     ],
     "cost": {
@@ -2785,7 +2785,7 @@
   },
   {
     "id": "137",
-    "name": "todo1",
+    "name": "Smocza jaskinia",
     "week": 3,
     "color": "yellow",
     "effect": {
@@ -2801,10 +2801,10 @@
       "ore": 1
     },
     "connection_cost": [
-      "todo1"
+      "smocza_jaskinia"
     ],
     "players": 3,
-    "artwork": "assets/cards/artwork/week3/yellow/todo1.png"
+    "artwork": "assets/cards/artwork/week3/yellow/smocza_jaskinia.png"
   },
   {
     "id": "138",
