@@ -1,5 +1,6 @@
 const townDialog = document.querySelector('#town-dialog');
 const townPreview = document.querySelector('#town-preview');
+let selectedBoard = null;
 const boardResourceNames = {wood:'drewno',ore:'ruda',mercury:'rtęć',sulfur:'siarka',crystal:'kryształ',gems:'klejnoty',gold:'złoto'};
 const preciousResources = new Set(['gold', 'crystal', 'gems']);
 const boardResourcePalettes = {
@@ -173,16 +174,22 @@ function boardSurface(board) {
     panel.className = 'board-resource-panel' + (preciousResources.has(board.base_resource) ? ' precious-resource' : '');
     const ribbon = document.createElement('span');
     ribbon.className = 'board-resource-ribbon';
+    const ribbonTexture = stageIcon('assets/towns/template/resource-top.png', '');
+    ribbonTexture.className = 'board-panel-texture';
+    ribbon.append(ribbonTexture);
     if (preciousResources.has(board.base_resource)) {
       greyBoardTextureSource('assets/towns/template/resource-top.png').then(source => {
-        ribbon.style.setProperty('--ribbon-texture', 'url("' + source + '")');
+        ribbonTexture.src = source;
       }).catch(console.error);
     }
     const tab = document.createElement('span');
     tab.className = 'board-resource-tab';
+    const tabTexture = stageIcon('assets/towns/template/resource-tab.png', '');
+    tabTexture.className = 'board-panel-texture';
+    tab.append(tabTexture);
     if (preciousResources.has(board.base_resource)) {
       greyBoardTextureSource('assets/towns/template/resource-tab.png').then(source => {
-        tab.style.setProperty('--tab-texture', 'url("' + source + '")');
+        tabTexture.src = source;
       }).catch(console.error);
     }
     const token = document.createElement('span');
@@ -223,6 +230,8 @@ function makeBoard(board, index) {
   article.querySelector('h3').textContent = board.name;
   article.querySelector('.card-number').textContent = String(index + 1).padStart(2, '0');
   button.addEventListener('click', () => {
+    selectedBoard = board;
+    document.querySelector('#town-download-status').textContent = '';
     document.querySelector('#town-preview-title').textContent = button.closest('article').querySelector('h3').textContent;
     townPreview.replaceChildren(boardSurface(board));
     townDialog.showModal();
@@ -257,4 +266,100 @@ document.querySelector('#close-town').addEventListener('click', () => townDialog
 townDialog.addEventListener('click', event => {
   const bounds = townDialog.getBoundingClientRect();
   if (event.target === townDialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) townDialog.close();
+});
+
+// Freeze the rendered layers, including pseudo-elements, into a self-contained SVG.
+// Rasterizing that snapshot keeps the PNG in sync with the gallery's CSS layout.
+async function boardSnapshot(surface) {
+  const width = surface.getBoundingClientRect().width;
+  const assets = new Map();
+  function embed(url) {
+    if (url.startsWith('data:')) return Promise.resolve(url);
+    if (!assets.has(url)) assets.set(url, (async () => {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Nie udało się wczytać ' + url);
+      const blob = await response.blob();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(blob);
+      });
+    })());
+    return assets.get(url);
+  }
+  async function copyStyle(source, target, pseudo) {
+    const style = getComputedStyle(source, pseudo);
+    for (const property of style) {
+      if (property.startsWith('--')) continue;
+      let value = style.getPropertyValue(property).replace(/([\d.]+)cqw/g, (_, n) => (Number(n) * width / 100) + 'px');
+      const urls = [...value.matchAll(/url\(["']?(.*?)["']?\)/g)];
+      for (const match of urls) value = value.replace(match[0], 'url("' + await embed(match[1]) + '")');
+      target.style.setProperty(property, value);
+    }
+    target.style.setProperty('animation', 'none');
+    target.style.setProperty('transition', 'none');
+    return style;
+  }
+  async function clone(source) {
+    if (source.nodeType !== Node.ELEMENT_NODE) return source.cloneNode();
+    const target = source.cloneNode(false);
+    await copyStyle(source, target);
+    if (source instanceof HTMLImageElement) {
+      target.removeAttribute('srcset');
+      target.src = await embed(source.currentSrc || source.src);
+    }
+    for (const pseudo of ['::before', '::after']) {
+      const content = getComputedStyle(source, pseudo).content;
+      if (content === 'none' || content === 'normal') continue;
+      const layer = document.createElement('span');
+      await copyStyle(source, layer, pseudo);
+      layer.textContent = content === '""' ? '' : content.replace(/^["']|["']$/g, '');
+      if (pseudo === '::before') target.append(layer);
+      else target._after = layer;
+    }
+    for (const child of source.childNodes) target.append(await clone(child));
+    if (target._after) { target.append(target._after); delete target._after; }
+    return target;
+  }
+  return clone(surface);
+}
+
+document.querySelector('#download-town').addEventListener('click', async () => {
+  if (!selectedBoard) return;
+  const board = selectedBoard;
+  const button = document.querySelector('#download-town');
+  const status = document.querySelector('#town-download-status');
+  const surface = townPreview.querySelector('.board-surface');
+  button.disabled = true;
+  status.textContent = 'Przygotowywanie PNG…';
+  try {
+    await document.fonts.ready;
+    await Promise.all([...greyBoardTextures.values()]);
+    await Promise.all([...surface.querySelectorAll('img')].map(image => image.decode()));
+    const artwork = surface.querySelector('.board-artwork');
+    const bounds = surface.getBoundingClientRect();
+    const snapshot = await boardSnapshot(surface);
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + artwork.naturalWidth + '" height="' + artwork.naturalHeight + '" viewBox="0 0 ' + bounds.width + ' ' + bounds.height + '"><foreignObject width="100%" height="100%">' + new XMLSerializer().serializeToString(snapshot) + '</foreignObject></svg>';
+    const image = new Image();
+    image.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = artwork.naturalWidth;
+    canvas.height = artwork.naturalHeight;
+    canvas.getContext('2d').drawImage(image, 0, 0);
+    const blob = await new Promise((resolve, reject) => canvas.toBlob(value => value ? resolve(value) : reject(new Error('Nie udało się utworzyć PNG.')), 'image/png'));
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = board.id + '.png';
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    if (selectedBoard === board) status.textContent = 'Planszetka pobrana jako PNG.';
+  } catch (error) {
+    console.error(error);
+    if (selectedBoard === board) status.textContent = 'Nie udało się pobrać PNG. Spróbuj ponownie, otwierając galerię przez serwer HTTP.';
+  } finally {
+    button.disabled = false;
+  }
 });

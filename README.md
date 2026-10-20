@@ -28,6 +28,8 @@ Efekt resource_choice zawiera options, np. [{"mercury":1},{"sulfur":1}]: rtęć 
 
 ## Galeria plansz
 
+W powiększonym podglądzie miasta przycisk „Pobierz PNG” zapisuje kompletną planszetkę (ilustrację, nazwę, bazowy surowiec, koszty i bonusy etapów) w rozdzielczości oryginalnej ilustracji. Nazwa pliku odpowiada polu `id` planszy. Podczas generowania przycisk jest nieaktywny, a komunikat pod podglądem informuje o wyniku eksportu. Galerię należy uruchamiać przez serwer HTTP.
+
 Panel bazowego surowca jest nakładany na ilustrację w galerii i powiększeniu. `wood`, `ore`, `mercury` i `sulfur` mają brązowy panel z zaokrąglonym dołem; `gold`, `crystal` i `gems` — szary panel ze ściętymi narożnikami. Panel pojawia się po ustawieniu `base_resource`; `null` go ukrywa. Zamek ma `wood`, zgodnie z referencją.
 
 `boards.json` jest źródłem danych galerii plansz. Każda plansza zawiera `id`, `name`, `base_resource` (np. `"wood"`), `artwork` i uporządkowaną tablicę `stages`. Każdy etap ma `cost` (np. `{ "wood": 2, "ore": 1 }`) oraz `effect` w formacie efektów kart (np. `{ "type": "points", "amount": 3 }`). `null` oznacza wartość jeszcze nieustaloną, a pusty koszt `{}` oznacza etap darmowy. Wstępnie przygotowano po trzy etapy do uzupełnienia; liczbę etapów można zmienić w tablicy. Bazowe surowce, koszty i efekty pozostają nieustalone.
