@@ -7,7 +7,7 @@
  const graphRows={
   1:['Bractwo ognia','Podziemny tunel','Bractwo miecza','Wieża strażnicza','Targowisko','Handel wschodni','Handel zachodni','Chatka maga',null,'Chatka czarownicy',null,'Drzewo wiedzy'],
   2:['Wir magii','Stajnie',null,null,'Wiatrak','Mistyczny ogród','Sale ciemności','Gwiazda mocy','Kolumna oczu','Kamień wiedzy','Portal piekieł','Ogród objawienia',null,'Zaklęty krąg','Cytadela','Portal przyzwania'],
-  3:[null,null,'Kolos','Podniebny galeon','Latarnia morska','Stocznia','todo1','Koloseum magów','Kuźnia','Szkoła magii','Więzienie dusz','Magiczne źródło','Magiczna studnia','Kaplica magicznych sekretów','Zamek','Portal chwały']
+  3:[null,null,'Kolos','Podniebny galeon','Latarnia morska','Stocznia','Smocza jaskinia','Koloseum magów','Kuźnia','Szkoła magii','Więzienie dusz','Magiczne źródło','Magiczna studnia','Kaplica magicznych sekretów','Zamek','Portal chwały']
  };
  function graphRow(card){
   const rows=graphRows[Number(card.week)]||[];
@@ -64,7 +64,7 @@
     const x=(week-1)*400+(view==='catalog'?slot.x:45), y=76+(view==='catalog'?slot.row:graphRow(c))*116;
     positions.set(c.key,{x,y});button.style.left=(x-(week-1)*400)+'px';button.style.top=y+'px';
     const name=document.createElement('span');name.className='node-name';name.textContent=c.name;
-    const mini=makeCard(c), game=mini.querySelector('.game-card');const effects=game.querySelector('.card-effects');
+    const mini=makeCard(c), game=mini.querySelector('.game-card');const effects=game.querySelector('.card-effects').cloneNode(true);
     const symbol=document.createElement('span');symbol.className='node-symbol game-card';symbol.append(effects);
     // Fit the actual effect bounds, rather than scaling an entire card header.
     const layout=effectLayout(c);
