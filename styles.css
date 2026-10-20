@@ -1,0 +1,81 @@
+:root{color-scheme:dark;--bg:#101714;--gold:#c7aa6c;--text:#eae6d9;--muted:#969f94}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 85% 10%,#29372a66,transparent 48%),var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;min-height:100vh}.topbar,main,footer{width:min(1200px,calc(100% - 80px));margin:auto}.topbar{height:104px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #c7aa6c26}a{color:inherit;text-decoration:none}.brand{display:flex;gap:16px;align-items:center;font-size:13px;letter-spacing:.18em}.brand strong{display:block;font-size:21px;font-weight:400;letter-spacing:.24em;margin-top:5px}.brand-seal{display:grid;place-items:center;width:48px;height:56px;border:1px solid var(--gold);color:var(--gold);font-size:21px;letter-spacing:-.1em}.nav-current{font:13px system-ui;color:var(--gold);padding:14px 0;border-bottom:1px solid var(--gold)}.intro{padding:76px 0 66px}.eyebrow{color:var(--gold);font:11px system-ui;letter-spacing:.25em;margin:0 0 20px}h1{font-size:clamp(42px,5vw,70px);font-weight:400;line-height:1.08;letter-spacing:-.035em;margin:0 0 24px}.lead{color:var(--muted);font:15px/1.8 system-ui;margin:0}.gallery-section{border-top:1px solid #c7aa6c26;padding:32px 0 80px}.gallery-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:34px}.gallery-heading .eyebrow{margin-bottom:10px}h2{font-size:28px;font-weight:400;margin:0}.count{font:12px system-ui;vertical-align:middle;color:var(--gold);margin-left:12px}.guide-toggle{display:flex;align-items:center;gap:8px;font:12px system-ui;color:var(--muted);cursor:pointer}input{accent-color:var(--gold)}.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,290px));gap:32px}.card-button{position:relative;display:block;width:100%;border:0;padding:0;background:none;cursor:zoom-in;transition:transform .2s;color:white}.card-button:hover{transform:translateY(-5px)}.game-card{display:block;position:relative;width:100%;aspect-ratio:1092 / 1627;overflow:hidden;box-shadow:0 18px 40px #0007;background:#064781}.game-card img{position:absolute;display:block;height:auto;pointer-events:none}.card-top{width:100%;left:0;top:0;z-index:2}.card-art{width:100%;left:0;top:29.072526%}.card-cost{width:13.736264%;left:6.501832%;top:29.072526%;z-index:3}.safe-area{display:none;position:absolute;inset:2.827289% 4.304029%;z-index:4;pointer-events:none;box-shadow:0 0 0 2000px rgb(0 0 0 / 65%)}.show-guides .safe-area{display:block}.zoom-hint{position:absolute;right:12px;bottom:12px;padding:8px 10px;background:#101714e8;font:11px system-ui;border:1px solid #c7aa6c66;opacity:0;transition:opacity .2s}.card-button:hover .zoom-hint,.card-button:focus-visible .zoom-hint{opacity:1}.card-caption{display:flex;justify-content:space-between;align-items:center;padding:20px 0}h3{font-size:21px;font-weight:400;margin:0 0 7px}.card-caption p{font:12px system-ui;color:var(--muted);margin:0}.card-number{color:#7f8a7d;font:11px system-ui;letter-spacing:.14em}footer{border-top:1px solid #c7aa6c26;padding:24px 0 32px;display:flex;justify-content:space-between;color:var(--muted);font:11px system-ui}dialog{padding:20px;border:1px solid #c7aa6c55;background:#101714;color:var(--text);max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto}dialog::backdrop{background:#060b09e8;backdrop-filter:blur(8px)}.dialog-bar{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-bottom:18px}.dialog-bar h2{font-size:20px}.dialog-bar button{border:1px solid #c7aa6c55;color:var(--text);background:transparent;padding:9px 12px;cursor:pointer}#preview-card{width:min(65vh,560px,calc(100vw - 68px))}button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:5px}@media(max-width:600px){.topbar,main,footer{width:calc(100% - 36px)}.topbar{height:88px}.brand{font-size:10px;gap:10px}.brand strong{font-size:16px}.brand-seal{width:36px;height:44px;font-size:17px}.intro{padding:52px 0 42px}.gallery-heading{align-items:flex-start;flex-direction:column}.card-grid{grid-template-columns:minmax(0,290px);justify-content:center}.zoom-hint{opacity:1}footer{gap:20px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card-button{transition:none}}
+
+/* Pasek nazwy: 800 × 87 px, wyśrodkowany, y = 81 px. */
+.game-card{container-type:inline-size}.card-name{position:absolute;left:13.369963%;top:4.978488%;width:73.260073%;aspect-ratio:800 / 87;z-index:3;display:grid;place-items:center}.card-name img{inset:0;width:100%;height:100%}.card-name>span{position:relative;color:#f0d57e;font-family:Georgia,serif;font-size:4.2cqw;line-height:1.1;max-width:94%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Efekty: obręcze 220 px, rząd pod nazwą, y = 205 px. */
+.card-effects{position:absolute;left:8%;right:8%;top:12.599877%;height:13.521819%;display:flex;justify-content:center;gap:2%;z-index:3}.resource-effect{position:relative;display:block;flex:0 1 23.984301%;aspect-ratio:1;align-self:center;max-height:100%}.resource-effect .effect-ring{inset:0;width:100%;height:100%;object-fit:contain}.effect-center{position:absolute;inset:5%;border-radius:50%;background:radial-gradient(circle at center,#c68b4d 0%,#955c30 52%,#4e2c19 100%);display:grid;place-items:center;overflow:hidden}.effect-center .effect-resource{position:relative;width:100%;height:100%;object-fit:contain}
+
+.catalog-tools{display:flex;flex-direction:column;gap:22px;margin-bottom:32px}.search-wrap{display:flex;align-items:center;gap:14px;max-width:520px;font:12px system-ui;color:var(--muted)}.search-wrap input{flex:1;min-width:0;background:#18211b;border:1px solid #c7aa6c44;padding:12px;color:var(--text);font:13px system-ui}.search-wrap kbd{color:var(--gold)}.filter-row{display:flex;flex-wrap:wrap;gap:8px}.filter,.empty-state button,.preview-actions button{border:1px solid #c7aa6c55;background:transparent;color:var(--text);padding:10px 18px;cursor:pointer;font:12px system-ui}.filter[aria-pressed="true"]{background:#c7aa6c;color:#101714;border-color:#c7aa6c}.empty-state{padding:48px 20px;text-align:center;border:1px solid #c7aa6c26}.empty-state p{font:14px system-ui;color:var(--muted)}.preview-actions{display:flex;flex-direction:column;gap:12px;margin-top:18px}.preview-actions span{font:12px system-ui;color:var(--muted);max-width:400px}.preview-actions button:disabled{opacity:.5;cursor:wait}.intro{padding:42px 0}.intro h1{font-size:clamp(36px,4vw,52px)}
+
+.card-cost-list{position:absolute;left:7.417582%;top:29.686540%;width:11.904762%;display:flex;flex-direction:column;gap:0;z-index:3}.cost-entry{position:relative;display:flex;flex-direction:column;align-items:center;height:11.904762cqw}.cost-entry img{position:relative;width:100%;height:11.904762cqw;object-fit:contain}.cost-entry>span{position:absolute;top:8.15cqw;color:white;font:bold 3.48cqw Georgia;text-shadow:1px 1px 2px black,-1px -1px 2px black}
+
+.card-players{position:absolute;right:6.501832%;bottom:4.302397%;z-index:3;color:#fff;font:bold 4.945055cqw Georgia;line-height:1;-webkit-text-stroke:.55cqw #000;paint-order:stroke fill;pointer-events:none}
+
+.dynamic-cost-strip{position:absolute;display:block;overflow:hidden}.game-card .dynamic-cost-strip .cost-strip-art{position:absolute;top:auto;bottom:0;left:0;width:100%;height:auto;max-width:none}
+
+.game-card .card-effects{inset:0;width:100%;height:100%;display:block;pointer-events:none}.game-card .resource-effect{max-height:none}.effect-choice-slash img{inset:0;width:100%;height:100%;object-fit:contain}.slash-fallback::before{content:"";position:absolute;left:34%;top:8%;width:32%;height:84%;transform:rotate(17deg);background:linear-gradient(90deg,#9c8b70,#fffdf1 50%,#e6ddca);box-shadow:3px 4px 5px #160a00;border:1px solid #a59881}
+
+/* Gradient → obręcz → surowiec. Maska zachowuje tylko brzeg sprite’a obręczy. */
+.resource-effect .effect-ring{z-index:2;border-radius:50%;mask-image:radial-gradient(circle closest-side,transparent 85%,#000 87%);-webkit-mask-image:radial-gradient(circle closest-side,transparent 85%,#000 87%)}
+.effect-center .effect-resource{z-index:3}
+
+.war-effect img{inset:0;width:100%;height:100%;object-fit:contain}
+
+.war-effect img{inset:5%;width:90%;height:90%}
+
+.card-cost-list .cost-entry.framed-cost{height:11.904762cqw;flex-shrink:0;border:.9cqw solid #e4c667;border-radius:50%;display:grid;place-items:center;box-shadow:0 .2cqw .4cqw #0008;margin-bottom:0}.card-cost-list .framed-cost img{width:92%;height:92%;object-fit:contain}
+
+.card-cost-list .cost-entry.framed-cost{transform:scale(.9);transform-origin:center}
+
+.resource-effect.octagonal-effect .effect-ring{border-radius:0;mask-image:none;-webkit-mask-image:none}.octagonal-effect .effect-center{inset:4%;border-radius:0;clip-path:polygon(27% 0,73% 0,100% 27%,100% 73%,73% 100%,27% 100%,0 73%,0 27%)}
+
+.card-cost-list .cost-entry.octagonal-cost{border:0;border-radius:0;clip-path:none;background:transparent!important;width:100%;aspect-ratio:1;min-width:0;min-height:0;display:block;padding:0;isolation:isolate}
+.octagonal-cost::before{content:"";position:absolute;inset:0;z-index:0;background:var(--cost-background);clip-path:polygon(29.2893% 0,70.7107% 0,100% 29.2893%,100% 70.7107%,70.7107% 100%,29.2893% 100%,0 70.7107%,0 29.2893%)}
+.octagonal-cost::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20117%20117%22%3E%3Cpath%20fill%3D%22%23e4c667%22%20fill-rule%3D%22evenodd%22%20d%3D%22M34.269%200H82.731L117%2034.269V82.731L82.731%20117H34.269L0%2082.731V34.269ZM38.411%2010H78.589L107%2038.411V78.589L78.589%20107H38.411L10%2078.589V38.411Z%22%2F%3E%3C%2Fsvg%3E") center/100% 100% no-repeat}
+.card-cost-list .octagonal-cost img{position:absolute;inset:11%;z-index:3;width:78%;height:78%;object-fit:contain}
+
+.points-effect img{inset:0;width:100%;height:100%;object-fit:contain}.points-effect>span{position:absolute;inset:0;display:grid;place-items:center;color:#000;font:bold 6.85cqw Georgia;line-height:1;transform:translateY(1%)}
+
+.points-effect>span{color:#fff;-webkit-text-stroke:.55cqw #000;paint-order:stroke fill;transform:translateY(-5%)}
+
+.points-effect>span{font-size:7.857143cqw;-webkit-text-stroke:.915751cqw #000;transform:translateY(-8%)}
+
+.game-card .card-connection{left:82.051282%;width:10.989011%;height:7.375538%;object-fit:contain;z-index:3}
+
+.science-effect img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+
+/* Cień całego elementu bonusu, zgodny z eksportem PNG. */
+.card-effects>span{filter:drop-shadow(.5495cqw .8242cqw .5495cqw rgb(0 0 0 / 78%))}
+
+.game-card .card-connection{filter:drop-shadow(.5495cqw .8242cqw .5495cqw rgb(0 0 0 / 78%))}
+
+.card-cost-list .cost-entry{filter:drop-shadow(.5495cqw .8242cqw .5495cqw rgb(0 0 0 / 78%))}
+.card-cost-list .cost-entry.framed-cost{box-shadow:none}
+
+/* Krótki pionowy cień górnego panelu nad artworkiem i kosztami. */
+.game-card::after{content:"";position:absolute;left:0;right:0;top:29.072526%;height:1.098901cqw;z-index:3;pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,.7),rgba(0,0,0,0))}
+
+.trade-panel{border-radius:999px;overflow:hidden;background:#814519}.trade-panel img{width:100%;height:100%;object-fit:cover;filter:sepia(1) saturate(3) hue-rotate(-18deg) brightness(.8)}.trade-arrow img{inset:0;width:100%;height:100%;object-fit:contain}
+
+.trade-arrow img{filter:sepia(1) saturate(3) brightness(1.1)}
+
+.trade-panel.grey-trade-panel img{filter:none}
+
+.filter-group{display:flex;align-items:flex-start;gap:16px}.filter-label{min-width:58px;padding-top:11px;color:var(--muted);font:12px system-ui}@media(max-width:600px){.filter-group{flex-direction:column;gap:8px}.filter-label{padding-top:0}}
+
+.connection-cost-strip{position:absolute;left:22.619048%;top:29.072526%;width:13.736264%;height:14.751075%;overflow:hidden;z-index:3}
+.game-card .connection-cost-art{bottom:0;left:0;width:100%;height:auto}
+.game-card .connection-cost-icon{left:6.666667%;top:8.333333%;width:86.666667%;height:54.166667%;object-fit:contain;filter:drop-shadow(.5495cqw .8242cqw .5495cqw rgb(0 0 0 / 78%))}
+
+/* Cień pod oboma paskami kosztów, zgodny z eksportem PNG. */
+.dynamic-cost-strip,.connection-cost-strip{filter:drop-shadow(.5495cqw .8242cqw 1.0989cqw rgb(0 0 0 / 95%))}
+
+.card-count-panel{border:.824176cqw solid white;border-radius:1.648352cqw;overflow:hidden;background:#777}.card-count-panel img{inset:0;width:100%;height:100%;object-fit:none;object-position:center}
+
+/* Logo marki w nagłówku. */
+.brand{min-width:0}.brand-logo{display:block;width:300px;max-width:100%;height:auto}.nav-current{flex-shrink:0}.topbar{gap:24px}@media(max-width:600px){.brand{flex:0 1 240px}.brand-logo{width:240px}.topbar{gap:16px}.nav-current{font-size:12px}}
+
+/* Symbol kolorowej karty odsłania górny panel w jego oryginalnej skali i pozycji. */
+.game-card .card-count-panel img{width:100cqw;height:auto;max-width:none;object-fit:fill;object-position:initial}

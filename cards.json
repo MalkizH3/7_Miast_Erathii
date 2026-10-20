@@ -1,0 +1,2786 @@
+[
+  {
+    "id": "001",
+    "name": "Alchemiczne złoża",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "mercury": 1
+        },
+        {
+          "sulfur": 1
+        }
+      ]
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week1/brown/alchemiczne_zloza.png"
+  },
+  {
+    "id": "002",
+    "name": "Kopalnia",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "mercury": 1
+        },
+        {
+          "ore": 1
+        }
+      ]
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week1/brown/kopalnia.png"
+  },
+  {
+    "id": "003",
+    "name": "Leśna jaskinia",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "wood": 1
+        },
+        {
+          "ore": 1
+        }
+      ]
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week1/brown/lesna_jaskinia.png"
+  },
+  {
+    "id": "004",
+    "name": "Odkrywka",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "ore": 1
+        },
+        {
+          "sulfur": 1
+        }
+      ]
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/brown/odkrywka.png"
+  },
+  {
+    "id": "005",
+    "name": "Skażony las",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "wood": 1
+        },
+        {
+          "mercury": 1
+        }
+      ]
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/brown/skazony_las.png"
+  },
+  {
+    "id": "006",
+    "name": "Złoże paliw",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "wood": 1
+        },
+        {
+          "sulfur": 1
+        }
+      ]
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week1/brown/zloze_paliw.png"
+  },
+  {
+    "id": "007",
+    "name": "Składowisko drewna",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "wood": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/brown/skladowisko_drewna.png"
+  },
+  {
+    "id": "008",
+    "name": "Składowisko drewna",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "wood": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week1/brown/skladowisko_drewna.png"
+  },
+  {
+    "id": "009",
+    "name": "Składowisko rtęci",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "mercury": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/brown/skladowisko_rteci.png"
+  },
+  {
+    "id": "010",
+    "name": "Składowisko rtęci",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "mercury": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week1/brown/skladowisko_rteci.png"
+  },
+  {
+    "id": "011",
+    "name": "Składowisko rudy",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "ore": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/brown/skladowisko_rudy.png"
+  },
+  {
+    "id": "012",
+    "name": "Składowisko rudy",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "ore": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week1/brown/skladowisko_rudy.png"
+  },
+  {
+    "id": "013",
+    "name": "Składowisko siarki",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "sulfur": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week1/brown/skladowisko_siarki.png"
+  },
+  {
+    "id": "014",
+    "name": "Składowisko siarki",
+    "week": 1,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "sulfur": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/brown/skladowisko_siarki.png"
+  },
+  {
+    "id": "015",
+    "name": "Mauzoleum",
+    "week": 1,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "ore": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/red/mauzoleum.png"
+  },
+  {
+    "id": "016",
+    "name": "Mauzoleum",
+    "week": 1,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "ore": 1
+    },
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week1/red/mauzoleum.png"
+  },
+  {
+    "id": "017",
+    "name": "Wrota demonów",
+    "week": 1,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/red/wrota_demonow.png"
+  },
+  {
+    "id": "018",
+    "name": "Wrota demonów",
+    "week": 1,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week1/red/wrota_demonow.png"
+  },
+  {
+    "id": "019",
+    "name": "Zagajnik",
+    "week": 1,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/red/zagajnik.png"
+  },
+  {
+    "id": "020",
+    "name": "Zagajnik",
+    "week": 1,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1
+    },
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week1/red/zagajnik.png"
+  },
+  {
+    "id": "021",
+    "name": "Kopalnia złota",
+    "week": 1,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "gold": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/grey/kopalnia_zlota.png"
+  },
+  {
+    "id": "022",
+    "name": "Kopalnia złota",
+    "week": 1,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "gold": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week1/grey/kopalnia_zlota.png"
+  },
+  {
+    "id": "023",
+    "name": "Kryształowa grota",
+    "week": 1,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "crystal": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/grey/krysztalowa_grota.png"
+  },
+  {
+    "id": "024",
+    "name": "Kryształowa grota",
+    "week": 1,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "crystal": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week1/grey/krysztalowa_grota.png"
+  },
+  {
+    "id": "025",
+    "name": "Staw z klejnotami",
+    "week": 1,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "gems": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/grey/staw_z_klejnotami.png"
+  },
+  {
+    "id": "026",
+    "name": "Staw z klejnotami",
+    "week": 1,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "gems": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week1/grey/staw_z_klejnotami.png"
+  },
+  {
+    "id": "027",
+    "name": "Bractwo miecza",
+    "week": 1,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 3
+    },
+    "connections": [
+      "kolos"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/blue/bractwo_miecza.png"
+  },
+  {
+    "id": "028",
+    "name": "Bractwo miecza",
+    "week": 1,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 3
+    },
+    "connections": [
+      "kolos"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week1/blue/bractwo_miecza.png"
+  },
+  {
+    "id": "029",
+    "name": "Bractwo ognia",
+    "week": 1,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 3
+    },
+    "connections": [
+      "wir_magii"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week1/blue/bractwo_ognia.png"
+  },
+  {
+    "id": "030",
+    "name": "Bractwo ognia",
+    "week": 1,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 3
+    },
+    "connections": [
+      "wir_magii"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week1/blue/bractwo_ognia.png"
+  },
+  {
+    "id": "031",
+    "name": "Podziemny tunel",
+    "week": 1,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 3
+    },
+    "connections": [
+      "stajnie"
+    ],
+    "cost": {
+      "mercury": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/blue/podziemny_tunel.png"
+  },
+  {
+    "id": "032",
+    "name": "Podziemny tunel",
+    "week": 1,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 3
+    },
+    "connections": [
+      "stajnie"
+    ],
+    "cost": {
+      "mercury": 1
+    },
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week1/blue/podziemny_tunel.png"
+  },
+  {
+    "id": "033",
+    "name": "Wieża strażnicza",
+    "week": 1,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 3
+    },
+    "connections": [
+      "galeon"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/blue/wieza_straznicza.png"
+  },
+  {
+    "id": "034",
+    "name": "Wieża strażnicza",
+    "week": 1,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 3
+    },
+    "connections": [
+      "galeon"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week1/blue/wieza_straznicza.png"
+  },
+  {
+    "id": "035",
+    "name": "Drzewo wiedzy",
+    "week": 1,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "inteligence",
+      "amount": 1
+    },
+    "connections": [
+      "portal_piekiel",
+      "ogrod_wiedzy"
+    ],
+    "cost": {
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/green/drzewo_wiedzy.png"
+  },
+  {
+    "id": "036",
+    "name": "Drzewo wiedzy",
+    "week": 1,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "inteligence",
+      "amount": 1
+    },
+    "connections": [
+      "portal_piekiel",
+      "ogrod_wiedzy"
+    ],
+    "cost": {
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week1/green/drzewo_wiedzy.png"
+  },
+  {
+    "id": "037",
+    "name": "Chatka czarownicy",
+    "week": 1,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "wisdom",
+      "amount": 1
+    },
+    "connections": [
+      "kolumna_oczu",
+      "kamien_wiedzy"
+    ],
+    "cost": {
+      "gems": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/green/chatka_wiedźmy.png"
+  },
+  {
+    "id": "038",
+    "name": "Chatka czarownicy",
+    "week": 1,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "wisdom",
+      "amount": 1
+    },
+    "connections": [
+      "kolumna_oczu",
+      "kamien_wiedzy"
+    ],
+    "cost": {
+      "gems": 1
+    },
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week1/green/chatka_wiedźmy.png"
+  },
+  {
+    "id": "039",
+    "name": "Chatka maga",
+    "week": 1,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "sorcery",
+      "amount": 1
+    },
+    "connections": [
+      "sale_ciemnosci",
+      "gwiazda_mocy"
+    ],
+    "cost": {
+      "crystal": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/green/chatka_maga.png"
+  },
+  {
+    "id": "040",
+    "name": "Chatka maga",
+    "week": 1,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "sorcery",
+      "amount": 1
+    },
+    "connections": [
+      "sale_ciemnosci",
+      "gwiazda_mocy"
+    ],
+    "cost": {
+      "crystal": 1
+    },
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week1/green/chatka_maga.png"
+  },
+  {
+    "id": "041",
+    "name": "Karczma",
+    "week": 1,
+    "color": "yellow",
+    "effect": {
+      "type": "coin",
+      "amount": 5
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week1/yellow/karczma.png"
+  },
+  {
+    "id": "042",
+    "name": "Karczma",
+    "week": 1,
+    "color": "yellow",
+    "effect": {
+      "type": "coin",
+      "amount": 5
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week1/yellow/karczma.png"
+  },
+  {
+    "id": "043",
+    "name": "Karczma",
+    "week": 1,
+    "color": "yellow",
+    "effect": {
+      "type": "coin",
+      "amount": 5
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week1/yellow/karczma.png"
+  },
+  {
+    "id": "044",
+    "name": "Handel wschodni",
+    "week": 1,
+    "color": "yellow",
+    "effect": {
+      "type": "trade",
+      "direction": "right",
+      "resources": [
+        "wood",
+        "mercury",
+        "ore",
+        "sulfur"
+      ],
+      "price": 1
+    },
+    "connections": [
+      "mistyczny_ogrod"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/yellow/handel_wschodni.png"
+  },
+  {
+    "id": "045",
+    "name": "Handel wschodni",
+    "week": 1,
+    "color": "yellow",
+    "effect": {
+      "type": "trade",
+      "direction": "right",
+      "resources": [
+        "wood",
+        "mercury",
+        "ore",
+        "sulfur"
+      ],
+      "price": 1
+    },
+    "connections": [
+      "mistyczny_ogrod"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week1/yellow/handel_wschodni.png"
+  },
+  {
+    "id": "046",
+    "name": "Handel zachodni",
+    "week": 1,
+    "color": "yellow",
+    "effect": {
+      "type": "trade",
+      "direction": "left",
+      "resources": [
+        "wood",
+        "mercury",
+        "ore",
+        "sulfur"
+      ],
+      "price": 1
+    },
+    "connections": [
+      "mistyczny_ogrod"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/yellow/handel_zachodni.png"
+  },
+  {
+    "id": "047",
+    "name": "Handel zachodni",
+    "week": 1,
+    "color": "yellow",
+    "effect": {
+      "type": "trade",
+      "direction": "left",
+      "resources": [
+        "wood",
+        "mercury",
+        "ore",
+        "sulfur"
+      ],
+      "price": 1
+    },
+    "connections": [
+      "mistyczny_ogrod"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week1/yellow/handel_zachodni.png"
+  },
+  {
+    "id": "048",
+    "name": "Targowisko",
+    "week": 1,
+    "color": "yellow",
+    "effect": {
+      "type": "trade",
+      "direction": "both",
+      "resources": [
+        "gems",
+        "crystal",
+        "gold"
+      ],
+      "price": 1,
+      "panel_color": "grey"
+    },
+    "connections": [
+      "wiatrak"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week1/yellow/targowisko.png"
+  },
+  {
+    "id": "049",
+    "name": "Targowisko",
+    "week": 1,
+    "color": "yellow",
+    "effect": {
+      "type": "trade",
+      "direction": "both",
+      "resources": [
+        "gems",
+        "crystal",
+        "gold"
+      ],
+      "price": 1,
+      "panel_color": "grey"
+    },
+    "connections": [
+      "wiatrak"
+    ],
+    "cost": {},
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week1/yellow/targowisko.png"
+  },
+  {
+    "id": "050",
+    "name": "Laboratorium",
+    "week": 2,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "mercury": 2
+      }
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/brown/laboratorium.png"
+  },
+  {
+    "id": "051",
+    "name": "Laboratorium",
+    "week": 2,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "mercury": 2
+      }
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week2/brown/laboratorium.png"
+  },
+  {
+    "id": "052",
+    "name": "Odkrywka siarki",
+    "week": 2,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "sulfur": 2
+      }
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/brown/odkryka_siarki.png"
+  },
+  {
+    "id": "053",
+    "name": "Odkrywka siarki",
+    "week": 2,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "sulfur": 2
+      }
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week2/brown/odkryka_siarki.png"
+  },
+  {
+    "id": "054",
+    "name": "Tartak",
+    "week": 2,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "wood": 2
+      }
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/brown/tartak.png"
+  },
+  {
+    "id": "055",
+    "name": "Tartak",
+    "week": 2,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "wood": 2
+      }
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week2/brown/tartak.png"
+  },
+  {
+    "id": "056",
+    "name": "Złoże rudy",
+    "week": 2,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "ore": 2
+      }
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/brown/zloze_rudy.png"
+  },
+  {
+    "id": "057",
+    "name": "Złoże rudy",
+    "week": 2,
+    "color": "brown",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "ore": 2
+      }
+    },
+    "connections": [],
+    "cost": {
+      "coin": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week2/brown/zloze_rudy.png"
+  },
+  {
+    "id": "058",
+    "name": "Mistyczny ogród",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "gold": 1
+        },
+        {
+          "gems": 1
+        },
+        {
+          "crystal": 1
+        }
+      ]
+    },
+    "connections": [
+      "port"
+    ],
+    "cost": {
+      "sulfur": 2
+    },
+    "connection_cost": [
+      "mistyczny_ogrod"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/yellow/mistyczny_ogrod.png"
+  },
+  {
+    "id": "059",
+    "name": "Mistyczny ogród",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "gold": 1
+        },
+        {
+          "gems": 1
+        },
+        {
+          "crystal": 1
+        }
+      ]
+    },
+    "connections": [
+      "port"
+    ],
+    "cost": {
+      "sulfur": 2
+    },
+    "connection_cost": [
+      "mistyczny_ogrod"
+    ],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week2/yellow/mistyczny_ogrod.png"
+  },
+  {
+    "id": "060",
+    "name": "Mistyczny ogród",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "gold": 1
+        },
+        {
+          "gems": 1
+        },
+        {
+          "crystal": 1
+        }
+      ]
+    },
+    "connections": [
+      "port"
+    ],
+    "cost": {
+      "sulfur": 2
+    },
+    "connection_cost": [
+      "mistyczny_ogrod"
+    ],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week2/yellow/mistyczny_ogrod.png"
+  },
+  {
+    "id": "061",
+    "name": "Wiatrak",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "wood": 1
+        },
+        {
+          "mercury": 1
+        },
+        {
+          "ore": 1
+        },
+        {
+          "sulfur": 1
+        }
+      ]
+    },
+    "connections": [
+      "latarnia_morska"
+    ],
+    "cost": {
+      "wood": 2
+    },
+    "connection_cost": [
+      "wiatrak"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/yellow/wiatrak.png"
+  },
+  {
+    "id": "062",
+    "name": "Wiatrak",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "wood": 1
+        },
+        {
+          "mercury": 1
+        },
+        {
+          "ore": 1
+        },
+        {
+          "sulfur": 1
+        }
+      ]
+    },
+    "connections": [
+      "latarnia_morska"
+    ],
+    "cost": {
+      "wood": 2
+    },
+    "connection_cost": [
+      "wiatrak"
+    ],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week2/yellow/wiatrak.png"
+  },
+  {
+    "id": "063",
+    "name": "Wiatrak",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "resource_choice",
+      "options": [
+        {
+          "wood": 1
+        },
+        {
+          "mercury": 1
+        },
+        {
+          "ore": 1
+        },
+        {
+          "sulfur": 1
+        }
+      ]
+    },
+    "connections": [
+      "latarnia_morska"
+    ],
+    "cost": {
+      "wood": 2
+    },
+    "connection_cost": [
+      "wiatrak"
+    ],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week2/yellow/wiatrak.png"
+  },
+  {
+    "id": "064",
+    "name": "Młyn wodny",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_per_card",
+      "card_color": "brown",
+      "amount": 1,
+      "scope": "self_and_neighbors"
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/yellow/mlyn_wodny.png"
+  },
+  {
+    "id": "065",
+    "name": "Młyn wodny",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_per_card",
+      "card_color": "brown",
+      "amount": 1,
+      "scope": "self_and_neighbors"
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week2/yellow/mlyn_wodny.png"
+  },
+  {
+    "id": "066",
+    "name": "Składowisko złota",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_per_card",
+      "card_color": "grey",
+      "amount": 2,
+      "scope": "self_and_neighbors"
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week2/yellow/skladowisko_zlota.png"
+  },
+  {
+    "id": "067",
+    "name": "Składowisko złota",
+    "week": 2,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_per_card",
+      "card_color": "grey",
+      "amount": 2,
+      "scope": "self_and_neighbors"
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week2/yellow/skladowisko_zlota.png"
+  },
+  {
+    "id": "068",
+    "name": "Cytadela",
+    "week": 2,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 2
+    },
+    "connections": [
+      "zamek"
+    ],
+    "cost": {
+      "mercury": 3
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/red/cytadela.png"
+  },
+  {
+    "id": "069",
+    "name": "Cytadela",
+    "week": 2,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 2
+    },
+    "connections": [
+      "zamek"
+    ],
+    "cost": {
+      "mercury": 3
+    },
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week2/red/cytadela.png"
+  },
+  {
+    "id": "070",
+    "name": "Kolumna oczu",
+    "week": 2,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 2
+    },
+    "connections": [],
+    "cost": {
+      "wood": 2,
+      "ore": 1
+    },
+    "connection_cost": [
+      "kolumna_oczu"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/red/kolumna_oczu.png"
+  },
+  {
+    "id": "071",
+    "name": "Kolumna oczu",
+    "week": 2,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 2
+    },
+    "connections": [],
+    "cost": {
+      "wood": 2,
+      "ore": 1
+    },
+    "connection_cost": [
+      "kolumna_oczu"
+    ],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week2/red/kolumna_oczu.png"
+  },
+  {
+    "id": "072",
+    "name": "Portal przyzwania",
+    "week": 2,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 2
+    },
+    "connections": [
+      "portal_chwaly"
+    ],
+    "cost": {
+      "ore": 2,
+      "wood": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week2/red/portal_przyzwania.png"
+  },
+  {
+    "id": "073",
+    "name": "Portal przyzwania",
+    "week": 2,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 2
+    },
+    "connections": [
+      "portal_chwaly"
+    ],
+    "cost": {
+      "ore": 2,
+      "wood": 1
+    },
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week2/red/portal_przyzwania.png"
+  },
+  {
+    "id": "074",
+    "name": "Portal przyzwania",
+    "week": 2,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 2
+    },
+    "connections": [
+      "portal_chwaly"
+    ],
+    "cost": {
+      "ore": 2,
+      "wood": 1
+    },
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week2/red/portal_przyzwania.png"
+  },
+  {
+    "id": "075",
+    "name": "Sale ciemności",
+    "week": 2,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 2
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "ore": 1,
+      "sulfur": 1
+    },
+    "connection_cost": [
+      "sale_ciemnosci"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/red/sale_ciemnosci.png"
+  },
+  {
+    "id": "076",
+    "name": "Sale ciemności",
+    "week": 2,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 2
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "ore": 1,
+      "sulfur": 1
+    },
+    "connection_cost": [
+      "sale_ciemnosci"
+    ],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week2/red/sale_ciemnosci.png"
+  },
+  {
+    "id": "077",
+    "name": "Gwiazda mocy",
+    "week": 2,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "sorcery",
+      "amount": 1
+    },
+    "connections": [
+      "todo1",
+      "koloseum_magow"
+    ],
+    "cost": {
+      "ore": 2,
+      "gems": 1
+    },
+    "connection_cost": [
+      "gwiazda_mocy"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/green/gwiazda_mocy.png"
+  },
+  {
+    "id": "078",
+    "name": "Gwiazda mocy",
+    "week": 2,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "sorcery",
+      "amount": 1
+    },
+    "connections": [
+      "todo1",
+      "koloseum_magow"
+    ],
+    "cost": {
+      "ore": 2,
+      "gems": 1
+    },
+    "connection_cost": [
+      "gwiazda_mocy"
+    ],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week2/green/gwiazda_mocy.png"
+  },
+  {
+    "id": "079",
+    "name": "Kamień wiedzy",
+    "week": 2,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "wisdom",
+      "amount": 1
+    },
+    "connections": [
+      "kuznia",
+      "szkola_magii"
+    ],
+    "cost": {
+      "sulfur": 2,
+      "gold": 1
+    },
+    "connection_cost": [
+      "kamien_wiedzy"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/green/kamien_wiedzy.png"
+  },
+  {
+    "id": "080",
+    "name": "Kamień wiedzy",
+    "week": 2,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "wisdom",
+      "amount": 1
+    },
+    "connections": [
+      "kuznia",
+      "szkola_magii"
+    ],
+    "cost": {
+      "sulfur": 2,
+      "gold": 1
+    },
+    "connection_cost": [
+      "kamien_wiedzy"
+    ],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week2/green/kamien_wiedzy.png"
+  },
+  {
+    "id": "081",
+    "name": "Ogród objawienia",
+    "week": 2,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "inteligence",
+      "amount": 1
+    },
+    "connections": [
+      "wiezienie_dusz",
+      "magiczne_zrodlo"
+    ],
+    "cost": {
+      "mercury": 2,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "ogrod_wiedzy"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/green/ogrod_objawienia.png"
+  },
+  {
+    "id": "082",
+    "name": "Ogród objawienia",
+    "week": 2,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "inteligence",
+      "amount": 1
+    },
+    "connections": [
+      "wiezienie_dusz",
+      "magiczne_zrodlo"
+    ],
+    "cost": {
+      "mercury": 2,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "ogrod_wiedzy"
+    ],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week2/green/ogrod_objawienia.png"
+  },
+  {
+    "id": "083",
+    "name": "Zaklęty krąg",
+    "week": 2,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "inteligence",
+      "amount": 1
+    },
+    "connections": [
+      "magiczna_studnia",
+      "kaplica_magicznych_sekretow"
+    ],
+    "cost": {
+      "wood": 1,
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/green/zaklety_krag.png"
+  },
+  {
+    "id": "084",
+    "name": "Zaklęty krąg",
+    "week": 2,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "inteligence",
+      "amount": 1
+    },
+    "connections": [
+      "magiczna_studnia",
+      "kaplica_magicznych_sekretow"
+    ],
+    "cost": {
+      "wood": 1,
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week2/green/zaklety_krag.png"
+  },
+  {
+    "id": "085",
+    "name": "Kopalnia złota",
+    "week": 2,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "gold": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/grey/kopalnia_zlota.png"
+  },
+  {
+    "id": "086",
+    "name": "Kopalnia złota",
+    "week": 2,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "gold": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week2/grey/kopalnia_zlota.png"
+  },
+  {
+    "id": "087",
+    "name": "Kryształowa grota",
+    "week": 2,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "crystal": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/grey/krysztalowa_grota.png"
+  },
+  {
+    "id": "088",
+    "name": "Kryształowa grota",
+    "week": 2,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "crystal": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week2/grey/krysztalowa_grota.png"
+  },
+  {
+    "id": "089",
+    "name": "Staw z klejnotami",
+    "week": 2,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "gems": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/grey/staw_z_klejnotami.png"
+  },
+  {
+    "id": "090",
+    "name": "Staw z klejnotami",
+    "week": 2,
+    "color": "grey",
+    "effect": {
+      "type": "resources",
+      "resources": {
+        "gems": 1
+      }
+    },
+    "connections": [],
+    "cost": {},
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week2/grey/staw_z_klejnotami.png"
+  },
+  {
+    "id": "091",
+    "name": "Portal piekieł",
+    "week": 2,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 4
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "portal_piekiel"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/blue/portal_piekiel.png"
+  },
+  {
+    "id": "092",
+    "name": "Portal piekieł",
+    "week": 2,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 4
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "portal_piekiel"
+    ],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week2/blue/portal_piekiel.png"
+  },
+  {
+    "id": "093",
+    "name": "Wir magii",
+    "week": 2,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 4
+    },
+    "connections": [],
+    "cost": {
+      "ore": 2,
+      "wood": 1
+    },
+    "connection_cost": [
+      "wir_magii"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/blue/wir_magii.png"
+  },
+  {
+    "id": "094",
+    "name": "Wir magii",
+    "week": 2,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 4
+    },
+    "connections": [],
+    "cost": {
+      "ore": 2,
+      "wood": 1
+    },
+    "connection_cost": [
+      "wir_magii"
+    ],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week2/blue/wir_magii.png"
+  },
+  {
+    "id": "095",
+    "name": "Sale walhalli",
+    "week": 2,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 4
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "sulfur": 1,
+      "gems": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/blue/sale_walhalli.png"
+  },
+  {
+    "id": "096",
+    "name": "Sale walhalli",
+    "week": 2,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 4
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "sulfur": 1,
+      "gems": 1
+    },
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week2/blue/sale_walhalli.png"
+  },
+  {
+    "id": "097",
+    "name": "Stajnie",
+    "week": 2,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 5
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 3
+    },
+    "connection_cost": [
+      "stajnie"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week2/blue/stajnie.png"
+  },
+  {
+    "id": "098",
+    "name": "Stajnie",
+    "week": 2,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 5
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 3
+    },
+    "connection_cost": [
+      "stajnie"
+    ],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week2/blue/stajnie.png"
+  },
+  {
+    "id": "099",
+    "name": "Kaplica magicznych sekretów",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "wisdom",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "gold": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "kaplica_magicznych_sekretow"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/green/kaplica_magicznych_sekretow.png"
+  },
+  {
+    "id": "100",
+    "name": "Kaplica magicznych sekretów",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "wisdom",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "gold": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "kaplica_magicznych_sekretow"
+    ],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week3/green/kaplica_magicznych_sekretow.png"
+  },
+  {
+    "id": "101",
+    "name": "Koloseum magów",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "sorcery",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "gold": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "koloseum_magow"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/green/koloseum_magow.png"
+  },
+  {
+    "id": "102",
+    "name": "Koloseum magów",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "sorcery",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "gold": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "koloseum_magow"
+    ],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week3/green/koloseum_magow.png"
+  },
+  {
+    "id": "103",
+    "name": "Magiczna studnia",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "sorcery",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 3,
+      "gems": 1
+    },
+    "connection_cost": [
+      "magiczna_studnia"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/green/magiczna_studnia.png"
+  },
+  {
+    "id": "104",
+    "name": "Magiczna studnia",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "sorcery",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 3,
+      "gems": 1
+    },
+    "connection_cost": [
+      "magiczna_studnia"
+    ],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week3/green/magiczna_studnia.png"
+  },
+  {
+    "id": "105",
+    "name": "Magiczne źródło",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "inteligence",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "wood": 2,
+      "gems": 1,
+      "gold": 1
+    },
+    "connection_cost": [
+      "magiczne_zrodlo"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/green/magiczne_zrodlo.png"
+  },
+  {
+    "id": "106",
+    "name": "Magiczne źródło",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "inteligence",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "wood": 2,
+      "gems": 1,
+      "gold": 1
+    },
+    "connection_cost": [
+      "magiczne_zrodlo"
+    ],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week3/green/magiczne_zrodlo.png"
+  },
+  {
+    "id": "107",
+    "name": "Szkoła magii",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "wisdom",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "ore": 2,
+      "gems": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "szkola_magii"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/green/szkola_magii.png"
+  },
+  {
+    "id": "108",
+    "name": "Szkoła magii",
+    "week": 3,
+    "color": "green",
+    "effect": {
+      "type": "science",
+      "symbol": "wisdom",
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "ore": 2,
+      "gems": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "szkola_magii"
+    ],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week3/green/szkola_magii.png"
+  },
+  {
+    "id": "109",
+    "name": "Portal chwały",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 3,
+      "ore": 1
+    },
+    "connection_cost": [
+      "portal_chwaly"
+    ],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week3/red/portal_chwaly.png"
+  },
+  {
+    "id": "110",
+    "name": "Portal chwały",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 3,
+      "ore": 1
+    },
+    "connection_cost": [
+      "portal_chwaly"
+    ],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week3/red/portal_chwaly.png"
+  },
+  {
+    "id": "111",
+    "name": "Przeklęty pałac",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "wood": 1,
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week3/red/przeklety_palac.png"
+  },
+  {
+    "id": "112",
+    "name": "Przeklęty pałac",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "wood": 1,
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week3/red/przeklety_palac.png"
+  },
+  {
+    "id": "113",
+    "name": "Kuźnia",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 3,
+      "wood": 1
+    },
+    "connection_cost": [
+      "kuznia"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/red/kuznia.png"
+  },
+  {
+    "id": "114",
+    "name": "Kuźnia",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 3,
+      "wood": 1
+    },
+    "connection_cost": [
+      "kuznia"
+    ],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week3/red/kuznia.png"
+  },
+  {
+    "id": "115",
+    "name": "Świątynia obłoków",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "wood": 2,
+      "ore": 1,
+      "crystal": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/red/swiatynia_oblokow.png"
+  },
+  {
+    "id": "116",
+    "name": "Świątynia obłoków",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "wood": 2,
+      "ore": 1,
+      "crystal": 1
+    },
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week3/red/swiatynia_oblokow.png"
+  },
+  {
+    "id": "117",
+    "name": "Zamek",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "ore": 3,
+      "sulfur": 1
+    },
+    "connection_cost": [
+      "zamek"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/red/zamek.png"
+  },
+  {
+    "id": "118",
+    "name": "Zamek",
+    "week": 3,
+    "color": "red",
+    "effect": {
+      "type": "war",
+      "amount": 3
+    },
+    "connections": [],
+    "cost": {
+      "ore": 3,
+      "sulfur": 1
+    },
+    "connection_cost": [
+      "zamek"
+    ],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week3/red/zamek.png"
+  },
+  {
+    "id": "119",
+    "name": "Duchowy strażnik",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 8
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "mercury": 1,
+      "ore": 1,
+      "sulfur": 1,
+      "gems": 1,
+      "gold": 1,
+      "crystal": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/blue/duchowy_straznik.png"
+  },
+  {
+    "id": "120",
+    "name": "Duchowy strażnik",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 8
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "mercury": 1,
+      "ore": 1,
+      "sulfur": 1,
+      "gems": 1,
+      "gold": 1,
+      "crystal": 1
+    },
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week3/blue/duchowy_straznik.png"
+  },
+  {
+    "id": "121",
+    "name": "Kolos",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 7
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "ore": 1,
+      "gems": 1,
+      "gold": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "kolos"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/blue/kolos.png"
+  },
+  {
+    "id": "122",
+    "name": "Kolos",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 7
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "ore": 1,
+      "gems": 1,
+      "gold": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "kolos"
+    ],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week3/blue/kolos.png"
+  },
+  {
+    "id": "123",
+    "name": "Podniebny galeon",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 5
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "wood": 1
+    },
+    "connection_cost": [
+      "galeon"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/blue/podniebny_galeon.png"
+  },
+  {
+    "id": "124",
+    "name": "Podniebny galeon",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 5
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "wood": 1
+    },
+    "connection_cost": [
+      "galeon"
+    ],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week3/blue/podniebny_galeon.png"
+  },
+  {
+    "id": "125",
+    "name": "Mięsożerna roślina",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 6
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 2,
+      "ore": 1,
+      "gems": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/blue/miesozerna_roslina.png"
+  },
+  {
+    "id": "126",
+    "name": "Mięsożerna roślina",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 6
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 2,
+      "ore": 1,
+      "gems": 1
+    },
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week3/blue/miesozerna_roslina.png"
+  },
+  {
+    "id": "127",
+    "name": "Więzienie dusz",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 6
+    },
+    "connections": [],
+    "cost": {
+      "wood": 2,
+      "mercury": 1,
+      "ore": 1
+    },
+    "connection_cost": [
+      "wiezienie_dusz"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/blue/wiezienie_dusz.png"
+  },
+  {
+    "id": "128",
+    "name": "Więzienie dusz",
+    "week": 3,
+    "color": "blue",
+    "effect": {
+      "type": "points",
+      "amount": 6
+    },
+    "connections": [],
+    "cost": {
+      "wood": 2,
+      "mercury": 1,
+      "ore": 1
+    },
+    "connection_cost": [
+      "wiezienie_dusz"
+    ],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week3/blue/wiezienie_dusz.png"
+  },
+  {
+    "id": "129",
+    "name": "Całun ciemności",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_card",
+      "card_color": "red",
+      "coins": 3,
+      "points": 1,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 1,
+      "ore": 1
+    },
+    "connection_cost": [],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week3/yellow/calun_ciemnosci.png"
+  },
+  {
+    "id": "130",
+    "name": "Całun ciemności",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_card",
+      "card_color": "red",
+      "coins": 3,
+      "points": 1,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 1,
+      "ore": 1
+    },
+    "connection_cost": [],
+    "players": 7,
+    "artwork": "assets/cards/artwork/week3/yellow/calun_ciemnosci.png"
+  },
+  {
+    "id": "131",
+    "name": "Latarnia morska",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_card",
+      "card_color": "yellow",
+      "coins": 1,
+      "points": 1,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 1,
+      "gems": 1
+    },
+    "connection_cost": [
+      "latarnia_morska"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/yellow/latarnia_morska.png"
+  },
+  {
+    "id": "132",
+    "name": "Latarnia morska",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_card",
+      "card_color": "yellow",
+      "coins": 1,
+      "points": 1,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 1,
+      "gems": 1
+    },
+    "connection_cost": [
+      "latarnia_morska"
+    ],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week3/yellow/latarnia_morska.png"
+  },
+  {
+    "id": "133",
+    "name": "Skarbiec",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_card",
+      "card_color": "grey",
+      "coins": 2,
+      "points": 2,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week3/yellow/skarbiec.png"
+  },
+  {
+    "id": "134",
+    "name": "Skarbiec",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_card",
+      "card_color": "grey",
+      "coins": 2,
+      "points": 2,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 6,
+    "artwork": "assets/cards/artwork/week3/yellow/skarbiec.png"
+  },
+  {
+    "id": "135",
+    "name": "Stocznia",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_card",
+      "card_color": "brown",
+      "coins": 1,
+      "points": 1,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "ore": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "port"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/yellow/stocznia.png"
+  },
+  {
+    "id": "136",
+    "name": "Stocznia",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_card",
+      "card_color": "brown",
+      "coins": 1,
+      "points": 1,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "wood": 1,
+      "ore": 1,
+      "crystal": 1
+    },
+    "connection_cost": [
+      "port"
+    ],
+    "players": 4,
+    "artwork": "assets/cards/artwork/week3/yellow/stocznia.png"
+  }
+]
