@@ -25,3 +25,7 @@ Obręcz efektu: `assets/cards/template/card-effect-ring.png` (220 × 220 px). Ef
 `cards.json` jest źródłem danych galerii. Każdy wpis zawiera `id`, `name`, `color`, `effect`, `connections`, `cost`, `connection_cost`, `players`, `artwork`. Surowce efektu zapisujemy jako `effect.resources`, np. `{ "wood": 1 }`. `connections` i `connection_cost` są listami powiązań, `cost` jest obiektem kosztów, a `players` listą liczb graczy. Puste wartości w karcie Example pozostają do uzupełnienia. Aby dodać kartę, dopisz kolejny obiekt do tablicy.
 
 Efekt resource_choice zawiera options, np. [{"mercury":1},{"sulfur":1}]: rtęć albo siarka. Efekt resources zawiera resources i oznacza wszystkie podane surowce razem. Sprite ukośnika: assets/cards/template/effect-choice-slash.png; do czasu dodania oryginalnego PNG wyświetla się zastępczy symbol.
+
+## Atlas kart
+
+`atlas.html` — interaktywny wykaz kart z podziałem na trzy epoki i graf łańcuchów budowy. Najazd lub fokus pokazuje pełną kartę, kliknięcie otwiera powiększenie. Licznik w prawym dolnym rogu kafelka podaje liczbę kopii dla wybranej liczby graczy. Graf łączy symbole `connections` z `connection_cost` w późniejszych epokach. Dane pochodzą z `cards.json`.

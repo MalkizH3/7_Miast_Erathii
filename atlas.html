@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101714">
+<title>Atlas kart · 7 Miast Erathii</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="atlas.css"><script src="gallery.js" defer></script><script src="atlas.js" defer></script>
+</head>
+<body class="atlas-page">
+<header class="topbar"><a class="brand" href="./"><img class="brand-logo" src="assets/7cudow-logo.png" alt="7 Miast Erathii" width="2170" height="725"></a><nav><a href="index.html">Galeria kart</a><a class="nav-current" href="atlas.html" aria-current="page">Atlas kart</a></nav></header>
+<main class="atlas-main"><section class="atlas-intro"><p class="eyebrow">KRONIKI ERATHII / ATLAS</p><h1>Wszystko jest połączone.</h1><p class="lead">Trzy epoki. Jedna droga do potęgi. Odkryj karty i łańcuchy darmowej budowy.</p></section><div class="atlas-toolbar"><label>Liczba graczy<select id="atlas-players"><option value="7">Wszystkie karty · 7 graczy</option><option value="3">3 graczy</option><option value="4">4 graczy</option><option value="5">5 graczy</option><option value="6">6 graczy</option></select></label><div class="atlas-views" role="group" aria-label="Widok"><button data-view="catalog" aria-pressed="true">Wykaz kart</button><button data-view="graph" aria-pressed="false">Graf połączeń</button></div></div><div class="atlas-status"><span id="atlas-status" role="status">Wczytywanie kart…</span><span>Najedź lub ustaw fokus, aby zobaczyć kartę. Kliknij, aby powiększyć.</span></div><div class="atlas-scroll"><div id="atlas-board"></div></div><p id="atlas-empty" hidden>Brak kart spełniających kryteria.</p></main><aside id="atlas-preview" hidden aria-label="Podgląd karty"></aside><div hidden>
+<section class="intro"><p class="eyebrow">KRONIKI ERATHII</p><h1>Każda karta.<br>Nowa historia.</h1><p class="lead">Budynki, miejsca i potęga siedmiu miast.<br>Odkryj karty powstającej kolekcji.</p></section>
+<section id="gallery" class="gallery-section" aria-labelledby="gallery-title">
+<div class="gallery-heading"><div><p class="eyebrow">KOLEKCJA</p><h2 id="gallery-title">Galeria kart <span class="count" id="card-count" aria-live="polite">01</span></h2></div><label class="guide-toggle"><input id="guides" type="checkbox" checked> Pokaż marginesy</label></div>
+<div class="catalog-tools"><label class="search-wrap"><span>Szukaj kart</span><input id="search" type="search" placeholder="Nazwa, numer lub surowiec…" autocomplete="off"><kbd>/</kbd></label><div class="filter-group"><span class="filter-label">Tydzień</span><div id="week-filters" class="filter-row" role="group" aria-label="Filtruj tydzień kart"></div></div><div class="filter-group"><span class="filter-label">Kolor</span><div id="filters" class="filter-row" role="group" aria-label="Filtruj kolor kart"></div></div></div>
+<div class="card-grid" aria-live="polite">
+
+</div><div id="empty-state" class="empty-state" hidden><h3>Nie znaleziono kart</h3><p>Zmień frazę lub wybierz inny filtr.</p><button id="reset-search" type="button">Wyczyść filtry</button></div></section>
+</div>
+<footer><span>7 Miast Erathii</span><span>Kolekcja w przygotowaniu</span></footer>
+<dialog id="card-dialog" aria-labelledby="preview-title"><div class="dialog-bar"><h2 id="preview-title">Example</h2><button id="close-card" aria-label="Zamknij podgląd">Zamknij ×</button></div><div id="preview-card"></div><div class="preview-actions"><button id="download-card" type="button">Pobierz jako PNG</button><span id="download-status" role="status"></span></div></dialog>
+<template id="card-template"><article class="gallery-item"><button class="card-button" id="open-card" aria-label="Powiększ kartę Example"><span class="game-card">
+<img class="card-art" src="assets/cards/artwork/example.png" alt="Skaliste zbocze z niewielkim wodospadem" width="1092" height="1154">
+<img class="card-top" src="assets/cards/template/card-top.png" alt="" width="1092" height="473">
+<img class="card-cost" src="assets/cards/template/card-cost-strip.png" alt="" width="150" height="1012">
+<span class="card-name"><img src="assets/cards/template/card-name-banner.png" alt="" width="800" height="87"><span>Example</span></span>
+<span class="card-effects" data-resources="wood" role="img" aria-label="Efekt karty: drewno"></span>
+<span class="safe-area" aria-hidden="true"></span>
+</span><span class="zoom-hint">Powiększ ↗</span></button><div class="card-caption"><div><h3>Example</h3><p>Karta przykładowa</p></div><span class="card-number">001</span></div></article></template>
+</body></html>
+
+
+

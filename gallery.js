@@ -6,6 +6,7 @@ function effectGroups(card) {
 }
 function effectResources(card) { return card.effect?.type==='trade' ? card.effect.resources : effectGroups(card).flat(); }
 function effectItems(card) {
+ if(card.effect?.type==='science_choice')return card.effect.options.flatMap((symbol,index)=>[...(index?[{type:'slash'}]:[]),{type:'science',symbol}]);
  if(card.effect?.type==='science')return [{type:'science',symbol:card.effect.symbol}];
  if(card.effect?.type==='coin')return [{type:'coin',amount:card.effect.amount || 0}];
  if(card.effect?.type==='points')return [{type:'points',amount:card.effect.amount || 0}];
@@ -13,6 +14,25 @@ function effectItems(card) {
  const items=[];effectGroups(card).forEach((group,index)=>{if(index)items.push({type:'slash'});group.forEach(resource=>items.push({type:'resource',resource}));});return items;
 }
 function effectLayout(card) {
+ if(card.effect?.type==='coins_and_points_per_pyramid')return [
+ {type:'pyramid',symbol:'pyramid_sliced',x:456,y:205,width:180,height:180},
+ {type:'coin',amount:card.effect.coins,x:370,y:302,width:106,height:106},
+ {type:'points',amount:card.effect.points,x:616,y:302,width:96,height:106}
+ ];
+ if(card.effect?.type==='points_per_pyramid')return [
+ {type:'pyramid',symbol:card.effect.target==='stage'?'pyramid_sliced':'pyramid',x:446,y:205,width:180,height:180},
+ {type:'points',amount:card.effect.amount,x:550,y:302,width:106,height:116},
+ ...(['neighbors','self_and_neighbors'].includes(card.effect.scope)?[{type:'arrow',direction:'left',x:340,y:283,width:64,height:64},{type:'arrow',direction:'right',x:688,y:283,width:64,height:64}]:[]),
+ ...(card.effect.scope==='self_and_neighbors'?[{type:'arrow',direction:'down',x:514,y:395,width:64,height:64}]:[])
+ ].map(item=>({...item,y:item.y-(card.effect.scope==='self_and_neighbors'?30:0)})).sort((a,b)=>(a.type==='points')-(b.type==='points'));
+ if(card.effect?.type==='points_per_card'){
+ const palette=card.effect.card_colors,step=195,start=546-(palette.length-1)*step/2;
+ return [
+ ...palette.flatMap((color,index)=>[{type:'card_count_panel',color,x:start+index*step-61,y:205,width:122,height:175},{type:'points',amount:card.effect.amount,x:start+index*step-8,y:302,width:96,height:106}]),
+ ...(card.effect.scope==='neighbors'?[{type:'arrow',direction:'left',x:340,y:283,width:64,height:64},{type:'arrow',direction:'right',x:688,y:283,width:64,height:64}]:[])
+ ];
+ }
+
  if(card.effect?.type==='coins_and_points_per_card')return [
  {type:'card_count_panel',color:card.effect.card_color,x:485,y:211,width:122,height:175},
  {type:'coin',amount:card.effect.coins,x:410,y:306,width:106,height:106},
@@ -35,10 +55,11 @@ function effectLayout(card) {
  }
  const compactChoice=card.effect?.type==='resource_choice' && /(?:mistyczny_ogrod|wiatrak)\.png$/i.test(card.artwork || '');
  const windmillChoice=compactChoice && /wiatrak\.png$/i.test(card.artwork || '');
- const tokenSize=windmillChoice?138:compactChoice?180:220,slashWidth=windmillChoice?46:compactChoice?60:80;
- const items=effectItems(card),gap=compactChoice?8:18,nominal=items.reduce((sum,i)=>sum+(i.type==='slash'?slashWidth:tokenSize),0)+Math.max(0,items.length-1)*gap,scale=Math.min(1,917/Math.max(1,nominal));
+ const scienceChoice=card.effect?.type==='science_choice';
+ const tokenSize=scienceChoice?188.1:windmillChoice?138:compactChoice?180:220,slashWidth=scienceChoice?68.4:windmillChoice?46:compactChoice?60:80;
+ const items=effectItems(card),gap=compactChoice?8:items.length===2&&items.every(item=>item.type==='resource')?42:18,nominal=items.reduce((sum,i)=>sum+(i.type==='slash'?slashWidth:tokenSize),0)+Math.max(0,items.length-1)*gap,scale=Math.min(1,917/Math.max(1,nominal));
  let x=(1092-nominal*scale)/2;
- return items.map(item=>{const width=(item.type==='slash'?slashWidth:tokenSize)*scale,height=(item.type==='slash'?(compactChoice?100:120):tokenSize)*scale;const layout={...item,x,y:205+(220-height)/2-(item.type==='war'?10:0),width,height};x+=width+gap*scale;return layout;});
+ return items.map(item=>{const width=(item.type==='slash'?slashWidth:tokenSize)*scale,height=(item.type==='slash'?(compactChoice?100:120):tokenSize)*scale;const layout={...item,x,y:205+(220-height)/2-(item.type==='war'?10:0)-(scienceChoice?15:0),width,height};x+=width+gap*scale;return layout;});
 }
 const resourceNames = {wood:'drewno',ore:'ruda',mercury:'rtęć',sulfur:'siarka',crystal:'kryształ',gems:'klejnoty',gold:'złoto',coin:'moneta'};
 const resourceBackgrounds = {
@@ -67,7 +88,7 @@ const colorFilters = {blue:'none',brown:'sepia(1) saturate(3) hue-rotate(-18deg)
 // Recolor only blue pixels, preserving the original gold ornament and borders.
 const coloredSpriteCache = new Map();
 function cardSpriteSource(source, color) {
-  if (!['red','grey','gray','green','yellow'].includes(color)) return Promise.resolve(source);
+  if (!['red','grey','gray','green','yellow','purple'].includes(color)) return Promise.resolve(source);
   const key = color + ':' + source;
   if (!coloredSpriteCache.has(key)) coloredSpriteCache.set(key, (async () => {
     const image = await loadImage(source);
@@ -79,7 +100,7 @@ function cardSpriteSource(source, color) {
       if(b>r*1.3 && b>g*1.05){
         if(color === 'red'){
         pixels.data[i]=Math.min(255,b*.95);pixels.data[i+1]=r*.16;pixels.data[i+2]=r*.12;
-        }else if(color === 'yellow'){pixels.data[i]=Math.min(255,b*1.42);pixels.data[i+1]=Math.min(255,b*.91);pixels.data[i+2]=b*.045;}else if(color === 'green'){pixels.data[i]=Math.min(255,b*.2208);pixels.data[i+1]=Math.min(255,b*.8096);pixels.data[i+2]=b*.023;}else{const grey=Math.min(255,b*.8);pixels.data[i]=grey;pixels.data[i+1]=grey;pixels.data[i+2]=grey;}
+        }else if(color === 'purple'){pixels.data[i]=b*.64;pixels.data[i+1]=b*.32;pixels.data[i+2]=b*.86;}else if(color === 'yellow'){pixels.data[i]=Math.min(255,b*1.42);pixels.data[i+1]=Math.min(255,b*.91);pixels.data[i+2]=b*.045;}else if(color === 'green'){pixels.data[i]=Math.min(255,b*.2208);pixels.data[i+1]=Math.min(255,b*.8096);pixels.data[i+2]=b*.023;}else{const grey=Math.min(255,b*.8);pixels.data[i]=grey;pixels.data[i+1]=grey;pixels.data[i+2]=grey;}
       }
     }
     context.putImageData(pixels,0,0);return canvas.toDataURL('image/png');
@@ -87,8 +108,8 @@ function cardSpriteSource(source, color) {
   return coloredSpriteCache.get(key);
 }
 function applyCardColor(image, color) {
-  image.style.filter=['red','grey','gray','green','yellow'].includes(color)?'none':(colorFilters[color] || 'none');
-  if(['red','grey','gray','green','yellow'].includes(color))cardSpriteSource(image.getAttribute('src'),color).then(source=>{image.src=source;}).catch(console.error);
+  image.style.filter=['red','grey','gray','green','yellow','purple'].includes(color)?'none':(colorFilters[color] || 'none');
+  if(['red','grey','gray','green','yellow','purple'].includes(color))cardSpriteSource(image.getAttribute('src'),color).then(source=>{image.src=source;}).catch(console.error);
 }
 function costEntries(card) { return Object.entries(card.cost || {}).flatMap(([resource,amount]) => Number.isInteger(amount) && amount > 0 ? Array(Math.min(amount,20)).fill([resource,1]) : []); }
 function resourceFile(resource) { return resource; }
@@ -156,7 +177,7 @@ function makeCard(card) {
   article.querySelector('.card-number').textContent = card.id;
   const effects = article.querySelector('.card-effects');
   effects.replaceChildren();
-  effects.setAttribute('aria-label',card.effect?.type==='coins_and_points_per_card'?'Za każdą własną kartę '+colors[card.effect.card_color]+': '+card.effect.coins+' monet i '+card.effect.points+' punktów':card.effect?.type==='coins_per_card'?'Monety za każdą kartę '+card.effect.card_color+' u siebie i obu sąsiadów: '+card.effect.amount:card.effect?.type==='trade'?'Handel z sąsiadem: '+card.effect.direction+', cena '+card.effect.price:card.effect?.type==='coin'?'Monety: '+card.effect.amount:card.effect?.type==='science'?'Nauka: '+card.effect.symbol:card.effect?.type==='points'?'Punkty zwycięstwa: '+card.effect.amount:card.effect?.type==='war'?'Siła militarna: '+(card.effect.amount || 1):'Efekt karty: '+effectGroups(card).map(group=>group.map(r=>resourceNames[r]).join(' i ')).join(' albo '));
+  effects.setAttribute('aria-label',card.effect?.type==='coins_and_points_per_pyramid'?'Za każdy własny etap piramidy: '+card.effect.coins+' monet i '+card.effect.points+' punktów':card.effect?.type==='points_per_pyramid'?card.effect.amount+' punktów za '+(card.effect.target==='stage'?'każdy etap piramid':'każdą ukończoną piramidę')+' '+(card.effect.scope==='self_and_neighbors'?'u siebie i obu sąsiadów':card.effect.scope==='neighbors'?'u obu sąsiadów':'u siebie'):card.effect?.type==='points_per_card'?'Punkty za każdą kartę ('+card.effect.card_colors.map(c=>colors[c]).join(', ')+') '+(card.effect.scope==='neighbors'?'u obu sąsiadów':'u siebie')+': '+card.effect.amount:card.effect?.type==='science_choice'?'Wybierz jeden symbol nauki: '+card.effect.options.join(', '):card.effect?.type==='coins_and_points_per_card'?'Za każdą własną kartę '+colors[card.effect.card_color]+': '+card.effect.coins+' monet i '+card.effect.points+' punktów':card.effect?.type==='coins_per_card'?'Monety za każdą kartę '+card.effect.card_color+' u siebie i obu sąsiadów: '+card.effect.amount:card.effect?.type==='trade'?'Handel z sąsiadem: '+card.effect.direction+', cena '+card.effect.price:card.effect?.type==='coin'?'Monety: '+card.effect.amount:card.effect?.type==='science'?'Nauka: '+card.effect.symbol:card.effect?.type==='points'?'Punkty zwycięstwa: '+card.effect.amount:card.effect?.type==='war'?'Siła militarna: '+(card.effect.amount || 1):'Efekt karty: '+effectGroups(card).map(group=>group.map(r=>resourceNames[r]).join(' i ')).join(' albo '));
   effectLayout(card).forEach(item=>{
  let token;
  if(item.type==='card_count_panel'){
@@ -167,10 +188,10 @@ function makeCard(card) {
  const texture=document.createElement('img');texture.src='assets/cards/template/card-top.png';texture.alt='';if(item.color==='grey')applyCardColor(texture,'grey');token.append(texture);
  } else if(item.type==='arrow'){
  token=document.createElement('span');token.className='trade-arrow';
- const icon=document.createElement('img');icon.src='assets/cards/icons/arrow-'+item.direction+'.png';icon.alt='Handel: '+item.direction;token.append(icon);
- } else if(item.type==='science'){
+ const icon=document.createElement('img');icon.src='assets/cards/icons/arrow-'+item.direction+'.png';icon.alt='Handel: '+item.direction;if(card.color==='purple')icon.style.filter='sepia(1) saturate(3) hue-rotate(220deg)';token.append(icon);
+ } else if(item.type==='science'||item.type==='pyramid'){
  token=document.createElement('span');token.className='science-effect';
- const icon=document.createElement('img');icon.src='assets/cards/science/'+item.symbol+'.png';icon.alt='Nauka: '+item.symbol;token.append(icon);
+ const icon=document.createElement('img');icon.src='assets/cards/'+(item.type==='pyramid'?'icons/':'science/')+item.symbol+'.png';icon.alt=item.type==='pyramid'?'Piramida':'Nauka: '+item.symbol;token.append(icon);
  } else if(item.type==='points'||item.type==='coin'){
  token=document.createElement('span');token.className='points-effect';
  const icon=document.createElement('img');icon.src=item.type==='coin'?'assets/cards/resources/coin.png':'assets/cards/icons/points.png';icon.alt='';
@@ -241,20 +262,20 @@ async function downloadCard(){
     for(const [src,x,y,w,h] of [[selectedCard.artwork,0,473,1092,1154],['assets/cards/template/card-top.png',0,0,1092,473],['assets/cards/template/card-name-banner.png',146,81,800,87]]){
       ctx.save();
       const isTemplate = src.endsWith('card-top.png') || src.endsWith('card-cost-strip.png');
-      if (isTemplate && !['red','grey','gray','green','yellow'].includes(selectedCard.color)) ctx.filter = colorFilters[selectedCard.color] || 'none';
+      if (isTemplate && !['red','grey','gray','green','yellow','purple'].includes(selectedCard.color)) ctx.filter = colorFilters[selectedCard.color] || 'none';
       ctx.drawImage(await loadImage(isTemplate ? await cardSpriteSource(src,selectedCard.color) : src),x,y,w,h);ctx.restore();
     }
     const rowCount = costEntries(selectedCard).length;
     if (rowCount) {
       const strip = await loadImage(await cardSpriteSource('assets/cards/template/card-cost-strip.png',selectedCard.color));
       const height = 210 + (rowCount - 1) * 130;
-      ctx.save();ctx.filter = ['red','grey','gray','green','yellow'].includes(selectedCard.color) ? 'none' : (colorFilters[selectedCard.color] || 'none');
+      ctx.save();ctx.filter = ['red','grey','gray','green','yellow','purple'].includes(selectedCard.color) ? 'none' : (colorFilters[selectedCard.color] || 'none');
       ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowOffsetX=6;ctx.shadowOffsetY=9;ctx.shadowBlur=12;ctx.drawImage(strip,0,Math.max(0,1012-height),150,Math.min(height,1012),71,473,150,height);ctx.restore();
     }
     if (selectedCard.connection_cost?.length) {
       const strip=await loadImage(await cardSpriteSource('assets/cards/template/card-cost-strip.png',selectedCard.color));
       const height=selectedCard.connection_cost.length*170+70;
-      ctx.save();ctx.filter=['red','grey','gray','green','yellow'].includes(selectedCard.color)?'none':(colorFilters[selectedCard.color]||'none');ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowOffsetX=6;ctx.shadowOffsetY=9;ctx.shadowBlur=12;ctx.drawImage(strip,0,1012-height,150,height,247,473,150,height);ctx.restore();
+      ctx.save();ctx.filter=['red','grey','gray','green','yellow','purple'].includes(selectedCard.color)?'none':(colorFilters[selectedCard.color]||'none');ctx.shadowColor='rgba(0,0,0,.95)';ctx.shadowOffsetX=6;ctx.shadowOffsetY=9;ctx.shadowBlur=12;ctx.drawImage(strip,0,1012-height,150,height,247,473,150,height);ctx.restore();
       for(const [index,connection] of selectedCard.connection_cost.entries()) {
         const icon=await loadImage('assets/cards/connections/'+connection+'.png'),size=130,scale=Math.min(size/icon.width,size/icon.height);
         ctx.save();ctx.shadowColor='rgba(0,0,0,.78)';ctx.shadowOffsetX=6;ctx.shadowOffsetY=9;ctx.shadowBlur=12;ctx.drawImage(icon,257+(size-icon.width*scale)/2,493+index*170+(size-icon.height*scale)/2,icon.width*scale,icon.height*scale);ctx.restore();
@@ -268,16 +289,16 @@ async function downloadCard(){
  try {
  const {x,y,width,height}=item;
  if(item.type==='card_count_panel'){
- ctx.save();ctx.beginPath();ctx.roundRect(x,y,width,height,18);ctx.fillStyle='#fff';ctx.fill();ctx.clip();ctx.filter=['red','grey','gray','green','yellow'].includes(item.color)?'none':(colorFilters[item.color]||'none');ctx.drawImage(await loadImage(await cardSpriteSource('assets/cards/template/card-top.png',item.color)),x+9,y+9,width-18,height-18,x+9,y+9,width-18,height-18);ctx.restore();continue;
+ ctx.save();ctx.beginPath();ctx.roundRect(x,y,width,height,18);ctx.fillStyle='#fff';ctx.fill();ctx.clip();ctx.filter=['red','grey','gray','green','yellow','purple'].includes(item.color)?'none':(colorFilters[item.color]||'none');ctx.drawImage(await loadImage(await cardSpriteSource('assets/cards/template/card-top.png',item.color)),x+9,y+9,width-18,height-18,x+9,y+9,width-18,height-18);ctx.restore();continue;
  }
  if(item.type==='trade_panel'){
  ctx.save();ctx.beginPath();ctx.roundRect(x,y,width,height,height/2);ctx.clip();ctx.filter=item.color==='grey'?'none':colorFilters.brown;ctx.drawImage(await loadImage(await cardSpriteSource('assets/cards/template/card-top.png',item.color)),0,170,1092,245,x,y,width,height);ctx.restore();continue;
  }
  if(item.type==='arrow'){
- ctx.save();ctx.filter='sepia(1) saturate(3) brightness(1.1)';ctx.drawImage(await loadImage('assets/cards/icons/arrow-'+item.direction+'.png'),x,y,width,height);ctx.restore();continue;
+ ctx.save();ctx.filter=selectedCard.color==='purple'?'sepia(1) saturate(3) hue-rotate(220deg)':'sepia(1) saturate(3) brightness(1.1)';ctx.drawImage(await loadImage('assets/cards/icons/arrow-'+item.direction+'.png'),x,y,width,height);ctx.restore();continue;
  }
- if(item.type==='science'){
- const icon=await loadImage('assets/cards/science/'+item.symbol+'.png');const scale=Math.min(width/icon.width,height/icon.height);ctx.drawImage(icon,x+(width-icon.width*scale)/2,y+(height-icon.height*scale)/2,icon.width*scale,icon.height*scale);continue;
+ if(item.type==='science'||item.type==='pyramid'){
+ const icon=await loadImage('assets/cards/'+(item.type==='pyramid'?'icons/':'science/')+item.symbol+'.png');const scale=Math.min(width/icon.width,height/icon.height);ctx.drawImage(icon,x+(width-icon.width*scale)/2,y+(height-icon.height*scale)/2,icon.width*scale,icon.height*scale);continue;
  }
  if(item.type==='points'||item.type==='coin'){
  const icon=await loadImage(item.type==='coin'?'assets/cards/resources/coin.png':'assets/cards/icons/points.png');const scale=Math.min(width/icon.width,height/icon.height);ctx.drawImage(icon,x+(width-icon.width*scale)/2,y+(height-icon.height*scale)/2,icon.width*scale,icon.height*scale);
@@ -363,8 +384,9 @@ async function initializeGallery() {
     const data = await response.json();
     if (!Array.isArray(data)) throw new Error('cards.json musi zawierać tablicę kart.');
     cards = data;
-    renderFilters();
-    render();
+    if (document.body.classList.contains('atlas-page')) {
+      document.dispatchEvent(new CustomEvent('cards-ready', {detail: cards}));
+    } else { renderFilters(); render(); }
   } catch (error) {
     console.error(error);
     document.querySelector('#card-count').textContent = '00';

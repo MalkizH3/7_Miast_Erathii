@@ -2782,5 +2782,256 @@
     ],
     "players": 4,
     "artwork": "assets/cards/artwork/week3/yellow/stocznia.png"
+  },
+  {
+    "id": "137",
+    "name": "todo1",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_pyramid",
+      "target": "stage",
+      "coins": 3,
+      "points": 1,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "ore": 1
+    },
+    "connection_cost": [
+      "todo1"
+    ],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/yellow/todo1.png"
+  },
+  {
+    "id": "138",
+    "name": "Magazyn zasobów",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "points_per_card",
+      "card_colors": [
+        "brown"
+      ],
+      "amount": 1,
+      "scope": "neighbors"
+    },
+    "connections": [],
+    "cost": {
+      "ore": 2,
+      "wood": 1,
+      "mercury": 1,
+      "sulfur": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/magazyn_zasobow.png"
+  },
+  {
+    "id": "139",
+    "name": "Magiczny staw",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "points_per_card",
+      "card_colors": [
+        "grey"
+      ],
+      "amount": 2,
+      "scope": "neighbors"
+    },
+    "connections": [],
+    "cost": {
+      "ore": 2,
+      "mercury": 2
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/magiczny_staw.png"
+  },
+  {
+    "id": "140",
+    "name": "Pomnik wodza",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "points_per_card",
+      "card_colors": [
+        "blue"
+      ],
+      "amount": 1,
+      "scope": "neighbors"
+    },
+    "connections": [],
+    "cost": {
+      "wood": 3,
+      "mercury": 1,
+      "crystal": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/pomnik_wodza.png"
+  },
+  {
+    "id": "141",
+    "name": "Kapitol",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "points_per_card",
+      "card_colors": [
+        "yellow"
+      ],
+      "amount": 1,
+      "scope": "neighbors"
+    },
+    "connections": [],
+    "cost": {
+      "gems": 1,
+      "crystal": 1,
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/kapitol.png"
+  },
+  {
+    "id": "142",
+    "name": "Akademia wojny",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "points_per_card",
+      "card_colors": [
+        "red"
+      ],
+      "amount": 1,
+      "scope": "neighbors"
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "gems": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/akademia_wojny.png"
+  },
+  {
+    "id": "143",
+    "name": "Gildia magów",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "points_per_card",
+      "card_colors": [
+        "green"
+      ],
+      "amount": 1,
+      "scope": "neighbors"
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 3,
+      "gold": 1,
+      "crystal": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/gildia_magow.png"
+  },
+  {
+    "id": "144",
+    "name": "Biblioteka oświecenia",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "science_choice",
+      "options": [
+        "sorcery",
+        "inteligence",
+        "wisdom"
+      ],
+      "amount": 1
+    },
+    "connections": [],
+    "cost": {
+      "wood": 2,
+      "ore": 2,
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/bilbioteka_oswiecenia.png"
+  },
+  {
+    "id": "145",
+    "name": "Biblioteka",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "points_per_card",
+      "card_colors": [
+        "brown",
+        "grey",
+        "purple"
+      ],
+      "amount": 1,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "wood": 3,
+      "crystal": 1,
+      "gold": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/bilbioteka.png"
+  },
+  {
+    "id": "146",
+    "name": "todo2",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "points_per_pyramid",
+      "target": "stage",
+      "amount": 1,
+      "scope": "self_and_neighbors"
+    },
+    "connections": [],
+    "cost": {
+      "mercury": 3,
+      "sulfur": 2,
+      "gems": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/todo2.png"
+  },
+  {
+    "id": "147",
+    "name": "todo3",
+    "week": 3,
+    "color": "purple",
+    "effect": {
+      "type": "points_per_pyramid",
+      "target": "completed",
+      "amount": 7,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "ore": 2,
+      "mercury": 1,
+      "crystal": 1
+    },
+    "connection_cost": [],
+    "players": 3,
+    "artwork": "assets/cards/artwork/week3/purple/todo3.png"
   }
 ]
