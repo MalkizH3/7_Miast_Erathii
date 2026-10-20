@@ -1,0 +1,267 @@
+[
+  {
+    "id": "castle",
+    "name": "Zamek",
+    "base_resource": "gold",
+    "artwork": "assets/towns/artworks/castle.png",
+    "stages": [
+      {
+        "cost": {
+          "sulfur": 2
+        },
+        "effect": {
+          "type": "points",
+          "amount": 3
+        }
+      },
+      {
+        "cost": {
+          "wood": 2
+        },
+        "effect": {
+          "type": "coin",
+          "amount": 9
+        }
+      },
+      {
+        "cost": {
+          "ore": 2,
+          "gems": 1
+        },
+        "effect": {
+          "type": "points",
+          "amount": 7
+        }
+      }
+    ]
+  },
+  {
+    "id": "rampart",
+    "name": "Bastion",
+    "base_resource": "crystal",
+    "artwork": "assets/towns/artworks/rampart.png",
+    "stages": [
+      {
+        "cost": {
+          "ore": 2
+        },
+        "effect": {
+          "type": "points",
+          "amount": 3
+        }
+      },
+      {
+        "cost": {
+          "gems": 1,
+          "gold": 1
+        },
+        "effect": null
+      },
+      {
+        "cost": {
+          "mercury": 3
+        },
+        "effect": {
+          "type": "points",
+          "amount": 7
+        }
+      }
+    ]
+  },
+  {
+    "id": "tower",
+    "name": "Forteca",
+    "base_resource": "gems",
+    "artwork": "assets/towns/artworks/tower.png",
+    "stages": [
+      {
+        "cost": {
+          "mercury": 2
+        },
+        "effect": {
+          "type": "points",
+          "amount": 3
+        }
+      },
+      {
+        "cost": {
+          "ore": 2
+        },
+        "effect": {
+          "type": "resource_choice",
+          "options": [
+            {
+              "wood": 1
+            },
+            {
+              "mercury": 1
+            },
+            {
+              "ore": 1
+            },
+            {
+              "sulfur": 1
+            }
+          ]
+        }
+      },
+      {
+        "cost": {
+          "gold": 1,
+          "crystal": 1
+        },
+        "effect": {
+          "type": "points",
+          "amount": 7
+        }
+      }
+    ]
+  },
+  {
+    "id": "inferno",
+    "name": "Inferno",
+    "base_resource": "mercury",
+    "artwork": "assets/towns/artworks/inferno.png",
+    "stages": [
+      {
+        "cost": {
+          "wood": 2
+        },
+        "effect": {
+          "type": "points",
+          "amount": 3
+        }
+      },
+      {
+        "cost": {
+          "sulfur": 2,
+          "crystal": 1
+        },
+        "effect": {
+          "type": "points",
+          "amount": 5
+        }
+      },
+      {
+        "cost": {
+          "mercury": 4
+        },
+        "cost_columns": 2,
+        "effect": {
+          "type": "points",
+          "amount": 7
+        }
+      }
+    ]
+  },
+  {
+    "id": "necropolis",
+    "name": "Nekropolia",
+    "base_resource": "ore",
+    "artwork": "assets/towns/artworks/necropolis.png",
+    "stages": [
+      {
+        "cost": {
+          "wood": 2
+        },
+        "effect": {
+          "type": "points",
+          "amount": 3
+        }
+      },
+      {
+        "cost": {
+          "sulfur": 3
+        },
+        "effect": {
+          "type": "war",
+          "amount": 2
+        }
+      },
+      {
+        "cost": {
+          "ore": 4
+        },
+        "cost_columns": 2,
+        "effect": {
+          "type": "points",
+          "amount": 7
+        }
+      }
+    ]
+  },
+  {
+    "id": "dungeon",
+    "name": "Loch",
+    "base_resource": "sulfur",
+    "artwork": "assets/towns/artworks/dungeon.png",
+    "stages": [
+      {
+        "cost": {
+          "mercury": 2
+        },
+        "effect": {
+          "type": "points",
+          "amount": 3
+        }
+      },
+      {
+        "cost": {
+          "wood": 2
+        },
+        "effect": null
+      },
+      {
+        "cost": {
+          "sulfur": 3
+        },
+        "effect": {
+          "type": "points",
+          "amount": 7
+        }
+      }
+    ]
+  },
+  {
+    "id": "stronghold",
+    "name": "Twierdza",
+    "base_resource": "wood",
+    "artwork": "assets/towns/artworks/stronghold.png",
+    "stages": [
+      {
+        "cost": {
+          "sulfur": 2
+        },
+        "effect": {
+          "type": "points",
+          "amount": 3
+        }
+      },
+      {
+        "cost": {
+          "ore": 2,
+          "crystal": 1
+        },
+        "effect": {
+          "type": "science_choice",
+          "options": [
+            "sorcery",
+            "inteligence",
+            "wisdom"
+          ],
+          "amount": 1
+        }
+      },
+      {
+        "cost": {
+          "wood": 4
+        },
+        "cost_columns": 2,
+        "effect": {
+          "type": "points",
+          "amount": 7
+        }
+      }
+    ]
+  }
+]

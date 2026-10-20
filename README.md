@@ -26,6 +26,14 @@ Obręcz efektu: `assets/cards/template/card-effect-ring.png` (220 × 220 px). Ef
 
 Efekt resource_choice zawiera options, np. [{"mercury":1},{"sulfur":1}]: rtęć albo siarka. Efekt resources zawiera resources i oznacza wszystkie podane surowce razem. Sprite ukośnika: assets/cards/template/effect-choice-slash.png; do czasu dodania oryginalnego PNG wyświetla się zastępczy symbol.
 
+## Galeria plansz
+
+Panel bazowego surowca jest nakładany na ilustrację w galerii i powiększeniu. `wood`, `ore`, `mercury` i `sulfur` mają brązowy panel z zaokrąglonym dołem; `gold`, `crystal` i `gems` — szary panel ze ściętymi narożnikami. Panel pojawia się po ustawieniu `base_resource`; `null` go ukrywa. Zamek ma `wood`, zgodnie z referencją.
+
+`boards.json` jest źródłem danych galerii plansz. Każda plansza zawiera `id`, `name`, `base_resource` (np. `"wood"`), `artwork` i uporządkowaną tablicę `stages`. Każdy etap ma `cost` (np. `{ "wood": 2, "ore": 1 }`) oraz `effect` w formacie efektów kart (np. `{ "type": "points", "amount": 3 }`). `null` oznacza wartość jeszcze nieustaloną, a pusty koszt `{}` oznacza etap darmowy. Wstępnie przygotowano po trzy etapy do uzupełnienia; liczbę etapów można zmienić w tablicy. Bazowe surowce, koszty i efekty pozostają nieustalone.
+
+`towns.html` — galeria siedmiu plansz miast: Zamek, Bastion, Forteca, Inferno, Nekropolia, Loch i Twierdza. Na początek plansze pokazują pełne ilustracje z `assets/towns/artworks/`; kliknięcie otwiera powiększony podgląd. Obsługę podglądu zawiera `towns.js`, a wygląd jest wspólny z galerią kart w `styles.css`.
+
 ## Atlas kart
 
 `atlas.html` — interaktywny wykaz kart z podziałem na trzy epoki i graf łańcuchów budowy. Najazd lub fokus pokazuje pełną kartę, kliknięcie otwiera powiększenie. Licznik w prawym dolnym rogu kafelka podaje liczbę kopii dla wybranej liczby graczy. Graf łączy symbole `connections` z `connection_cost` w późniejszych epokach. Dane pochodzą z `cards.json`.
