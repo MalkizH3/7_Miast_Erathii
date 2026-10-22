@@ -403,6 +403,8 @@ export function boardSurface(board) {
   surface.className = 'board-surface';
   const artwork = document.createElement('img');
   artwork.className = 'board-artwork';
+  artwork.width = 6400;
+  artwork.height = 2992;
   artwork.src = board.artwork;
   artwork.alt = 'Plansza miasta ' + board.name;
   surface.append(artwork);

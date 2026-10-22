@@ -1,3 +1,4 @@
+import {onlineTableUpdate} from './online-table-update.js';
 import {renderResults} from './game-results.js';
 import {describeCard as describeCardDetails} from './card-description.js';
 import {createWarAnimation} from './war-animation.js';
@@ -22,7 +23,7 @@ const handTransfer=createHandTransfer(root);
 const buildMorph=createBuildMorph(root);
 const gameSounds=createGameSounds(root);
 const stageTransfer=createStageTransfer(root);
-const warAnimation=createWarAnimation(root,{beforeBattle:signal=>gameSounds.playBattle(signal),onMeeting:()=>gameSounds.playWarMeeting(),onFinish:()=>table()});
+const warAnimation=createWarAnimation(root,{beforeBattle:signal=>gameSounds.playBattle(signal),onMeeting:()=>gameSounds.playWarMeeting(),onFinish:()=>table(true)});
 let connectionFailed=false;
 let online=null,submittedTurn=null,hostMovesUnsub=null;
 let cards,boards,game=null,hand=null,room=null,roomId=null,user=null,api=null,unsubs=[],busy=false,local=false;
@@ -166,18 +167,42 @@ window.addEventListener('resize',()=>{
  const circle=root.querySelector('.town-circle');if(!circle)return;
  circle.style.minWidth='';root.querySelectorAll('.town-seat').forEach(fitTownBonuses);fitTownRing(circle);
 });
-function table(){
+let renderedOnlineTableKey=null;
+function updatePickStatus(instruction,disabled){
+ const label=root.querySelector('.turn-instruction');if(label)label.textContent=instruction;
+ root.querySelectorAll('[data-pick],[data-bonus]').forEach(button=>{button.disabled=disabled||button.dataset.unavailable==='true';});
+}
+function updateReadyBoards(g,ownIndex){
+ root.querySelectorAll('.town-seat').forEach(seat=>{
+  const index=Number(seat.dataset.playerIndex);
+  const synced=hand?.week===g.week&&hand?.round===g.round&&hand?.phase===g.status;
+  const ready=g.status==='playing'&&(local?!!g.picks[index]:g.picked?.includes(index)||(index===ownIndex&&(submittedTurn===g.turn||(synced&&hand?.picked))));
+  seat.classList.toggle('turn-ready',!!ready);
+ });
+}
+function table(force=false){
  document.dispatchEvent(new CustomEvent('game-player-count',{detail:(local?game:room).players.length}));
- townLayoutObserver?.disconnect();cancelAnimationFrame(townLayoutFrame);
- hideCardTip();
  const g=local?game:room,i=local?0:g.members.indexOf(user.uid),p=g.players[i];if(!p?.board)return;
  const synced=local||(hand?.week===g.week&&hand?.round===g.round&&hand?.phase===g.status);
- const h=local?g.hands[i]:synced?hand?.cards||[]:[],picked=local?!!g.picks[i]:!!hand?.picked||submittedTurn===g.turn;
+ const h=local?g.hands[i]:synced?hand?.cards||[]:[],picked=local?!!g.picks[i]:!!hand?.picked||g.picked?.includes(i)||submittedTurn===g.turn;
  const enteringTable=!document.body.classList.contains('table-active');
  document.body.classList.add('table-active');root.classList.add('playing-table');
  if(enteringTable)window.scrollTo({top:0});
  status.textContent=local?'Partia testowa':'Połączono';
  const instruction=!synced?'Synchronizowanie ręki…':picked?'Wybór potwierdzony. Czekamy na pozostałych graczy.':'Najedź na kartę i wybierz swój ruch.';
+ if(!local){
+  updateReadyBoards(g,i);
+  const update=onlineTableUpdate(g,hand,renderedOnlineTableKey,!!root.querySelector('.town-circle'),roomId);
+  if(update.kind==='waiting'){
+   updatePickStatus('Synchronizowanie ręki…',true);return;
+  }
+  if(update.kind==='status'&&!force){
+   updatePickStatus(instruction,picked||!synced);return;
+  }
+  renderedOnlineTableKey=update.key;
+ }
+ townLayoutObserver?.disconnect();cancelAnimationFrame(townLayoutFrame);
+ hideCardTip();
  root.innerHTML=`<div class="table-status"><div><p class="eyebrow">TYDZIEŃ ${g.week} · TURA ${g.round}/6</p><h3>${g.status==='finished'?'Koniec rozgrywki':g.status==='discard_choice'?'Darmowa budowa':'Wybierz kartę do zagrania'}</h3></div><div class="table-status-actions"><span>${esc(p.name)} · ${esc(p.board.name)}</span>${local?button('Zapisz i wróć','home'):''}</div></div>${g.status==='finished'?results(g):g.status==='discard_choice'?discardPanel(g,i,synced):`<section class="hand-zone" aria-label="Twoje karty"><p class="turn-instruction" role="status">${instruction}</p><div class="table-hand"></div></section>`}<section class="town-circle-section" aria-label="Plansze graczy"><div class="table-direction">Przekazywanie kart <strong class="pass-direction-symbol${g.week===2?' reverse':''}" role="img" aria-label="${g.week===2?'Przeciwnie do ruchu wskazówek zegara':'Zgodnie z ruchem wskazówek zegara'}"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M38 16a17 17 0 1 0 2 15"/><path d="M28 16h10V6"/></svg></strong></div><div class="town-circle" style="--seat-count:${g.players.length};--circle-height:${g.players.length<=4?'900px':'1240px'}"><div class="circle-center"><span>✦</span><p>7 MIAST ERATHII</p><small>${g.players.length} graczy · tydzień ${g.week}</small></div></div></section>`;
  const row=root.querySelector('.table-hand');
  const freeBuild=g.status==='discard_choice';
@@ -235,6 +260,7 @@ function table(){
   circle.append(seat);
   fitTownBonuses(seat);
  });
+ updateReadyBoards(g,i);
  watchTownLayout(circle);
  warAnimation.update(g,i);
  gameSounds.update(p,local?game:roomId,g.week,g.round,warAnimation.running);
@@ -250,7 +276,7 @@ function discardPanel(g,i,synced){
 }
 function localBonuses(){while(game.status==='discard_choice'&&game.pendingDiscard[0]!==0){const i=game.pendingDiscard[0];selectDiscard(game,cards,i,discardOptions(game,i)[0]?.id??null);}}
 async function pickDiscard(cardId){if(cardId!==null)buildMorph.select(cardId,'build');if(local){selectDiscard(game,cards,0,cardId);localBonuses();save();table();}else await call('discard_bonus',{choice:{cardId}});}
-function pickButton(c,action,text,plans,disabled){return `<button class="game-action" data-pick="${c.id}" data-kind="${action}" ${disabled||!plans.length?'disabled':''}>${text}${action!=='discard'&&plans.length&&(plans[0].bank+plans[0].left+plans[0].right)>0?` · ${plans[0].bank+plans[0].left+plans[0].right} monet`:''}</button>`;}
+function pickButton(c,action,text,plans,disabled){return `<button class="game-action" data-pick="${c.id}" data-kind="${action}" data-unavailable="${!plans.length}" ${disabled||!plans.length?'disabled':''}>${text}${action!=='discard'&&plans.length&&(plans[0].bank+plans[0].left+plans[0].right)>0?` · ${plans[0].bank+plans[0].left+plans[0].right} monet`:''}</button>`;}
 function results(g){return renderResults(g,score);}
 function save(){try{localStorage.setItem('erathia-practice-v2',JSON.stringify(game));localSave=game;}catch{tell('Przeglądarka nie pozwala zapisać partii lokalnej.');}}
 function bot(i){const h=game.hands[i];for(const c of h){const plans=payments(game,i,c);if(plans.length)return {cardId:c.id,action:'build',...plans[0]};}return {cardId:h[0].id,action:'discard',left:0,right:0};}
@@ -281,7 +307,7 @@ root.addEventListener('click',async e=>{if(warAnimation.running&&e.target.closes
  if(b.dataset.bonus){await pickDiscard(b.dataset.bonus==='skip'?null:b.dataset.bonus);return;}
  if(b.dataset.pick){await pick(b.dataset.pick,b.dataset.kind);return;}
  switch(b.dataset.action){case 'retry-assets':await initialize();break;case 'practice':{const setup=await choosePractice();if(!setup)break;const nextGame=createGame(cards,boards,['Ty',...Array.from({length:setup.bots},(_,i)=>`Komputer ${i+1}`)],setup.town);local=true;stopWatching();game=nextGame;save();table();break;}case 'resume':local=true;stopWatching();game=structuredClone(localSave);table();break;case 'home':local=false;home();break;case 'login':await api.signInWithPopup(api.auth,new api.GoogleAuthProvider());break;case 'logout':await api.signOut(api.auth);break;case 'create':{const r=await call('create');const url=new URL(location.href);url.searchParams.set('room',r.roomId);history.replaceState(null,'',url);await watch(r.roomId);break;}case 'start':await call('start');break;case 'copy':await navigator.clipboard.writeText(document.querySelector('#invite-link').value);tell('Skopiowano link zaproszenia.');break;case 'leave':await call('leave');stopWatching();room=null;roomId=null;history.replaceState(null,'',location.pathname);home();break;}
- }catch(e){tell(e);}finally{busy=false;if(b.isConnected)b.disabled=false;}});
+ }catch(e){tell(e);}finally{busy=false;if(b.isConnected){b.disabled=false;if(!local&&(b.dataset.pick||b.dataset.bonus))table();}}});
 async function connect(){
  const version='11.10.0',base=`https://www.gstatic.com/firebasejs/${version}/`;
  const [app,auth,store]=await Promise.all(['app','auth','firestore'].map(n=>import(base+`firebase-${n}.js`)));
@@ -313,4 +339,3 @@ async function initialize(){
  if(firebaseConfigured){try{await connect();}catch(error){connectionFailed=true;home();tell(error);}}
 }
 await initialize();
-
