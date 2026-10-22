@@ -9,3 +9,4 @@ import './online-table-update.test.mjs';
 import './session-navigation.test.mjs';
 import './results-reveal.test.mjs';
 import './card-description.test.mjs';
+import './atlas-colors.test.mjs';

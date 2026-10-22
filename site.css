@@ -68,7 +68,7 @@ body.table-active main{width:calc(100% - 32px);max-width:1700px}.table-active .h
 /* Żółte bonusy zaczynają się dokładnie na lewej krawędzi planszy. */
 .town-yellow-bonuses{left:0;right:0;padding-left:0}
 
-/* Nauka z prawej strony planszy, punkty cywilne w rzędzie ponad nią. */
+/* Magia z prawej strony planszy, punkty cywilne w rzędzie ponad nią. */
 .town-green-bonuses,.town-blue-bonuses{position:absolute;right:0;left:25%;z-index:5;display:flex;flex-wrap:wrap-reverse;justify-content:flex-end;align-items:flex-end;gap:3px;padding:10px 0 10px 10px;pointer-events:none}
 .town-green-bonuses{bottom:29%}.town-blue-bonuses{bottom:calc(29% + 48px)}
 .town-green-bonuses:empty,.town-blue-bonuses:empty{display:none}

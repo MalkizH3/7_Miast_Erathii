@@ -1,3 +1,4 @@
+const magicSymbolNames={sorcery:'talent',inteligence:'inteligencja',wisdom:'mądrość'};
 function resourceList(resources) {
  return Object.entries(resources || {}).flatMap(([resource, amount]) => Object.hasOwn(resourceNames, resource) && Number.isInteger(amount) && amount > 0 ? Array(Math.min(amount,20)).fill(resource) : []);
 }
@@ -107,9 +108,25 @@ function cardSpriteSource(source, color) {
   })());
   return coloredSpriteCache.get(key);
 }
+const pendingCardColors = new WeakMap();
+function cloneColoredSurface(surface){
+ const clone=surface.cloneNode(true),originals=surface.querySelectorAll('img'),copies=clone.querySelectorAll('img');
+ originals.forEach((image,index)=>{
+  const pending=pendingCardColors.get(image);
+  if(pending){
+   pendingCardColors.set(copies[index],pending);
+   pending.then(source=>{copies[index].src=source;}).catch(console.error);
+  }
+ });
+ return clone;
+}
 function applyCardColor(image, color) {
-  image.style.filter=['red','grey','gray','green','yellow','purple'].includes(color)?'none':(colorFilters[color] || 'none');
-  if(['red','grey','gray','green','yellow','purple'].includes(color))cardSpriteSource(image.getAttribute('src'),color).then(source=>{image.src=source;}).catch(console.error);
+ image.style.filter=['red','grey','gray','green','yellow','purple'].includes(color)?'none':(colorFilters[color] || 'none');
+ if(['red','grey','gray','green','yellow','purple'].includes(color)){
+  const pending=cardSpriteSource(image.getAttribute('src'),color);
+  pendingCardColors.set(image,pending);
+  pending.then(source=>{image.src=source;}).catch(console.error);
+ }
 }
 function costEntries(card) { return Object.entries(card.cost || {}).flatMap(([resource,amount]) => Number.isInteger(amount) && amount > 0 ? Array(Math.min(amount,20)).fill([resource,1]) : []); }
 function resourceFile(resource) { return resource; }
@@ -177,7 +194,7 @@ function makeCard(card) {
   article.querySelector('.card-number').textContent = card.id;
   const effects = article.querySelector('.card-effects');
   effects.replaceChildren();
-  effects.setAttribute('aria-label',card.effect?.type==='coins_and_points_per_pyramid'?'Za każdy własny etap piramidy: '+card.effect.coins+' monet i '+card.effect.points+' punktów':card.effect?.type==='points_per_pyramid'?card.effect.amount+' punktów za '+(card.effect.target==='stage'?'każdy etap piramid':'każdą ukończoną piramidę')+' '+(card.effect.scope==='self_and_neighbors'?'u siebie i obu sąsiadów':card.effect.scope==='neighbors'?'u obu sąsiadów':'u siebie'):card.effect?.type==='points_per_card'?'Punkty za każdą kartę ('+card.effect.card_colors.map(c=>colors[c]).join(', ')+') '+(card.effect.scope==='neighbors'?'u obu sąsiadów':'u siebie')+': '+card.effect.amount:card.effect?.type==='science_choice'?'Wybierz jeden symbol nauki: '+card.effect.options.join(', '):card.effect?.type==='coins_and_points_per_card'?'Za każdą własną kartę '+colors[card.effect.card_color]+': '+card.effect.coins+' monet i '+card.effect.points+' punktów':card.effect?.type==='coins_per_card'?'Monety za każdą kartę '+card.effect.card_color+' u siebie i obu sąsiadów: '+card.effect.amount:card.effect?.type==='trade'?'Handel z sąsiadem: '+card.effect.direction+', cena '+card.effect.price:card.effect?.type==='coin'?'Monety: '+card.effect.amount:card.effect?.type==='science'?'Nauka: '+card.effect.symbol:card.effect?.type==='points'?'Punkty zwycięstwa: '+card.effect.amount:card.effect?.type==='war'?'Siła militarna: '+(card.effect.amount || 1):'Efekt karty: '+effectGroups(card).map(group=>group.map(r=>resourceNames[r]).join(' i ')).join(' albo '));
+  effects.setAttribute('aria-label',card.effect?.type==='coins_and_points_per_pyramid'?'Za każdy własny etap piramidy: '+card.effect.coins+' monet i '+card.effect.points+' punktów':card.effect?.type==='points_per_pyramid'?card.effect.amount+' punktów za '+(card.effect.target==='stage'?'każdy etap piramid':'każdą ukończoną piramidę')+' '+(card.effect.scope==='self_and_neighbors'?'u siebie i obu sąsiadów':card.effect.scope==='neighbors'?'u obu sąsiadów':'u siebie'):card.effect?.type==='points_per_card'?'Punkty za każdą kartę ('+card.effect.card_colors.map(c=>colors[c]).join(', ')+') '+(card.effect.scope==='neighbors'?'u obu sąsiadów':'u siebie')+': '+card.effect.amount:card.effect?.type==='science_choice'?'Wybierz jeden symbol magii: '+card.effect.options.map(symbol=>magicSymbolNames[symbol]||symbol).join(', '):card.effect?.type==='coins_and_points_per_card'?'Za każdą własną kartę '+colors[card.effect.card_color]+': '+card.effect.coins+' monet i '+card.effect.points+' punktów':card.effect?.type==='coins_per_card'?'Monety za każdą kartę '+card.effect.card_color+' u siebie i obu sąsiadów: '+card.effect.amount:card.effect?.type==='trade'?'Handel z sąsiadem: '+card.effect.direction+', cena '+card.effect.price:card.effect?.type==='coin'?'Monety: '+card.effect.amount:card.effect?.type==='science'?'Magia: '+(magicSymbolNames[card.effect.symbol]||card.effect.symbol):card.effect?.type==='points'?'Punkty zwycięstwa: '+card.effect.amount:card.effect?.type==='war'?'Siła militarna: '+(card.effect.amount || 1):'Efekt karty: '+effectGroups(card).map(group=>group.map(r=>resourceNames[r]).join(' i ')).join(' albo '));
   effectLayout(card).forEach(item=>{
  let token;
  if(item.type==='card_count_panel'){
@@ -191,7 +208,7 @@ function makeCard(card) {
  const icon=document.createElement('img');icon.src='assets/cards/icons/arrow-'+item.direction+'.png';icon.alt='Handel: '+item.direction;if(card.color==='purple')icon.style.filter='sepia(1) saturate(3) hue-rotate(220deg)';token.append(icon);
  } else if(item.type==='science'||item.type==='pyramid'){
  token=document.createElement('span');token.className='science-effect';
- const icon=document.createElement('img');icon.src='assets/cards/'+(item.type==='pyramid'?'icons/':'science/')+item.symbol+'.png';icon.alt=item.type==='pyramid'?'Piramida':'Nauka: '+item.symbol;token.append(icon);
+ const icon=document.createElement('img');icon.src='assets/cards/'+(item.type==='pyramid'?'icons/':'science/')+item.symbol+'.png';icon.alt=item.type==='pyramid'?'Piramida':'Magia: '+(magicSymbolNames[item.symbol]||item.symbol);token.append(icon);
  } else if(item.type==='points'||item.type==='coin'){
  token=document.createElement('span');token.className='points-effect';
  const icon=document.createElement('img');icon.src=item.type==='coin'?'assets/cards/resources/coin.png':'assets/cards/icons/points.png';icon.alt='';
@@ -216,7 +233,7 @@ function makeCard(card) {
  });
   article.querySelector('.card-button').addEventListener('click',()=>{
     selectedCard=card;
-    preview.replaceChildren(article.querySelector('.game-card').cloneNode(true));
+    preview.replaceChildren(cloneColoredSurface(article.querySelector('.game-card')));
     document.querySelector('#preview-title').textContent=card.name;
     document.querySelector('#download-status').textContent='';
     dialog.showModal();

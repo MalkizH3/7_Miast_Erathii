@@ -1,7 +1,7 @@
 const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const trophy='<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5h12v8a6 6 0 0 1-12 0V5ZM10 8H5v3a6 6 0 0 0 6 6M22 8h5v3a6 6 0 0 1-6 6M16 19v7M10 27h12"/></svg>';
 const guild='<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 12-6 12 6H4ZM7 13v11m6-11v11m6-11v11m6-11v11M4 27h24"/></svg>';
-const categories=[['buildings','Budowle i miasto','assets/cards/icons/pyramid.png'],['science','Nauka','assets/cards/science/wisdom.png'],['military','Wojna','assets/cards/icons/war.png'],['coins','Monety','assets/cards/resources/coin.png'],['guilds','Premie',null]];
+const categories=[['buildings','Budowle i miasto','assets/cards/icons/pyramid.png'],['science','Magia','assets/cards/science/wisdom.png'],['military','Wojna','assets/cards/icons/war.png'],['coins','Monety','assets/cards/resources/coin.png'],['guilds','Premie',null]];
 export function renderResults(g,scorePlayer){
  const ranked=g.players.map((p,i)=>({p,s:g.scores?.[i]??scorePlayer(g,i)})).sort((a,b)=>b.s.total-a.s.total||b.p.coins-a.p.coins);
  let place=1;

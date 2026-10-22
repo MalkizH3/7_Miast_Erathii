@@ -15,7 +15,7 @@ test('yellow mixed rewards and purple card categories use correct singular gramm
   assert.match(describeCard({effect:{type,coins:3,points:1,card_color:'yellow'}}),/3 monety natychmiast i 1 punkt/);
   assert.match(describeCard({effect:{type,coins:1,points:4,card_color:'yellow'}}),/1 monetę natychmiast i 4 punkty/);
  }
- assert.match(describeCard({effect:{type:'points_per_card',amount:1,card_colors:['brown','red']}}),/1 punkt za każdą kartę surowcową lub wojskową/);
+ assert.match(describeCard({effect:{type:'points_per_card',amount:1,card_colors:['brown','red']}}),/1 punkt za każdą kartę produkcyjną lub wojskową/);
  assert.match(describeCard({effect:{type:'coins_per_card',amount:2,card_color:'blue'}}),/2 monety za każdą kartę cywilną/);
 });
 test('every city stage has a readable description using the same grammar as cards',()=>{
@@ -25,4 +25,8 @@ test('every city stage has a readable description using the same grammar as card
   assert(description.length>10);
   assert.doesNotMatch(description,/do uzupełnienia|undefined|1 punktów|3 punktów|4 punktów/);
  }
+});
+
+test('completed city bonus explicitly requires all stages',()=>{
+ assert.equal(describeCard({effect:{type:'points_per_pyramid',target:'completed',amount:7}}),'Na koniec gry otrzymujesz 7 punktów za ukończenie wszystkich etapów swojego miasta.');
 });

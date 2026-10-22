@@ -1,7 +1,7 @@
 /* Atlas uses the gallery renderer so previews always match the collection. */
 (() => {
  const board=document.querySelector('#atlas-board'), peek=document.querySelector('#atlas-preview');
- const descriptions=import('./card-description.js');
+ const descriptions=Promise.all([import('./card-description.js'),import('./cost-row.js')]).then(([descriptions,cost])=>({...descriptions,...cost}));
  peek.setAttribute('role','tooltip');
  let previewVersion=0;
  const palette={brown:'#965b35',grey:'#8b918c',gray:'#8b918c',blue:'#2586a6',yellow:'#c99c29',red:'#a43d3d',green:'#50864b',purple:'#83609e'};
@@ -42,15 +42,15 @@
   }else{
   const version=++previewVersion;
   const full=makeCard(card).querySelector('.game-card');peek.replaceChildren(full);peek.hidden=false;
-  descriptions.then(({describeCard,describeCost})=>{
+  descriptions.then(({describeCard,createCostRow})=>{
    if(version!==previewVersion||peek.hidden)return;
    const copy=document.createElement('div');copy.className='atlas-card-description';
    const add=(tag,text)=>{const node=document.createElement(tag);node.textContent=text;copy.append(node);};
    add('h3',card.name);add('p','Tydzień '+card.week+' · Liczba kart: '+card.copies.length);
-   add('p',describeCard(card));add('h4','Koszt budowy');add('p',describeCost(card.cost));
+   add('p',describeCard(card));add('h4','Koszt budowy');copy.append(createCostRow(full.querySelector('.card-cost-list')));
    const previous=[...new Set(data.filter(c=>Number(c.week)<Number(card.week)&&(c.connections||[]).some(s=>(card.connection_cost||[]).includes(s))).map(c=>c.name))];
    const next=[...new Set(data.filter(c=>Number(c.week)>Number(card.week)&&(card.connections||[]).some(s=>(c.connection_cost||[]).includes(s))).map(c=>c.name))];
-   if(previous.length){add('h4','Darmowa budowa po');add('p',previous.join(', '));}
+   if(previous.length){add('h4','Darmowa budowa jeśli posiadasz:');add('p',previous.join(', '));}
    if(next.length){add('h4','Pozwala wybudować za darmo');add('p',next.join(', '));}
    peek.append(copy);
    const rect=button.getBoundingClientRect();
@@ -95,7 +95,7 @@
     const x=(week-1)*400+(view==='catalog'?slot.x:45), y=76+(view==='catalog'?slot.row:graphRow(c))*116;
     positions.set(c.key,{x,y});button.style.left=(x-(week-1)*400)+'px';button.style.top=y+'px';
     const name=document.createElement('span');name.className='node-name';name.textContent=c.name;
-    const mini=makeCard(c), game=mini.querySelector('.game-card');const effects=game.querySelector('.card-effects').cloneNode(true);
+    const mini=makeCard(c), game=mini.querySelector('.game-card');const effects=cloneColoredSurface(game.querySelector('.card-effects'));
     const symbol=document.createElement('span');symbol.className='node-symbol game-card';symbol.append(effects);
     // Fit the actual effect bounds, rather than scaling an entire card header.
     const layout=effectLayout(c);

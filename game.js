@@ -1,3 +1,4 @@
+import {createCostRow} from './cost-row.js';
 import {createResultsReveal} from './results-reveal.js';
 import {onlineTableUpdate} from './online-table-update.js';
 import {renderResults} from './game-results.js';
@@ -16,7 +17,7 @@ import {createOnlineClient} from './online-client.js';
 import {firebaseConfig,useFirebaseEmulators} from './firebase-config.js';
 const root=document.querySelector('#game-root'),status=document.querySelector('#connection'),message=document.querySelector('#game-message');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const labels={wood:'drewno',ore:'ruda',mercury:'rtęć',sulfur:'siarka',gold:'złoto',crystal:'kryształ',gems:'klejnoty',coin:'monety',sorcery:'moc',inteligence:'inteligencja',wisdom:'mądrość'};
+const labels={wood:'drewno',ore:'ruda',mercury:'rtęć',sulfur:'siarka',gold:'złoto',crystal:'kryształ',gems:'klejnoty',coin:'monety',sorcery:'talent',inteligence:'inteligencja',wisdom:'mądrość'};
 const list=o=>Object.entries(o||{}).map(([k,v])=>`${v} × ${labels[k]||k}`).join(', ')||'bez kosztu';
 const button=(text,action,primary=false)=>`<button class="game-action ${primary?'primary':''}" data-action="${action}">${text}</button>`;
 const firebaseConfigured=['apiKey','authDomain','projectId','appId'].every(k=>Boolean(firebaseConfig[k]));
@@ -31,7 +32,7 @@ let online=null,submittedTurn=null,hostMovesUnsub=null,onlineHome=false,watchGen
 let cards,boards,game=null,hand=null,room=null,roomId=null,user=null,api=null,unsubs=[],busy=false,local=false;
 let localSave;try{localSave=JSON.parse(localStorage.getItem('erathia-practice-v2'));}catch{}
 function tell(e){message.textContent=e?.message||String(e||'');}
-function effect(e){if(!e)return 'Efekt do uzupełnienia';switch(e.type){case 'discard_free':return 'Wybuduj za darmo kartę ze stosu odrzuconych';case 'color_free':return 'Pierwszy budynek każdego koloru jest darmowy';case 'resources':return list(e.resources);case 'resource_choice':return e.options.map(list).join(' albo ');case 'points':return `${e.amount} pkt`;case 'coin':return `${e.amount} monet`;case 'war':return `${e.amount} siły militarnej`;case 'science':return labels[e.symbol];case 'science_choice':return 'Wybrany symbol nauki';case 'trade':return `Handel za ${e.price} monetę (${e.direction==='left'?'lewy sąsiad':e.direction==='right'?'prawy sąsiad':'sąsiedzi'})`;default:return 'Premia za karty lub etapy miasta';}}
+function effect(e){if(!e)return 'Efekt do uzupełnienia';switch(e.type){case 'discard_free':return 'Wybuduj za darmo kartę ze stosu odrzuconych';case 'color_free':return 'Pierwszy budynek każdego koloru jest darmowy';case 'resources':return list(e.resources);case 'resource_choice':return e.options.map(list).join(' albo ');case 'points':return `${e.amount} pkt`;case 'coin':return `${e.amount} monet`;case 'war':return `${e.amount} siły militarnej`;case 'science':return labels[e.symbol];case 'science_choice':return 'Wybrany symbol magii';case 'trade':return `Handel za ${e.price} monetę (${e.direction==='left'?'lewy sąsiad':e.direction==='right'?'prawy sąsiad':'sąsiedzi'})`;default:return 'Premia za karty lub etapy miasta';}}
 function home(){
  resultsReveal.reset();
  townLayoutObserver?.disconnect();cancelAnimationFrame(townLayoutFrame);
@@ -97,19 +98,21 @@ function positionCardTip(){
 function showCardTip(c,anchor,ownerIndex){
  if(tipAnchor===anchor)return;hideCardTip();tipAnchor=anchor;
  cardTip=document.createElement('aside');cardTip.id='table-card-tooltip';cardTip.className='card-info-tooltip';cardTip.setAttribute('role','tooltip');
- const category={brown:'Budowla surowcowa',grey:'Produkcja dóbr',blue:'Budowla cywilna',red:'Budowla wojskowa',green:'Budowla naukowa',yellow:'Budowla handlowa',purple:'Gildia'};
+ const category={brown:'Budynek Produkcyjny',grey:'Budowla Alchemiczna',blue:'Budowla cywilna',red:'Budowla wojskowa',green:'Budowla Magiczna',yellow:'Budowla handlowa',purple:'Gildia'};
  const next=cards.filter(n=>Number(n.week)>Number(c.week)&&(n.connection_cost||[]).some(k=>(c.connections||[]).includes(k)));
  const unique=[...new Map(next.map(n=>[n.name,n])).values()];
  const previous=cards.filter(n=>(n.connections||[]).some(k=>(c.connection_cost||[]).includes(k)));
  const previousNames=[...new Set(previous.map(n=>n.name))];
- cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(c.name)}</h3><p class="card-info-category">${esc(category[c.color]||'Karta')} · tydzień ${c.week}</p><section><p>${esc(describeCard(c,ownerIndex))}</p></section><section><h4>Koszt budowy</h4><p>${esc(list(c.cost))}</p>${previousNames.length?`<p class="card-info-note">Darmowa budowa po: ${previousNames.map(esc).join(', ')}.</p>`:''}</section>${unique.length?`<section><h4>Pozwala wybudować za darmo</h4>${unique.map(n=>`<p class="card-chain-name">${esc(n.name)}</p><p class="card-info-note">${esc(describeCard(n,ownerIndex))}</p>`).join('')}</section>`:''}</div><div class="card-info-art"></div>`;
- cardTip.querySelector('.card-info-art').append(cardSurface(c));document.body.append(cardTip);positionCardTip();tipSizeObserver=new ResizeObserver(positionCardTip);tipSizeObserver.observe(cardTip);
+ cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(c.name)}</h3><p class="card-info-category">${esc(category[c.color]||'Karta')} · tydzień ${c.week}</p><section><p>${esc(describeCard(c,ownerIndex))}</p></section><section><h4>Koszt budowy</h4><div class="tooltip-cost-slot"></div>${previousNames.length?`<p class="card-info-note">Darmowa budowa jeśli posiadasz: ${previousNames.map(esc).join(', ')}.</p>`:''}</section>${unique.length?`<section><h4>Pozwala wybudować za darmo</h4>${unique.map(n=>`<p class="card-chain-name">${esc(n.name)}</p><p class="card-info-note">${esc(describeCard(n,ownerIndex))}</p>`).join('')}</section>`:''}</div><div class="card-info-art"></div>`;
+ const artwork=cardSurface(c);cardTip.querySelector('.tooltip-cost-slot').append(createCostRow(artwork.querySelector('.card-cost-list')));
+ cardTip.querySelector('.card-info-art').append(artwork);document.body.append(cardTip);positionCardTip();tipSizeObserver=new ResizeObserver(positionCardTip);tipSizeObserver.observe(cardTip);
 }
 function showStageTip(board,index,anchor,ownerIndex,built){
  if(tipAnchor===anchor)return;hideCardTip();tipAnchor=anchor;
  const stage=board.stages[index];
  cardTip=document.createElement('aside');cardTip.id='table-card-tooltip';cardTip.className='card-info-tooltip';cardTip.setAttribute('role','tooltip');
- cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(board.name)} · etap ${index+1}</h3><p class="card-info-category">${built?'Etap wybudowany':'Rozbudowa miasta'}</p><section><p>${esc(describeCard(stage,ownerIndex))}</p></section><section><h4>Koszt budowy</h4><p>${esc(list(stage.cost))}</p></section></div><div class="card-info-art stage-detail-art"></div>`;
+ cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(board.name)} · etap ${index+1}</h3><p class="card-info-category">${built?'Etap wybudowany':'Rozbudowa miasta'}</p><section><p>${esc(describeCard(stage,ownerIndex))}</p></section><section><h4>Koszt budowy</h4><div class="tooltip-cost-slot"></div></section></div><div class="card-info-art stage-detail-art"></div>`;
+ cardTip.querySelector('.tooltip-cost-slot').append(createCostRow(anchor.querySelector('.board-stage-cost')));
  const art=cardTip.querySelector('.stage-detail-art'),preview=boardSurface(board);
  const boardBounds=anchor.closest('.board-surface').getBoundingClientRect(),bounds=anchor.getBoundingClientRect();
  const scale=.8*boardBounds.width/bounds.width;

@@ -109,3 +109,13 @@
 
 /* Oryginalne ikony specjalnych zdolności Bastionu i Lochu. */
 .board-special-bonus>img{display:block;width:5.5cqw;height:5.5cqw;object-fit:contain}
+
+/* Oryginalne symbole paska kosztu w poziomym rzędzie pod opisem. */
+.card-cost-list.tooltip-cost-list{position:static;width:auto;display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:5px;margin:7px 0 12px;z-index:auto}
+.card-cost-list.tooltip-cost-list .cost-entry{width:30px;height:30px;min-width:30px;min-height:30px;flex:none;box-sizing:border-box;transform:none;filter:drop-shadow(0 2px 2px #0008)}
+.card-cost-list.tooltip-cost-list .cost-entry.framed-cost{border-width:3px}
+.card-cost-list.tooltip-cost-list .cost-entry.octagonal-cost{border:0;padding:0}
+.card-cost-list.tooltip-cost-list .cost-entry img{width:100%;height:100%;object-fit:contain}
+.card-cost-list.tooltip-cost-list .framed-cost img{width:92%;height:92%}
+.card-cost-list.tooltip-cost-list .octagonal-cost img{width:78%;height:78%}
+.tooltip-cost-list>strong{font-weight:700;color:#f0d59f}
