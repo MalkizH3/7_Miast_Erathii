@@ -25,18 +25,19 @@ const gameSounds=createGameSounds(root);
 const stageTransfer=createStageTransfer(root);
 const warAnimation=createWarAnimation(root,{beforeBattle:signal=>gameSounds.playBattle(signal),onMeeting:()=>gameSounds.playWarMeeting(),onFinish:()=>table(true)});
 let connectionFailed=false;
-let online=null,submittedTurn=null,hostMovesUnsub=null;
+let online=null,submittedTurn=null,hostMovesUnsub=null,onlineHome=false,watchGeneration=0;
 let cards,boards,game=null,hand=null,room=null,roomId=null,user=null,api=null,unsubs=[],busy=false,local=false;
 let localSave;try{localSave=JSON.parse(localStorage.getItem('erathia-practice-v2'));}catch{}
 function tell(e){message.textContent=e?.message||String(e||'');}
 function effect(e){if(!e)return 'Efekt do uzupełnienia';switch(e.type){case 'discard_free':return 'Wybuduj za darmo kartę ze stosu odrzuconych';case 'color_free':return 'Pierwszy budynek każdego koloru jest darmowy';case 'resources':return list(e.resources);case 'resource_choice':return e.options.map(list).join(' albo ');case 'points':return `${e.amount} pkt`;case 'coin':return `${e.amount} monet`;case 'war':return `${e.amount} siły militarnej`;case 'science':return labels[e.symbol];case 'science_choice':return 'Wybrany symbol nauki';case 'trade':return `Handel za ${e.price} monetę (${e.direction==='left'?'lewy sąsiad':e.direction==='right'?'prawy sąsiad':'sąsiedzi'})`;default:return 'Premia za karty lub etapy miasta';}}
 function home(){
+ townLayoutObserver?.disconnect();cancelAnimationFrame(townLayoutFrame);
  document.dispatchEvent(new CustomEvent('game-player-count',{detail:7}));
  handTransfer.reset();buildMorph.reset();stageTransfer.reset();warAnimation.reset();gameSounds.reset();
  hideCardTip();
  document.body.classList.remove("table-active");root.classList.remove("playing-table");
  status.textContent=api?(user?'Połączono':'Zaloguj się'):firebaseConfigured?(connectionFailed?'Połączenie niedostępne':'Łączenie…'):'Tryb lokalny dostępny';
- root.innerHTML=`<div><h3>Zaproś znajomych do Erathii</h3><p>Załóż prywatny stół, udostępnij link i rozwijaj swoje miasto. Wszyscy wybierają karty jednocześnie.</p>${!api?`<p>${firebaseConfigured?'Łączenie z usługą gry. W międzyczasie możesz rozegrać partię testową.':'Gra online czeka na podłączenie projektu Firebase. Możesz przetestować pełną partię lokalnie przeciw wybranej liczbie automatycznych graczy.'}</p>`:''}<div class="game-controls">${api?(user?button('Utwórz partię','create',true)+button('Wyloguj','logout'):button('Zaloguj przez Google','login',true)):''}${button('Rozegraj partię testową','practice',!api)}${localSave?button('Wznów partię testową','resume'):''}<a class="action" href="instrukcja.html">Jak grać ↗</a></div></div>`;
+ root.innerHTML=`<div><h3>Zaproś znajomych do Erathii</h3><p>Załóż prywatny stół, udostępnij link i rozwijaj swoje miasto. Wszyscy wybierają karty jednocześnie.</p>${!api?`<p>${firebaseConfigured?'Łączenie z usługą gry. W międzyczasie możesz rozegrać partię testową.':'Gra online czeka na podłączenie projektu Firebase. Możesz przetestować pełną partię lokalnie przeciw wybranej liczbie automatycznych graczy.'}</p>`:''}<div class="game-controls">${roomId&&room?button('Wróć do gry','return-game',true):api?(user?button('Utwórz partię','create',true)+button('Wyloguj','logout'):button('Zaloguj przez Google','login',true)):''}${!roomId?button('Rozegraj partię testową','practice',!api):''}${localSave&&!roomId?button('Wznów partię testową','resume'):''}<a class="action" href="instrukcja.html">Jak grać ↗</a></div></div>`;
 }
 function choosePractice(){return new Promise(resolve=>{
  const d=document.createElement('dialog');d.className='payment-dialog practice-dialog';d.setAttribute('aria-labelledby','practice-title');
@@ -47,7 +48,8 @@ function choosePractice(){return new Promise(resolve=>{
  d.querySelector('[data-cancel]').addEventListener('click',()=>finish(null));
  d.addEventListener('cancel',e=>{e.preventDefault();finish(null);});d.showModal();
 });}
-function lobby(){document.body.classList.remove('table-active');root.classList.remove('playing-table');status.textContent='Poczekalnia';const link=new URL(location.href);link.searchParams.set('room',roomId);link.hash='game-section';
+function lobby(){
+ if(onlineHome){home();return;}document.body.classList.remove('table-active');root.classList.remove('playing-table');status.textContent='Poczekalnia';const link=new URL(location.href);link.searchParams.set('room',roomId);link.hash='game-section';
  root.innerHTML=`<h3>Twój stół · ${room.players.length}/7 graczy</h3><p>Do rozpoczęcia potrzeba przynajmniej 3 osób. Talia obsługuje 3–7 graczy. Miasta są losowane spośród siedmiu plansz. Gospodarz musi mieć otwartą stronę przez całą partię.</p><ol class="player-list">${room.players.map((p,i)=>`<li>${esc(p.name)}${room.members[i]===room.host?' · gospodarz':''}</li>`).join('')}</ol><label>Link zaproszenia<div class="game-controls"><input id="invite-link" readonly value="${esc(link.href)}" aria-label="Link zaproszenia">${button('Kopiuj link','copy')}</div></label><div class="game-controls">${room.host===user.uid?`<button class="game-action primary" data-action="start" ${room.players.length<3?'disabled':''}>Rozpocznij grę</button>`:''}${button('Opuść pokój','leave')}</div>`;
 }
 let cardTip=null,tipAnchor=null,tipSizeObserver=null;
@@ -180,6 +182,7 @@ function updateReadyBoards(g,ownIndex){
  });
 }
 function table(force=false){
+ if(!local&&onlineHome)return;
  document.dispatchEvent(new CustomEvent('game-player-count',{detail:(local?game:room).players.length}));
  const g=local?game:room,i=local?0:g.members.indexOf(user.uid),p=g.players[i];if(!p?.board)return;
  const synced=local||(hand?.week===g.week&&hand?.round===g.round&&hand?.phase===g.status);
@@ -202,7 +205,7 @@ function table(force=false){
  }
  townLayoutObserver?.disconnect();cancelAnimationFrame(townLayoutFrame);
  hideCardTip();
- root.innerHTML=`<div class="table-status"><div><p class="eyebrow">TYDZIEŃ ${g.week} · TURA ${g.round}/6</p><h3>${g.status==='finished'?'Koniec rozgrywki':g.status==='discard_choice'?'Darmowa budowa':'Wybierz kartę do zagrania'}</h3></div><div class="table-status-actions"><span>${esc(p.name)} · ${esc(p.board.name)}</span>${local?button('Zapisz i wróć','home'):''}</div></div>${g.status==='finished'?results(g):g.status==='discard_choice'?discardPanel(g,i,synced):`<section class="hand-zone" aria-label="Twoje karty"><p class="turn-instruction" role="status">${instruction}</p><div class="table-hand"></div></section>`}<section class="town-circle-section" aria-label="Plansze graczy"><div class="table-direction">Przekazywanie kart <strong class="pass-direction-symbol${g.week===2?' reverse':''}" role="img" aria-label="${g.week===2?'Przeciwnie do ruchu wskazówek zegara':'Zgodnie z ruchem wskazówek zegara'}"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M38 16a17 17 0 1 0 2 15"/><path d="M28 16h10V6"/></svg></strong></div><div class="town-circle" style="--seat-count:${g.players.length};--circle-height:${g.players.length<=4?'900px':'1240px'}"><div class="circle-center"><span>✦</span><p>7 MIAST ERATHII</p><small>${g.players.length} graczy · tydzień ${g.week}</small></div></div></section>`;
+ root.innerHTML=`<div class="table-status"><div><p class="eyebrow">TYDZIEŃ ${g.week} · TURA ${g.round}/6</p><h3>${g.status==='finished'?'Koniec rozgrywki':g.status==='discard_choice'?'Darmowa budowa':'Wybierz kartę do zagrania'}</h3></div><div class="table-status-actions"><span>${esc(p.name)} · ${esc(p.board.name)}</span>${local?button('Zapisz i wróć','home'):button('Powrót do ekranu głównego','home')+button('Opuść grę','close-game')}</div></div>${g.status==='finished'?results(g):g.status==='discard_choice'?discardPanel(g,i,synced):`<section class="hand-zone" aria-label="Twoje karty"><p class="turn-instruction" role="status">${instruction}</p><div class="table-hand"></div></section>`}<section class="town-circle-section" aria-label="Plansze graczy"><div class="table-direction">Przekazywanie kart <strong class="pass-direction-symbol${g.week===2?' reverse':''}" role="img" aria-label="${g.week===2?'Przeciwnie do ruchu wskazówek zegara':'Zgodnie z ruchem wskazówek zegara'}"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M38 16a17 17 0 1 0 2 15"/><path d="M28 16h10V6"/></svg></strong></div><div class="town-circle" style="--seat-count:${g.players.length};--circle-height:${g.players.length<=4?'900px':'1240px'}"><div class="circle-center"><span>✦</span><p>7 MIAST ERATHII</p><small>${g.players.length} graczy · tydzień ${g.week}</small></div></div></section>`;
  const row=root.querySelector('.table-hand');
  const freeBuild=g.status==='discard_choice';
  const shownCards=freeBuild?(synced?(local?discardOptions(g,i):hand?.bonusCards||[]):[]):h;
@@ -299,13 +302,66 @@ function choosePlan(plans,g,playerIndex,card,action){return new Promise(resolve=
  d.addEventListener('cancel',e=>{e.preventDefault();finish(null);});d.showModal();
 });}
 async function call(action,extra={}){return online.request(action,{roomId,...extra});}
-function stopWatching(){unsubs.forEach(f=>f());unsubs=[];hostMovesUnsub?.();hostMovesUnsub=null;submittedTurn=null;}
-async function watch(id){stopWatching();roomId=id;local=false;hand=null;
- unsubs=[api.onSnapshot(api.doc(api.db,'erathiaRooms',id),s=>{if(!s.exists()){tell('Nie znaleziono pokoju.');return;}room=s.data();if(room.status==='lobby')lobby();else if(room.status==='closed'){home();tell('Pokój zamknięty.');}else table();if(room.host===user.uid){if(!hostMovesUnsub)hostMovesUnsub=api.onSnapshot(api.collection(api.db,'erathiaRooms',id,'moves'),()=>void online.process(id),tell);void online.process(id);}},tell),api.onSnapshot(api.doc(api.db,'erathiaRooms',id,'hands',user.uid),s=>{hand=s.exists()?s.data():null;if(hand?.error)tell(hand.error);if(['playing','discard_choice','finished'].includes(room?.status))table();},tell),api.onSnapshot(api.doc(api.db,'erathiaRooms',id,'moves',user.uid),s=>{submittedTurn=s.exists()?s.data().turn:null;if(['playing','discard_choice'].includes(room?.status))table();},tell)];}
+function stopWatching(){watchGeneration++;unsubs.forEach(f=>f());unsubs=[];hostMovesUnsub?.();hostMovesUnsub=null;submittedTurn=null;}
+function leaveOnlineView(id,text){
+ if(roomId!==id)return;
+ stopWatching();room=null;roomId=null;hand=null;onlineHome=false;
+ const url=new URL(location.href);url.searchParams.delete('room');history.replaceState(null,'',url);
+ document.querySelectorAll('.payment-dialog').forEach(dialog=>{dialog.dispatchEvent(new Event('cancel',{cancelable:true}));dialog.remove();});
+ home();tell(text);
+}
+async function watch(id){
+ stopWatching();roomId=id;local=false;hand=null;onlineHome=false;
+ const generation=watchGeneration,current=()=>roomId===id&&watchGeneration===generation;
+ const closedMessage=data=>data?`Gracz ${data.closedByName} opuścił grę. Partia została zamknięta.`:'Ta partia została zamknięta lub nie istnieje.';
+ const checkClosure=async(error)=>{
+  if(!current())return;
+  try{
+   const closure=await api.getDoc(api.doc(api.db,'erathiaClosures',id));
+   if(!current())return;
+   if(closure.exists()||!error){leaveOnlineView(id,closedMessage(closure.data()));return;}
+  }catch{}
+  if(current()&&error)tell(error);
+ };
+ unsubs=[
+  api.onSnapshot(api.doc(api.db,'erathiaClosures',id),s=>{
+   if(current()&&s.exists())leaveOnlineView(id,closedMessage(s.data()));
+  },error=>{if(current())tell(error);}),
+  api.onSnapshot(api.doc(api.db,'erathiaRooms',id),s=>{
+   if(!current())return;
+   if(!s.exists()){void checkClosure();return;}
+   room=s.data();
+   if(room.status==='lobby')lobby();
+   else if(room.status==='closed'){leaveOnlineView(id,'Pokój zamknięty.');return;}
+   else table();
+   if(room.host===user.uid){
+    if(!hostMovesUnsub)hostMovesUnsub=api.onSnapshot(api.collection(api.db,'erathiaRooms',id,'moves'),()=>{if(current())void online.process(id);},error=>void checkClosure(error));
+    void online.process(id);
+   }
+  },error=>void checkClosure(error)),
+  api.onSnapshot(api.doc(api.db,'erathiaRooms',id,'hands',user.uid),s=>{
+   if(!current())return;
+   hand=s.exists()?s.data():null;if(hand?.error)tell(hand.error);
+   if(['playing','discard_choice','finished'].includes(room?.status))table();
+  },error=>void checkClosure(error)),
+  api.onSnapshot(api.doc(api.db,'erathiaRooms',id,'moves',user.uid),s=>{
+   if(!current())return;
+   submittedTurn=s.exists()?s.data().turn:null;
+   if(['playing','discard_choice'].includes(room?.status))table();
+  },error=>void checkClosure(error))
+ ];
+}
+async function closeOnlineGame(){
+ if(!roomId||!room)return;
+ if(!window.confirm('Opuszczenie gry zamknie pokój i usunie całą partię dla wszystkich graczy. Nie będzie można wrócić do tego zapisu. Czy na pewno chcesz opuścić grę?'))return;
+ const id=roomId;
+ await call('close');
+ leaveOnlineView(id,'Partia została zamknięta i usunięta dla wszystkich graczy.');
+}
 root.addEventListener('click',async e=>{if(warAnimation.running&&e.target.closest('[data-pick],[data-bonus]'))return;const card=e.target.closest('.table-card');if(card&&!e.target.closest('button')){const expanded=card.classList.contains('actions-open');root.querySelectorAll('.table-card.actions-open').forEach(c=>c.classList.remove('actions-open'));card.classList.toggle('actions-open',!expanded);return;}const b=e.target.closest('button');if(!b||busy)return;busy=true;b.disabled=true;tell('');try{
  if(b.dataset.bonus){await pickDiscard(b.dataset.bonus==='skip'?null:b.dataset.bonus);return;}
  if(b.dataset.pick){await pick(b.dataset.pick,b.dataset.kind);return;}
- switch(b.dataset.action){case 'retry-assets':await initialize();break;case 'practice':{const setup=await choosePractice();if(!setup)break;const nextGame=createGame(cards,boards,['Ty',...Array.from({length:setup.bots},(_,i)=>`Komputer ${i+1}`)],setup.town);local=true;stopWatching();game=nextGame;save();table();break;}case 'resume':local=true;stopWatching();game=structuredClone(localSave);table();break;case 'home':local=false;home();break;case 'login':await api.signInWithPopup(api.auth,new api.GoogleAuthProvider());break;case 'logout':await api.signOut(api.auth);break;case 'create':{const r=await call('create');const url=new URL(location.href);url.searchParams.set('room',r.roomId);history.replaceState(null,'',url);await watch(r.roomId);break;}case 'start':await call('start');break;case 'copy':await navigator.clipboard.writeText(document.querySelector('#invite-link').value);tell('Skopiowano link zaproszenia.');break;case 'leave':await call('leave');stopWatching();room=null;roomId=null;history.replaceState(null,'',location.pathname);home();break;}
+ switch(b.dataset.action){case 'retry-assets':await initialize();break;case 'practice':{const setup=await choosePractice();if(!setup)break;const nextGame=createGame(cards,boards,['Ty',...Array.from({length:setup.bots},(_,i)=>`Komputer ${i+1}`)],setup.town);local=true;stopWatching();game=nextGame;save();table();break;}case 'resume':local=true;stopWatching();game=structuredClone(localSave);table();break;case 'home':onlineHome=!local&&!!roomId;local=false;home();break;case 'return-game':onlineHome=false;if(room?.status==='lobby')lobby();else if(room)table(true);break;case 'close-game':await closeOnlineGame();break;case 'login':await api.signInWithPopup(api.auth,new api.GoogleAuthProvider());break;case 'logout':await api.signOut(api.auth);break;case 'create':{const r=await call('create');const url=new URL(location.href);url.searchParams.set('room',r.roomId);history.replaceState(null,'',url);await watch(r.roomId);break;}case 'start':await call('start');break;case 'copy':await navigator.clipboard.writeText(document.querySelector('#invite-link').value);tell('Skopiowano link zaproszenia.');break;case 'leave':{const id=roomId;await call('leave');leaveOnlineView(id,'');break;}}
  }catch(e){tell(e);}finally{busy=false;if(b.isConnected){b.disabled=false;if(!local&&(b.dataset.pick||b.dataset.bonus))table();}}});
 async function connect(){
  const version='11.10.0',base=`https://www.gstatic.com/firebasejs/${version}/`;

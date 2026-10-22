@@ -6,10 +6,22 @@ service cloud.firestore {
   function member(id){ return signedIn() && request.auth.uid in roomData(id).members; }
   function host(id){ return signedIn() && roomData(id).host == request.auth.uid; }
   function hostAfter(id){ return signedIn() && getAfter(/databases/$(database)/documents/erathiaRooms/$(id)).data.host == request.auth.uid; }
+  function closedMember(id){
+   return signedIn() && exists(/databases/$(database)/documents/erathiaClosures/$(id))
+    && request.auth.uid in get(/databases/$(database)/documents/erathiaClosures/$(id)).data.memberUids;
+  }
+  function closing(id){
+   return member(id)
+    && !exists(/databases/$(database)/documents/erathiaClosures/$(id))
+    && !existsAfter(/databases/$(database)/documents/erathiaRooms/$(id))
+    && getAfter(/databases/$(database)/documents/erathiaClosures/$(id)).data.closedByUid == request.auth.uid;
+  }
   match /erathiaRooms/{id} {
-   allow get: if signedIn() && (resource.data.status == 'lobby' || request.auth.uid in resource.data.members);
-   allow list, delete: if false;
+   allow get: if closedMember(id) || (signedIn() && (resource.data.status == 'lobby' || request.auth.uid in resource.data.members));
+   allow list: if false;
+   allow delete: if closing(id);
    allow create: if signedIn() && request.resource.data.keys().hasOnly(['status','host','members','players','picked','pickedUids'])
+    && !exists(/databases/$(database)/documents/erathiaClosures/$(id))
     && request.resource.data.status == 'lobby' && request.resource.data.host == request.auth.uid
     && request.resource.data.members == [request.auth.uid] && request.resource.data.players.size() == 1
     && request.resource.data.players[0].uid == request.auth.uid
@@ -40,14 +52,15 @@ service cloud.firestore {
      && request.resource.data.status == (request.resource.data.members.size() > 0 ? 'lobby' : 'closed'))
    );
    match /hands/{uid} {
-    allow get: if member(id) && request.auth.uid == uid;
+    allow get: if request.auth.uid == uid && (closedMember(id) || member(id));
     allow list: if false;
-    allow write: if hostAfter(id);
+    allow create, update: if hostAfter(id);
+    allow delete: if closing(id) || hostAfter(id);
    }
    match /moves/{uid} {
-    allow get: if member(id) && (request.auth.uid == uid || host(id));
+    allow get: if (closedMember(id) && request.auth.uid == uid) || (member(id) && (request.auth.uid == uid || host(id)));
     allow list: if host(id);
-    allow delete: if host(id);
+    allow delete: if closing(id) || host(id);
     allow create, update: if member(id) && request.auth.uid == uid
      // A confirmed choice is immutable until the host consumes it.
      // Old turn documents may be replaced after reconnecting.
@@ -71,7 +84,21 @@ service cloud.firestore {
   match /erathiaState/{id} {
    allow get: if host(id);
    allow list: if false;
-   allow write: if hostAfter(id);
+   allow create, update: if hostAfter(id);
+   allow delete: if closing(id) || hostAfter(id);
+  }
+  match /erathiaClosures/{id} {
+   allow get: if signedIn() && (!exists(/databases/$(database)/documents/erathiaClosures/$(id)) || request.auth.uid in resource.data.memberUids);
+   allow list, update, delete: if false;
+   allow create: if closing(id)
+    && roomData(id).status in ['playing','discard_choice','finished']
+    && request.resource.data.keys().hasOnly(['memberUids','closedByUid','closedByIndex','closedByName','closedAt'])
+    && request.resource.data.memberUids == roomData(id).members
+    && request.resource.data.closedByIndex is int && request.resource.data.closedByIndex >= 0
+    && request.resource.data.closedByIndex < roomData(id).members.size()
+    && roomData(id).members[request.resource.data.closedByIndex] == request.auth.uid
+    && request.resource.data.closedByName == roomData(id).players[request.resource.data.closedByIndex].name
+    && request.resource.data.closedAt == request.time;
   }
   match /{document=**} { allow read, write: if false; }
  }

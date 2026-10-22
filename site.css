@@ -220,3 +220,5 @@ body:not(.table-active) .table-atlas-section{display:none}
 .table-hand>.table-card{flex:0 0 150px;min-width:150px}
 .table-hand{min-height:277px;box-sizing:border-box}
 @media(max-width:800px){.table-hand>.table-card{flex-basis:140px;min-width:140px}.table-hand{min-height:262px}}
+
+.table-status-actions{flex-wrap:wrap;justify-content:flex-end;gap:10px}

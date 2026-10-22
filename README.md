@@ -76,3 +76,11 @@ Testy silnika: `npm test`. Test integracyjny `npm run test:firebase` rozgrywa pe
 W trakcie partii pełne, warstwowe grafiki kart pojawiają się w górnym rzędzie. Najazd, fokus klawiatury lub dotknięcie karty odsłania akcje: odrzucenie za 3 monety, budowa etapu miasta i budowa budynku. Niedostępne ruchy są nieaktywne. Niżej plansze wszystkich graczy są rozmieszczone w kręgu, z własnym miastem u góry, licznikami monet i oznaczeniami zbudowanych etapów. Rozwinięcie przy planszy pokazuje obrazkowe karty danego miasta. Na małych ekranach rząd kart i krąg plansz można przesuwać poziomo.
 
 Rewersy trzech tygodni: `assets/cards/backs/week1.png`, `week2.png`, `week3.png`. Po wybudowaniu etapu miasta rewers tygodnia budowy wystaje spod odpowiedniego etapu. Tygodnie budowy zapisuje pole `stageWeeks`; dla starszych zapisów bez tej informacji rewers nie jest zgadywany.
+
+## Nawigacja i opuszczanie partii online
+
+„Powrót do ekranu głównego” pozostawia gracza w partii. Przycisk „Wróć do gry” otwiera aktualny stół. Nasłuchy i rozpatrywanie ruchów przez gospodarza działają także na ekranie głównym; karta przeglądarki musi pozostać otwarta.
+
+„Opuść grę” wymaga potwierdzenia i zamyka partię dla wszystkich. Każdy uczestnik może to zrobić, również gospodarz. Pokój, pełny stan, prywatne ręce i oczekujące ruchy są usuwane atomowo. W `erathiaClosures` pozostaje informacja o autorze zamknięcia, dostępna uczestnikom, aby wyświetlić komunikat także przy równoczesnym odświeżeniu. W poczekalni „Opuść pokój” nadal usuwa tylko danego gracza i przekazuje rolę gospodarza.
+
+Mechanizm wymaga aktualnych reguł `firestore.rules`; zmiany lokalne nie publikują ich automatycznie.

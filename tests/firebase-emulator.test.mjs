@@ -92,4 +92,44 @@ try{
  const second=await host.client.request('create');await contexts[1].client.request('join',{roomId:second.roomId});await host.client.request('leave',{roomId:second.roomId});
  const transferred=(await sdk.getDoc(sdk.doc(contexts[1].db,'erathiaRooms',second.roomId))).data();assert.equal(transferred.host,contexts[1].user.uid);
  console.log('PASS: lobby host transfer.');
+ // Any participant can close a started game; closure and cleanup are atomic.
+ for(const closerIndex of [0,1]){
+  const created=await host.client.request('create'),id=created.roomId;
+  const participants=contexts.slice(0,closerIndex===0?7:3),outsider=contexts[7];
+  for(const c of participants.slice(1))await c.client.request('join',{roomId:id});
+  await assert.rejects(participants[1].client.request('close',{roomId:id}),/rozpoczęła/);
+  await host.client.request('start',{roomId:id});
+  const docFor=(c,...path)=>sdk.doc(c.db,...path);
+  const roomPath=['erathiaRooms',id],closurePath=['erathiaClosures',id];
+  await assert.rejects(outsider.client.request('close',{roomId:id}));
+  await assert.rejects(sdk.deleteDoc(docFor(participants[1],...roomPath)),{code:'permission-denied'});
+  await assert.rejects(sdk.deleteDoc(docFor(participants[1],...roomPath,'hands',host.user.uid)),{code:'permission-denied'});
+  await assert.rejects(sdk.setDoc(docFor(participants[1],...closurePath),{
+   memberUids:participants.map(c=>c.user.uid),closedByUid:participants[1].user.uid,
+   closedByIndex:1,closedByName:'Gracz',closedAt:sdk.serverTimestamp()
+  }),{code:'permission-denied'});
+  const pendingHand=(await sdk.getDoc(docFor(participants[2],...roomPath,'hands',participants[2].user.uid))).data();
+  await participants[2].client.request('pick',{roomId:id,choice:{cardId:pendingHand.cards[0].id,action:'discard',left:0,right:0}});
+  const notifications=participants.map(c=>new Promise((resolve,reject)=>{
+   const unsubscribe=sdk.onSnapshot(docFor(c,...closurePath),snapshot=>{
+    if(snapshot.exists()){unsubscribe();resolve(snapshot.data());}
+   },reject);
+  }));
+  // Host processing can race the close; its transaction must not recreate the room.
+  await Promise.all([participants[closerIndex].client.request('close',{roomId:id}),host.client.process(id)]);
+  const closed=await Promise.all(notifications);
+  assert(closed.every(data=>data.closedByUid===participants[closerIndex].user.uid));
+  for(const c of participants){
+   assert.equal((await sdk.getDoc(docFor(c,...roomPath))).exists(),false);
+   assert.equal((await sdk.getDoc(docFor(c,...roomPath,'hands',c.user.uid))).exists(),false);
+   assert.equal((await sdk.getDoc(docFor(c,...roomPath,'moves',c.user.uid))).exists(),false);
+  }
+  const adminState=await fetch(`http://127.0.0.1:8080/v1/projects/${projectId}/databases/(default)/documents/erathiaState/${id}`,{headers:{Authorization:'Bearer owner'}});
+  assert.equal(adminState.status,404);
+  await assert.rejects(sdk.getDoc(docFor(outsider,...closurePath)),{code:'permission-denied'});
+  await assert.rejects(sdk.updateDoc(docFor(host,...closurePath),{closedByName:'Changed'}),{code:'permission-denied'});
+  await assert.rejects(sdk.setDoc(docFor(host,...roomPath),{status:'lobby',host:host.user.uid,members:[host.user.uid],players:[{uid:host.user.uid,name:'Host'}],picked:[],pickedUids:[]}),{code:'permission-denied'});
+  await participants[closerIndex].client.request('close',{roomId:id});
+ }
+ console.log('PASS: host/member closure, notifications to all members, pending moves/state cleanup, concurrent host processing, rejected outsiders and immutable closure.');
 }finally{for(const c of contexts)await sdk.terminate(c.db);for(const app of apps)await deleteApp(app);}

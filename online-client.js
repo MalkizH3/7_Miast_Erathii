@@ -21,13 +21,31 @@ export function createOnlineClient({sdk,db,getUser,cards,boards,onError=()=>{}})
   if(typeof roomId!=='string'||!/^[a-f0-9]{24}$/.test(roomId))throw Error('Niepoprawny link pokoju.');
   const ref=roomRef(roomId);
   return sdk.runTransaction(db,async tx=>{
-   const snap=await tx.get(ref);if(!snap.exists())throw Error('Nie znaleziono pokoju.');const r=snap.data();
+   const snap=await tx.get(ref);
+   if(!snap.exists()){
+    if(action==='close')return {closed:true};
+    throw Error('Nie znaleziono pokoju.');
+   }
+   const r=snap.data();
    if(action==='join'){
     if(r.members.includes(uid))return {roomId};
     if(r.status!=='lobby'||r.members.length>=7)throw Error('Pokój jest pełny lub gra już trwa.');
     r.members.push(uid);r.players.push({name,uid});tx.set(ref,r);return {roomId};
    }
    const i=r.members.indexOf(uid);if(i<0)throw Error('Nie należysz do tego pokoju.');
+   if(action==='close'){
+    if(!['playing','discard_choice','finished'].includes(r.status))throw Error('Partia jeszcze się nie rozpoczęła.');
+    tx.set(sdk.doc(db,'erathiaClosures',roomId),{
+     memberUids:r.members,closedByUid:uid,closedByIndex:i,
+     closedByName:r.players[i].name,closedAt:sdk.serverTimestamp()
+    });
+    for(const member of r.members){
+     tx.delete(sdk.doc(db,'erathiaRooms',roomId,'hands',member));
+     tx.delete(moveRef(roomId,member));
+    }
+    tx.delete(stateRef(roomId));tx.delete(ref);
+    return {closed:true};
+   }
    if(action==='leave'){
     if(r.status!=='lobby')throw Error('Możesz opuścić pokój przed rozpoczęciem partii.');
     r.members.splice(i,1);r.players.splice(i,1);r.host=r.members[0]||'';r.status=r.members.length?'lobby':'closed';r.leaveIndex=i;tx.set(ref,r);return {left:true};
