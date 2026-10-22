@@ -209,3 +209,14 @@ body:not(.table-active) .table-atlas-section{display:none}
 
 /* Gotowość gracza bez zmiany wymiarów i położenia planszy. */
 .town-seat.turn-ready{border-color:#99deb0;box-shadow:0 0 0 2px #80dba488,0 0 22px #66d99255,0 8px 24px #0005}
+
+/* Stałe pola nagłówka, produkcji i planszy — niezależne od liczby kart. */
+.town-circle .town-seat{box-sizing:border-box;display:grid;grid-template-rows:32px 52px minmax(0,1fr);gap:8px;padding:9px}
+.town-seat .seat-heading{min-width:0;padding:0 3px;height:32px}
+.town-seat .seat-heading h3{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.town-seat .seat-counters{flex-shrink:0}
+.town-seat .town-brown-bonuses,.town-seat .town-brown-bonuses:empty{display:flex;flex-wrap:nowrap;height:52px;min-height:52px;margin:0 2px;align-items:center}
+.town-seat .seat-board{align-self:start;aspect-ratio:6400 / 2992;width:100%}
+.table-hand>.table-card{flex:0 0 150px;min-width:150px}
+.table-hand{min-height:277px;box-sizing:border-box}
+@media(max-width:800px){.table-hand>.table-card{flex-basis:140px;min-width:140px}.table-hand{min-height:262px}}

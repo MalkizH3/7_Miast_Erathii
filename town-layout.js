@@ -25,12 +25,23 @@ export function townRingLayout(sizes,availableWidth,gap=32){
  return {width,height:centerY+radiusY+maxHeight/2+gap,centerY,radiusX,radiusY,seats:sizes.map((_,i)=>({x:width/2+xs[i]*radiusX,y:centerY+ys[i]*radiusY}))};
 }
 
+// Panel dimensions are independent of cards, image loading and the ring's min-width.
+export function fixedTownRingLayout(count,availableWidth){
+ const width=count<=4?500:count<=6?460:440;
+ const height=count<=4?352:count<=6?334:324;
+ const size={width,height};
+ return {...townRingLayout(Array.from({length:count},()=>size),Math.max(850,Math.min(1450,availableWidth))),seatSize:size};
+}
 export function fitTownRing(circle){
  if(!circle)return;
  const seats=[...circle.querySelectorAll('.town-seat')].sort((a,b)=>Number(a.dataset.relativeSeat)-Number(b.dataset.relativeSeat));
- const sizes=seats.map(seat=>{const r=seat.getBoundingClientRect();return {width:r.width,height:r.height};});
- const layout=townRingLayout(sizes,circle.clientWidth);
- circle.style.minWidth=layout.width+'px';circle.style.height=layout.height+'px';
+ const layout=fixedTownRingLayout(seats.length,circle.parentElement.clientWidth);
+ seats.forEach(seat=>{
+  seat.style.width=layout.seatSize.width+'px';
+  seat.style.maxWidth='none';
+  seat.style.height=layout.seatSize.height+'px';
+ });
+ circle.style.width=layout.width+'px';circle.style.minWidth=layout.width+'px';circle.style.height=layout.height+'px';
  circle.style.setProperty('--ring-center-y',layout.centerY+'px');
  circle.dataset.ringCenterY=layout.centerY;circle.dataset.ringRadiusX=layout.radiusX;circle.dataset.ringRadiusY=layout.radiusY;
  circle.style.setProperty('--ring-left',(layout.width/2-layout.radiusX)+'px');circle.style.setProperty('--ring-top',(layout.centerY-layout.radiusY)+'px');

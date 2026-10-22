@@ -157,15 +157,14 @@ function fitTownBonuses(seat){
 let townLayoutObserver=null,townLayoutFrame=null;
 function watchTownLayout(circle){
  townLayoutObserver?.disconnect();cancelAnimationFrame(townLayoutFrame);
- const fit=()=>{root.querySelectorAll('.town-seat').forEach(fitTownBonuses);fitTownRing(circle);};
+ const fit=()=>{fitTownRing(circle);root.querySelectorAll('.town-seat').forEach(fitTownBonuses);};
  fit();
  townLayoutObserver=new ResizeObserver(()=>{cancelAnimationFrame(townLayoutFrame);townLayoutFrame=requestAnimationFrame(fit);});
- townLayoutObserver.observe(circle);
- circle.querySelectorAll('.town-seat').forEach(seat=>townLayoutObserver.observe(seat));
+ townLayoutObserver.observe(circle.parentElement);
 }
 window.addEventListener('resize',()=>{
  const circle=root.querySelector('.town-circle');if(!circle)return;
- circle.style.minWidth='';root.querySelectorAll('.town-seat').forEach(fitTownBonuses);fitTownRing(circle);
+ fitTownRing(circle);root.querySelectorAll('.town-seat').forEach(fitTownBonuses);
 });
 let renderedOnlineTableKey=null;
 function updatePickStatus(instruction,disabled){
@@ -258,7 +257,7 @@ function table(force=false){
   q.cards.filter(c=>['brown','grey','gray'].includes(c.color)).forEach(c=>seat.querySelector('.town-brown-bonuses').append(brownCardBonus(c,(q.newCards||[]).includes(c.id),j)));
 
   circle.append(seat);
-  fitTownBonuses(seat);
+  // Bonuses are fitted after all seats have their fixed dimensions.
  });
  updateReadyBoards(g,i);
  watchTownLayout(circle);
