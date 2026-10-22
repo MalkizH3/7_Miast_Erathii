@@ -105,6 +105,18 @@ function showCardTip(c,anchor,ownerIndex){
  cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(c.name)}</h3><p class="card-info-category">${esc(category[c.color]||'Karta')} · tydzień ${c.week}</p><section><p>${esc(describeCard(c,ownerIndex))}</p></section><section><h4>Koszt budowy</h4><p>${esc(list(c.cost))}</p>${previousNames.length?`<p class="card-info-note">Darmowa budowa po: ${previousNames.map(esc).join(', ')}.</p>`:''}</section>${unique.length?`<section><h4>Pozwala wybudować za darmo</h4>${unique.map(n=>`<p class="card-chain-name">${esc(n.name)}</p><p class="card-info-note">${esc(describeCard(n,ownerIndex))}</p>`).join('')}</section>`:''}</div><div class="card-info-art"></div>`;
  cardTip.querySelector('.card-info-art').append(cardSurface(c));document.body.append(cardTip);positionCardTip();tipSizeObserver=new ResizeObserver(positionCardTip);tipSizeObserver.observe(cardTip);
 }
+function showStageTip(board,index,anchor,ownerIndex,built){
+ if(tipAnchor===anchor)return;hideCardTip();tipAnchor=anchor;
+ const stage=board.stages[index];
+ cardTip=document.createElement('aside');cardTip.id='table-card-tooltip';cardTip.className='card-info-tooltip';cardTip.setAttribute('role','tooltip');
+ cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(board.name)} · etap ${index+1}</h3><p class="card-info-category">${built?'Etap wybudowany':'Rozbudowa miasta'}</p><section><p>${esc(describeCard(stage,ownerIndex))}</p></section><section><h4>Koszt budowy</h4><p>${esc(list(stage.cost))}</p></section></div><div class="card-info-art stage-detail-art"></div>`;
+ const art=cardTip.querySelector('.stage-detail-art'),preview=boardSurface(board);
+ const boardBounds=anchor.closest('.board-surface').getBoundingClientRect(),bounds=anchor.getBoundingClientRect();
+ const scale=.8*boardBounds.width/bounds.width;
+ preview.style.width=scale*100+'%';preview.style.left=(10-(bounds.left-boardBounds.left)/boardBounds.width*scale*100)+'%';
+ preview.querySelectorAll('.board-stage').forEach((segment,k)=>segment.classList.toggle('stage-built',built&&k===index));
+ art.append(preview);document.body.append(cardTip);positionCardTip();tipSizeObserver=new ResizeObserver(positionCardTip);tipSizeObserver.observe(cardTip);
+}
 window.addEventListener('scroll',positionCardTip,true);window.addEventListener('resize',positionCardTip);
 window.visualViewport?.addEventListener('resize',positionCardTip);window.visualViewport?.addEventListener('scroll',positionCardTip);
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hideCardTip();});
@@ -240,7 +252,15 @@ function table(force=false){
   const seat=document.createElement('article');seat.dataset.playerIndex=j;seat.dataset.relativeSeat=relative;seat.className='town-seat'+(j===i?' own-seat':'');
   seat.style.setProperty('--seat-x',`${50+Math.cos(angle)*(g.players.length<=4?29:33)}%`);seat.style.setProperty('--seat-y',`${50+Math.sin(angle)*28}%`);
   seat.innerHTML=`<header class="seat-heading"><h3>${esc(q.name)}${j===i?' <small>Ty</small>':''}</h3><div class="seat-counters"><span class="seat-coins" aria-label="${q.coins} monet"><img src="assets/cards/resources/coin.png" alt="">${q.coins}</span><span class="seat-points" aria-label="${score(g,j).total} punktów zwycięstwa" title="Aktualne punkty zwycięstwa"><img src="assets/cards/icons/points.png" alt=""><span class="seat-points-value">${score(g,j).total}</span></span></div></header><div class="town-brown-bonuses" aria-label="Produkcja brązowych i szarych kart"></div><div class="seat-board"></div>`;
-  const surface=boardSurface(q.board);surface.querySelectorAll('.board-stage').forEach((stage,k)=>{stage.classList.toggle('stage-built',k<q.stages);});
+  const surface=boardSurface(q.board);surface.querySelectorAll('.board-stage').forEach((stage,k)=>{
+   stage.classList.toggle('stage-built',k<q.stages);stage.tabIndex=0;
+   stage.setAttribute('aria-label',`${q.board.name}, etap ${k+1}: ${describeCard(q.board.stages[k],j)}`);
+   stage.setAttribute('aria-describedby','table-card-tooltip');
+   const show=()=>showStageTip(q.board,k,stage,j,k<q.stages);
+   stage.addEventListener('pointerenter',show);stage.addEventListener('focus',show);stage.addEventListener('click',show);
+   stage.addEventListener('pointerleave',()=>{if(tipAnchor===stage)hideCardTip();});
+   stage.addEventListener('blur',()=>{if(tipAnchor===stage)hideCardTip();});
+  });
   const commerce=document.createElement('span');commerce.className='town-yellow-bonuses';commerce.setAttribute('aria-label','Bonusy żółtych kart');
   q.cards.filter(c=>c.color==='yellow').forEach(c=>commerce.append(brownCardBonus(c,(q.newCards||[]).includes(c.id),j)));
   const guilds=document.createElement('span');guilds.className='town-purple-bonuses';guilds.setAttribute('aria-label','Bonusy fioletowych kart');

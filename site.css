@@ -222,3 +222,11 @@ body:not(.table-active) .table-atlas-section{display:none}
 @media(max-width:800px){.table-hand>.table-card{flex-basis:140px;min-width:140px}.table-hand{min-height:262px}}
 
 .table-status-actions{flex-wrap:wrap;justify-content:flex-end;gap:10px}
+
+/* Podgląd wybranego etapu z oryginalnymi kosztami i symbolami bonusów. */
+.stage-detail-art{position:relative;aspect-ratio:1.4;overflow:hidden;border:1px solid #c7a56655;border-radius:6px;background:#101714}
+.stage-detail-art>.board-surface{position:absolute;bottom:0;max-width:none;pointer-events:none}
+.town-seat .board-stage{cursor:help}
+.town-seat .board-stage:focus-visible{outline:2px solid #f0d59f;outline-offset:3px}
+/* Miejsce na opisy wyświetlane pod najniższym rzędem atlasu. */
+.table-atlas-section{margin-bottom:max(640px,85vh)}

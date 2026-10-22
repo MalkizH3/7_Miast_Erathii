@@ -24,3 +24,5 @@
 
 
 
+
+.atlas-page:not(.atlas-embedded) .atlas-main{padding-bottom:max(640px,85vh)}
