@@ -76,7 +76,7 @@
   let maxHeight=0;
   for(const week of [1,2,3]){
    const column=document.createElement('section');column.className='epoch-column';column.style.left=((week-1)*400)+'px';
-   const heading=document.createElement('h2');heading.textContent='Epoka '+['I','II','III'][week-1];column.append(heading);
+   const heading=document.createElement('h2');heading.textContent='Tydzień '+['I','II','III'][week-1];column.append(heading);
    const list=nodes.filter(c=>Number(c.week)===week).sort((a,b)=>view==='graph'?graphRow(a)-graphRow(b):order.indexOf(a.color)-order.indexOf(b.color)||a.name.localeCompare(b.name,'pl'));
    const catalogPositions=new Map();
    let catalogRow=0;
@@ -107,7 +107,7 @@
      Object.assign(effects.style,{width:1092*scale+'px',height:1627*scale+'px',left:(130-width*scale)/2-left*scale+'px',top:(56-height*scale)/2-top*scale+'px',containerType:'inline-size'});
     }
     const count=document.createElement('span');count.className='node-count';count.textContent='×'+c.copies.length;
-    button.append(name,symbol,count);button.setAttribute('aria-label',c.name+', epoka '+week+', liczba kart: '+c.copies.length);
+    button.append(name,symbol,count);button.setAttribute('aria-label',c.name+', tydzień '+week+', liczba kart: '+c.copies.length);
     button.addEventListener('pointerenter',()=>show(c,button,edges));button.addEventListener('pointerleave',hide);button.addEventListener('focus',()=>show(c,button,edges));button.addEventListener('blur',hide);
     button.addEventListener('click',()=>{hide();mini.querySelector('.card-button').click();});column.append(button);maxHeight=Math.max(maxHeight,y+110);
    }
@@ -143,6 +143,3 @@
  document.addEventListener('keydown',e=>{if(e.key==='Escape')hide();});
  window.addEventListener('resize',()=>{hide();fitEmbed();});window.addEventListener('scroll',hide,true);
 })();
-
-
-

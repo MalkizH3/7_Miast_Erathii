@@ -1,3 +1,4 @@
+import {createResultsReveal} from './results-reveal.js';
 import {onlineTableUpdate} from './online-table-update.js';
 import {renderResults} from './game-results.js';
 import {describeCard as describeCardDetails} from './card-description.js';
@@ -23,7 +24,8 @@ const handTransfer=createHandTransfer(root);
 const buildMorph=createBuildMorph(root);
 const gameSounds=createGameSounds(root);
 const stageTransfer=createStageTransfer(root);
-const warAnimation=createWarAnimation(root,{beforeBattle:signal=>gameSounds.playBattle(signal),onMeeting:()=>gameSounds.playWarMeeting(),onFinish:()=>table(true)});
+const resultsReveal=createResultsReveal(()=>table(true));
+const warAnimation=createWarAnimation(root,{beforeBattle:signal=>gameSounds.playBattle(signal),onMeeting:()=>gameSounds.playWarMeeting(),onFinish:()=>{if(resultsReveal.pending)resultsReveal.finishBattle();else table(true);}});
 let connectionFailed=false;
 let online=null,submittedTurn=null,hostMovesUnsub=null,onlineHome=false,watchGeneration=0;
 let cards,boards,game=null,hand=null,room=null,roomId=null,user=null,api=null,unsubs=[],busy=false,local=false;
@@ -31,6 +33,7 @@ let localSave;try{localSave=JSON.parse(localStorage.getItem('erathia-practice-v2
 function tell(e){message.textContent=e?.message||String(e||'');}
 function effect(e){if(!e)return 'Efekt do uzupełnienia';switch(e.type){case 'discard_free':return 'Wybuduj za darmo kartę ze stosu odrzuconych';case 'color_free':return 'Pierwszy budynek każdego koloru jest darmowy';case 'resources':return list(e.resources);case 'resource_choice':return e.options.map(list).join(' albo ');case 'points':return `${e.amount} pkt`;case 'coin':return `${e.amount} monet`;case 'war':return `${e.amount} siły militarnej`;case 'science':return labels[e.symbol];case 'science_choice':return 'Wybrany symbol nauki';case 'trade':return `Handel za ${e.price} monetę (${e.direction==='left'?'lewy sąsiad':e.direction==='right'?'prawy sąsiad':'sąsiedzi'})`;default:return 'Premia za karty lub etapy miasta';}}
 function home(){
+ resultsReveal.reset();
  townLayoutObserver?.disconnect();cancelAnimationFrame(townLayoutFrame);
  document.dispatchEvent(new CustomEvent('game-player-count',{detail:7}));
  handTransfer.reset();buildMorph.reset();stageTransfer.reset();warAnimation.reset();gameSounds.reset();
@@ -205,7 +208,13 @@ function table(force=false){
  }
  townLayoutObserver?.disconnect();cancelAnimationFrame(townLayoutFrame);
  hideCardTip();
- root.innerHTML=`<div class="table-status"><div><p class="eyebrow">TYDZIEŃ ${g.week} · TURA ${g.round}/6</p><h3>${g.status==='finished'?'Koniec rozgrywki':g.status==='discard_choice'?'Darmowa budowa':'Wybierz kartę do zagrania'}</h3></div><div class="table-status-actions"><span>${esc(p.name)} · ${esc(p.board.name)}</span>${local?button('Zapisz i wróć','home'):button('Powrót do ekranu głównego','home')+button('Opuść grę','close-game')}</div></div>${g.status==='finished'?results(g):g.status==='discard_choice'?discardPanel(g,i,synced):`<section class="hand-zone" aria-label="Twoje karty"><p class="turn-instruction" role="status">${instruction}</p><div class="table-hand"></div></section>`}<section class="town-circle-section" aria-label="Plansze graczy"><div class="table-direction">Przekazywanie kart <strong class="pass-direction-symbol${g.week===2?' reverse':''}" role="img" aria-label="${g.week===2?'Przeciwnie do ruchu wskazówek zegara':'Zgodnie z ruchem wskazówek zegara'}"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M38 16a17 17 0 1 0 2 15"/><path d="M28 16h10V6"/></svg></strong></div><div class="town-circle" style="--seat-count:${g.players.length};--circle-height:${g.players.length<=4?'900px':'1240px'}"><div class="circle-center"><span>✦</span><p>7 MIAST ERATHII</p><small>${g.players.length} graczy · tydzień ${g.week}</small></div></div></section>`;
+ const oldCircle=root.querySelector('.town-circle-section');
+ if(g.status==='finished'&&oldCircle&&root.dataset.tablePhase!=='finished'){
+  const header=root.querySelector('.table-status');
+  resultsReveal.prepare(oldCircle.getBoundingClientRect().top-header.getBoundingClientRect().bottom);
+ }
+ root.dataset.tablePhase=g.status;
+ root.innerHTML=`<div class="table-status"><div><p class="eyebrow">TYDZIEŃ ${g.week} · TURA ${g.round}/6</p><h3>${g.status==='finished'?'Koniec rozgrywki':g.status==='discard_choice'?'Darmowa budowa':'Wybierz kartę do zagrania'}</h3></div><div class="table-status-actions"><span>${esc(p.name)} · ${esc(p.board.name)}</span>${local?button('Zapisz i wróć','home'):button('Powrót do ekranu głównego','home')+button('Opuść grę','close-game')}</div></div>${g.status==='finished'?(resultsReveal.pending?`<div class="results-placeholder" style="height:${resultsReveal.height}px" aria-hidden="true"></div>`:results(g)):g.status==='discard_choice'?discardPanel(g,i,synced):`<section class="hand-zone" aria-label="Twoje karty"><p class="turn-instruction" role="status">${instruction}</p><div class="table-hand"></div></section>`}<section class="town-circle-section" aria-label="Plansze graczy"><div class="table-direction">Przekazywanie kart <strong class="pass-direction-symbol${g.week===2?' reverse':''}" role="img" aria-label="${g.week===2?'Przeciwnie do ruchu wskazówek zegara':'Zgodnie z ruchem wskazówek zegara'}"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M38 16a17 17 0 1 0 2 15"/><path d="M28 16h10V6"/></svg></strong></div><div class="town-circle" style="--seat-count:${g.players.length};--circle-height:${g.players.length<=4?'900px':'1240px'}"><div class="circle-center"><span>✦</span><p>7 MIAST ERATHII</p><small>${g.players.length} graczy · tydzień ${g.week}</small></div></div></section>`;
  const row=root.querySelector('.table-hand');
  const freeBuild=g.status==='discard_choice';
  const shownCards=freeBuild?(synced?(local?discardOptions(g,i):hand?.bonusCards||[]):[]):h;

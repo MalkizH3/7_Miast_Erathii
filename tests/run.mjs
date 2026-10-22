@@ -7,3 +7,4 @@ import './war-animation.test.mjs';
 import './stage-transfer.test.mjs';
 import './online-table-update.test.mjs';
 import './session-navigation.test.mjs';
+import './results-reveal.test.mjs';

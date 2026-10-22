@@ -9,7 +9,7 @@ function harness(){
  const context={
   roomId:'room',room,user:{uid:'user'},local:false,onlineHome:false,busy:false,roomRef:room,
   api:{},status:{},connectionFailed:false,firebaseConfigured:true,localSave:null,
-  townLayoutObserver:null,townLayoutFrame:null,cancelAnimationFrame(){},
+  resultsReveal:{reset(){}},townLayoutObserver:null,townLayoutFrame:null,cancelAnimationFrame(){},
   CustomEvent:class{},document:{dispatchEvent(){},body:{classList:{remove(){}}}},
   handTransfer:{reset(){}},buildMorph:{reset(){}},stageTransfer:{reset(){}},
   warAnimation:{running:false,reset(){}},gameSounds:{reset(){}},hideCardTip(){},

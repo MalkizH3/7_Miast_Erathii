@@ -50,7 +50,7 @@ export function createWarAnimation(root,{beforeBattle,onMeeting,onFinish}={}){
   }else if(ended&&(!reduced()||beforeBattle)){
    const battles=warBattles(g.players,previous.week),deltas=snapshot.military.map((value,i)=>value-previous.military[i]);
    const layer=document.createElement('div');layer.className='war-animation-layer';layer.setAttribute('aria-hidden','true');
-   const banner=document.createElement('div');banner.className='war-banner';banner.textContent=`Wojna · koniec epoki ${previous.week}`;layer.append(banner);
+   const banner=document.createElement('div');banner.className='war-banner';banner.textContent=`Wojna · koniec tygodnia ${previous.week}`;layer.append(banner);
    const tokens=battles.map(battle=>{
     const token=document.createElement('div');token.className='war-token';
     const icon=document.createElement('img');icon.src='assets/cards/icons/war.png';icon.alt='';
