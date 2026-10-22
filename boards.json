@@ -55,7 +55,9 @@
           "gems": 1,
           "gold": 1
         },
-        "effect": null
+        "effect": {
+          "type": "discard_free"
+        }
       },
       {
         "cost": {
@@ -209,7 +211,9 @@
         "cost": {
           "wood": 2
         },
-        "effect": null
+        "effect": {
+          "type": "color_free"
+        }
       },
       {
         "cost": {

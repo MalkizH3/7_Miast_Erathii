@@ -2808,6 +2808,29 @@
   },
   {
     "id": "138",
+    "name": "Smocza jaskinia",
+    "week": 3,
+    "color": "yellow",
+    "effect": {
+      "type": "coins_and_points_per_pyramid",
+      "target": "stage",
+      "coins": 3,
+      "points": 1,
+      "scope": "self"
+    },
+    "connections": [],
+    "cost": {
+      "sulfur": 2,
+      "ore": 1
+    },
+    "connection_cost": [
+      "smocza_jaskinia"
+    ],
+    "players": 5,
+    "artwork": "assets/cards/artwork/week3/yellow/smocza_jaskinia.png"
+  },
+  {
+    "id": "139",
     "name": "Magazyn zasobów",
     "week": 3,
     "color": "purple",
@@ -2831,7 +2854,7 @@
     "artwork": "assets/cards/artwork/week3/purple/magazyn_zasobow.png"
   },
   {
-    "id": "139",
+    "id": "140",
     "name": "Magiczny staw",
     "week": 3,
     "color": "purple",
@@ -2853,7 +2876,7 @@
     "artwork": "assets/cards/artwork/week3/purple/magiczny_staw.png"
   },
   {
-    "id": "140",
+    "id": "141",
     "name": "Pomnik wodza",
     "week": 3,
     "color": "purple",
@@ -2876,7 +2899,7 @@
     "artwork": "assets/cards/artwork/week3/purple/pomnik_wodza.png"
   },
   {
-    "id": "141",
+    "id": "142",
     "name": "Kapitol",
     "week": 3,
     "color": "purple",
@@ -2899,7 +2922,7 @@
     "artwork": "assets/cards/artwork/week3/purple/kapitol.png"
   },
   {
-    "id": "142",
+    "id": "143",
     "name": "Akademia wojny",
     "week": 3,
     "color": "purple",
@@ -2921,7 +2944,7 @@
     "artwork": "assets/cards/artwork/week3/purple/akademia_wojny.png"
   },
   {
-    "id": "143",
+    "id": "144",
     "name": "Gildia magów",
     "week": 3,
     "color": "purple",
@@ -2944,7 +2967,7 @@
     "artwork": "assets/cards/artwork/week3/purple/gildia_magow.png"
   },
   {
-    "id": "144",
+    "id": "145",
     "name": "Biblioteka oświecenia",
     "week": 3,
     "color": "purple",
@@ -2968,7 +2991,7 @@
     "artwork": "assets/cards/artwork/week3/purple/bilbioteka_oswiecenia.png"
   },
   {
-    "id": "145",
+    "id": "146",
     "name": "Biblioteka",
     "week": 3,
     "color": "purple",
@@ -2993,7 +3016,7 @@
     "artwork": "assets/cards/artwork/week3/purple/bilbioteka.png"
   },
   {
-    "id": "146",
+    "id": "147",
     "name": "todo2",
     "week": 3,
     "color": "purple",
@@ -3014,7 +3037,7 @@
     "artwork": "assets/cards/artwork/week3/purple/todo2.png"
   },
   {
-    "id": "147",
+    "id": "148",
     "name": "todo3",
     "week": 3,
     "color": "purple",

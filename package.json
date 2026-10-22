@@ -1,0 +1,14 @@
+{
+  "name": "7-miast-erathii",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "preview": "node scripts/preview.mjs",
+    "test": "node tests/run.mjs",
+    "test:firebase": "node tests/firebase-emulator.test.mjs",
+    "assets": "node scripts/generate-assets.mjs"
+  },
+  "devDependencies": {
+    "firebase": "11.10.0"
+  }
+}

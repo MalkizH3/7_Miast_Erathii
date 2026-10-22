@@ -1,8 +1,19 @@
 /* Atlas uses the gallery renderer so previews always match the collection. */
 (() => {
  const board=document.querySelector('#atlas-board'), peek=document.querySelector('#atlas-preview');
+ const descriptions=import('./card-description.js');
+ peek.setAttribute('role','tooltip');
+ let previewVersion=0;
  const palette={brown:'#965b35',grey:'#8b918c',gray:'#8b918c',blue:'#2586a6',yellow:'#c99c29',red:'#a43d3d',green:'#50864b',purple:'#83609e'};
- let data=[], view='catalog';
+ const params=new URLSearchParams(location.search), embedded=params.get('embed')==='1';
+ let data=[], view=embedded&&params.get('view')==='graph'?'graph':'catalog';
+ if(embedded)document.body.classList.add('atlas-embedded');
+ function fitEmbed(){
+  if(!embedded)return;
+  const scale=Math.min(1,document.documentElement.clientWidth/1200);
+  board.style.zoom=scale;
+  parent.postMessage({type:'atlas-height',view,height:Math.ceil(board.offsetHeight*scale)},location.origin);
+ }
  // Fixed rows reproduce the reference diagram; null preserves an empty line.
  const graphRows={
   1:['Bractwo ognia','Podziemny tunel','Bractwo miecza','Wieża strażnicza','Targowisko','Handel wschodni','Handel zachodni','Chatka maga',null,'Chatka czarownicy',null,'Drzewo wiedzy'],
@@ -23,12 +34,32 @@
  function edgesFor(nodes){
   return nodes.flatMap(a=>nodes.filter(b=>Number(b.week)>Number(a.week)&&(a.connections||[]).some(s=>(b.connection_cost||[]).includes(s))).map(b=>({from:a,to:b,symbol:a.connections.find(s=>(b.connection_cost||[]).includes(s))})));
  }
- function hide(){peek.hidden=true;board.querySelectorAll('.related,.selected').forEach(n=>n.classList.remove('related','selected'));board.querySelectorAll('.edge.active').forEach(n=>n.classList.remove('active'));}
+ function hide(){previewVersion++;peek.hidden=true;if(embedded)parent.postMessage({type:'atlas-tip-hide'},location.origin);board.querySelectorAll('.related,.selected').forEach(n=>n.classList.remove('related','selected'));board.querySelectorAll('.edge.active').forEach(n=>n.classList.remove('active'));}
  function show(card,button,edges){
+  if(embedded){
+   const r=button.getBoundingClientRect();
+   parent.postMessage({type:'atlas-tip-show',cardId:card.id,rect:{left:r.left,top:r.top,bottom:r.bottom,width:r.width,height:r.height}},location.origin);
+  }else{
+  const version=++previewVersion;
   const full=makeCard(card).querySelector('.game-card');peek.replaceChildren(full);peek.hidden=false;
+  descriptions.then(({describeCard,describeCost})=>{
+   if(version!==previewVersion||peek.hidden)return;
+   const copy=document.createElement('div');copy.className='atlas-card-description';
+   const add=(tag,text)=>{const node=document.createElement(tag);node.textContent=text;copy.append(node);};
+   add('h3',card.name);add('p','Tydzień '+card.week+' · Liczba kart: '+card.copies.length);
+   add('p',describeCard(card));add('h4','Koszt budowy');add('p',describeCost(card.cost));
+   const previous=[...new Set(data.filter(c=>Number(c.week)<Number(card.week)&&(c.connections||[]).some(s=>(card.connection_cost||[]).includes(s))).map(c=>c.name))];
+   const next=[...new Set(data.filter(c=>Number(c.week)>Number(card.week)&&(card.connections||[]).some(s=>(c.connection_cost||[]).includes(s))).map(c=>c.name))];
+   if(previous.length){add('h4','Darmowa budowa po');add('p',previous.join(', '));}
+   if(next.length){add('h4','Pozwala wybudować za darmo');add('p',next.join(', '));}
+   peek.append(copy);
+   const rect=button.getBoundingClientRect();
+   peek.style.top=Math.max(8,Math.min(innerHeight-peek.offsetHeight-8,rect.top))+'px';
+  });
   const rect=button.getBoundingClientRect(), width=peek.offsetWidth, height=peek.offsetHeight;
   peek.style.left=Math.max(8,Math.min(innerWidth-width-8,rect.right+width+24<innerWidth?rect.right+16:rect.left-width-16))+'px';
   peek.style.top=Math.max(8,Math.min(innerHeight-height-8,rect.top))+'px';
+  }
   const related=new Set([card.key]);
   // Highlight the complete connected chain, including earlier and later epochs.
   let changed=true;while(changed){changed=false;edges.forEach(e=>{if(related.has(e.from.key)||related.has(e.to.key)){for(const k of [e.from.key,e.to.key])if(!related.has(k)){related.add(k);changed=true;}}});}
@@ -58,7 +89,7 @@
     catalogRow++;
    }
    for(const c of list){
-    const button=document.createElement('button');button.className='atlas-node';button.dataset.key=c.key;button.style.setProperty('--card-color',palette[c.color]||'#888');
+    const button=document.createElement('button');button.className='atlas-node';button.dataset.key=c.key;button.setAttribute('aria-describedby','atlas-preview');button.style.setProperty('--card-color',palette[c.color]||'#888');
     const background=document.createElement('img');background.className='node-background';background.src='assets/cards/template/card-top.png';background.alt='';applyCardColor(background,c.color);button.append(background);
     const slot=catalogPositions.get(c.key);
     const x=(week-1)*400+(view==='catalog'?slot.x:45), y=76+(view==='catalog'?slot.row:graphRow(c))*116;
@@ -97,14 +128,20 @@
   }
   document.querySelector('#atlas-status').textContent=nodes.length+' typów kart · '+nodes.reduce((n,c)=>n+c.copies.length,0)+' kart'+(view==='graph'?' · '+visibleEdges.length+' połączeń':'');
   document.querySelector('#atlas-empty').hidden=nodes.length>0;
+  fitEmbed();
  }
  document.addEventListener('cards-ready',event=>{data=event.detail;
   render();
  });
  document.querySelector('#atlas-players').addEventListener('change',render);
+ window.addEventListener('message',event=>{
+  if(!embedded||event.source!==parent||event.origin!==location.origin||event.data?.type!=='atlas-players')return;
+  const count=Number(event.data.players),select=document.querySelector('#atlas-players');
+  if(Number.isInteger(count)&&count>=3&&count<=7&&select.value!==String(count)){select.value=String(count);render();}
+ });
  document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(n=>n.setAttribute('aria-pressed',String(n===b)));render();}));
  document.addEventListener('keydown',e=>{if(e.key==='Escape')hide();});
- window.addEventListener('resize',hide);window.addEventListener('scroll',hide,true);
+ window.addEventListener('resize',()=>{hide();fitEmbed();});window.addEventListener('scroll',hide,true);
 })();
 
 

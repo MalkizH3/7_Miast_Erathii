@@ -16,8 +16,8 @@ function effectItems(card) {
 function effectLayout(card) {
  if(card.effect?.type==='coins_and_points_per_pyramid')return [
  {type:'pyramid',symbol:'pyramid_sliced',x:456,y:205,width:180,height:180},
- {type:'coin',amount:card.effect.coins,x:370,y:302,width:106,height:106},
- {type:'points',amount:card.effect.points,x:616,y:302,width:96,height:106}
+ {type:'coin',amount:card.effect.coins,x:410,y:302,width:106,height:106},
+ {type:'points',amount:card.effect.points,x:580,y:302,width:96,height:106}
  ];
  if(card.effect?.type==='points_per_pyramid')return [
  {type:'pyramid',symbol:card.effect.target==='stage'?'pyramid_sliced':'pyramid',x:446,y:205,width:180,height:180},

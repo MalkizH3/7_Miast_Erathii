@@ -1,0 +1,78 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function signedIn(){ return request.auth != null; }
+  function roomData(id){ return get(/databases/$(database)/documents/erathiaRooms/$(id)).data; }
+  function member(id){ return signedIn() && request.auth.uid in roomData(id).members; }
+  function host(id){ return signedIn() && roomData(id).host == request.auth.uid; }
+  function hostAfter(id){ return signedIn() && getAfter(/databases/$(database)/documents/erathiaRooms/$(id)).data.host == request.auth.uid; }
+  match /erathiaRooms/{id} {
+   allow get: if signedIn() && (resource.data.status == 'lobby' || request.auth.uid in resource.data.members);
+   allow list, delete: if false;
+   allow create: if signedIn() && request.resource.data.keys().hasOnly(['status','host','members','players','picked','pickedUids'])
+    && request.resource.data.status == 'lobby' && request.resource.data.host == request.auth.uid
+    && request.resource.data.members == [request.auth.uid] && request.resource.data.players.size() == 1
+    && request.resource.data.players[0].uid == request.auth.uid
+    && request.resource.data.players[0].name is string && request.resource.data.players[0].name.size() <= 50
+    && request.resource.data.picked == [] && request.resource.data.pickedUids == [];
+   allow update: if signedIn() && (
+    (resource.data.host == request.auth.uid && request.resource.data.host == resource.data.host
+     && request.resource.data.members == resource.data.members
+     && request.resource.data.status in ['lobby','playing','discard_choice','finished'])
+    || (resource.data.status == 'lobby' && request.resource.data.status == 'lobby'
+     && !(request.auth.uid in resource.data.members) && resource.data.members.size() < 7
+     && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members','players'])
+     && request.resource.data.members == resource.data.members.concat([request.auth.uid])
+     && request.resource.data.players.size() == resource.data.players.size() + 1
+     && request.resource.data.players == resource.data.players.concat([request.resource.data.players[resource.data.players.size()]])
+     && request.resource.data.players[resource.data.players.size()].keys().hasOnly(['uid','name'])
+     && request.resource.data.players[resource.data.players.size()].uid == request.auth.uid
+     && request.resource.data.players[resource.data.players.size()].name is string
+     && request.resource.data.players[resource.data.players.size()].name.size() <= 50)
+    || (resource.data.status == 'lobby' && request.auth.uid in resource.data.members
+     && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members','players','host','status','leaveIndex'])
+     && request.resource.data.leaveIndex is int && request.resource.data.leaveIndex >= 0
+     && request.resource.data.leaveIndex < resource.data.members.size()
+     && resource.data.members[request.resource.data.leaveIndex] == request.auth.uid
+     && request.resource.data.members == resource.data.members.removeAll([request.auth.uid])
+     && request.resource.data.players == resource.data.players.removeAll([resource.data.players[request.resource.data.leaveIndex]])
+     && request.resource.data.host == (request.resource.data.members.size() > 0 ? request.resource.data.members[0] : '')
+     && request.resource.data.status == (request.resource.data.members.size() > 0 ? 'lobby' : 'closed'))
+   );
+   match /hands/{uid} {
+    allow get: if member(id) && request.auth.uid == uid;
+    allow list: if false;
+    allow write: if hostAfter(id);
+   }
+   match /moves/{uid} {
+    allow get: if member(id) && (request.auth.uid == uid || host(id));
+    allow list: if host(id);
+    allow delete: if host(id);
+    allow create, update: if member(id) && request.auth.uid == uid
+     // A confirmed choice is immutable until the host consumes it.
+     // Old turn documents may be replaced after reconnecting.
+     && (!exists(/databases/$(database)/documents/erathiaRooms/$(id)/moves/$(uid))
+      || resource.data.turn != roomData(id).turn)
+     && request.resource.data.keys().hasOnly(['turn','kind','choice'])
+     && request.resource.data.turn == roomData(id).turn
+     && ((roomData(id).status == 'playing' && request.resource.data.kind == 'pick'
+      && !(uid in roomData(id).pickedUids)
+      && request.resource.data.choice.keys().hasOnly(['cardId','action','left','right'])
+      && request.resource.data.choice.action in ['build','stage','discard']
+      && request.resource.data.choice.cardId in get(/databases/$(database)/documents/erathiaRooms/$(id)/hands/$(uid)).data.cardIds
+      && request.resource.data.choice.left is int && request.resource.data.choice.left >= 0
+      && request.resource.data.choice.right is int && request.resource.data.choice.right >= 0)
+     || (roomData(id).status == 'discard_choice' && request.resource.data.kind == 'discard_bonus'
+      && roomData(id).members[roomData(id).pendingDiscard[0]] == uid
+      && request.resource.data.choice.keys().hasOnly(['cardId'])
+      && (request.resource.data.choice.cardId == null || request.resource.data.choice.cardId in get(/databases/$(database)/documents/erathiaRooms/$(id)/hands/$(uid)).data.bonusIds)));
+   }
+  }
+  match /erathiaState/{id} {
+   allow get: if host(id);
+   allow list: if false;
+   allow write: if hostAfter(id);
+  }
+  match /{document=**} { allow read, write: if false; }
+ }
+}

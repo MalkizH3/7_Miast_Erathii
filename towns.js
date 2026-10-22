@@ -55,6 +55,10 @@ function stageBonus(effect) {
   if (!effect) {
     bonus.textContent = '—';
     bonus.setAttribute('aria-label', 'Bonus do ustalenia');
+  } else if (['discard_free', 'color_free'].includes(effect.type)) {
+    bonus.classList.add('board-special-bonus');
+    const discard = effect.type === 'discard_free';
+    bonus.append(stageIcon('assets/towns/bonuses/' + (discard ? 'free_discard.png' : 'free_color.png'), discard ? 'Darmowa budowa ze stosu odrzuconych' : 'Darmowa budowa według koloru'));
   } else if (effect.type === 'war') {
     for (let i = 0; i < Math.max(1, Math.min(10, Number(effect.amount) || 1)); i++) {
       const token = document.createElement('span');

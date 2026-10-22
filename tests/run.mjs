@@ -1,0 +1,7 @@
+import './engine.test.mjs';
+import './economy-scoring.test.mjs';
+import './assets.test.mjs';
+import './hand-status.test.mjs';
+import './town-layout.test.mjs';
+import './war-animation.test.mjs';
+import './stage-transfer.test.mjs';

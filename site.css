@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+:root{--bg:#171817;--text:#ece9df;--muted:#a7a69e;--gold:#c7a566;--line:#ffffff19;--sans:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',monospace;--serif:'Playfair Display',Georgia,serif}
+body{background:linear-gradient(#171817b8,#171817ed),url('assets/fantasy-cavern-background.png') center/cover fixed;font-family:var(--sans)}h1,h2,h3{font-family:var(--serif)}.topbar,main,footer{width:min(1280px,calc(100% - 80px))}.topbar{min-height:76px;height:auto;padding:16px 0;gap:22px}.brand{font:600 12px var(--sans);letter-spacing:.02em;gap:11px}.brand-star,.brand-cross{color:var(--gold)}.brand-star{font-size:22px}.brand-logo{width:205px}.site-nav{gap:6px}.site-nav a{padding:10px 13px;border:1px solid transparent!important;border-radius:5px;font:10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#c5c1b5}.site-nav a:hover,.site-nav a[aria-current]{background:#c7a56618;border-color:#c7a56666!important;color:#f0d59f}.eyebrow{font:10px var(--mono);letter-spacing:.17em}.home-intro{text-align:center;padding:76px 0 62px}.home-intro h1{margin:0}.home-intro h1 img{width:min(620px,100%);height:auto;filter:drop-shadow(0 8px 18px #000b)}.home-intro>p:not(.eyebrow){font:14px/1.8 var(--sans);color:var(--muted);margin:22px 0}.hero-actions{display:flex;gap:12px;justify-content:center;margin-top:30px}.action,.game-action{display:inline-flex;align-items:center;justify-content:center;gap:24px;min-height:43px;border:1px solid #c7a56666;border-radius:5px;padding:12px 18px;font:12px var(--sans);color:var(--text);background:#20211fe8;cursor:pointer}.primary{background:#c7a566;color:#171817;border-color:#c7a566;font-weight:700}.action:hover,.game-action:hover{filter:brightness(1.15)}.online-section,.explore-section{border-top:1px solid var(--line);padding:30px 0 48px;scroll-margin-top:20px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}.section-head .eyebrow{margin:0 0 10px}.section-head h2{font-size:27px}.connection,.collection-note{font:10px var(--mono);color:var(--muted)}.connection::before{content:'●';color:var(--gold);margin-right:8px}.game-panel{border:1px solid var(--line);border-radius:8px;background:#20211fe8;padding:28px}.game-panel h3{font-size:23px}.game-panel p,#game-message{font:13px/1.8 var(--sans);color:var(--muted)}.game-panel input{border:1px solid #c7a56655;background:#171817;color:var(--text);padding:12px;border-radius:4px;font:13px var(--sans);max-width:100%}.game-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px}.explore-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.explore-card{border:1px solid var(--line);border-radius:7px;overflow:hidden;background:#20211fe8;transition:transform .2s,border-color .2s}.explore-card:hover{transform:translateY(-4px);border-color:#c7a56677}.explore-card>img{width:100%;height:190px;object-fit:cover;display:block}.explore-card>div{padding:24px}.explore-card .eyebrow{display:block;margin-bottom:15px}.explore-card h3{display:flex;justify-content:space-between;font-size:22px;gap:10px}.explore-card h3 span{color:var(--gold)}.explore-card p{font:13px/1.8 var(--sans);color:var(--muted);margin-bottom:0}footer{font:10px var(--mono);letter-spacing:.08em}.intro{text-align:center;padding:45px 0}.lead{font-family:var(--sans)}.filter,.search-wrap input,.preview-actions button{border-radius:5px}.card-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}.card-grid .game-card{border-radius:8px}.game-hand{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:14px;margin-top:20px}.draft-card{background:#171817;border:1px solid var(--line);border-radius:6px;padding:12px}.draft-card img{width:100%;height:140px;object-fit:cover}.draft-card h3{font-size:17px;margin:10px 0}.draft-card .game-action{padding:8px;min-height:34px;width:100%;margin-top:5px;font-size:11px}.player-list{display:flex;gap:12px;flex-wrap:wrap;padding:0;list-style:none}.player-list li{padding:14px;border:1px solid var(--line);border-radius:5px;font-size:13px}.player-list small{display:block;color:var(--muted);margin-top:7px}.game-action:disabled{opacity:.45;cursor:default}[hidden]{display:none!important}
+@media(max-width:850px){.topbar,main,footer{width:calc(100% - 36px)}.topbar{flex-wrap:wrap}.site-nav{flex-wrap:wrap}.explore-grid{grid-template-columns:1fr}.explore-card{display:grid;grid-template-columns:35% 1fr}.explore-card>img{height:100%;min-height:200px}.brand{font-size:11px}.home-intro{padding:50px 0}.section-head{align-items:flex-start}.collection-note{display:none}}@media(max-width:480px){.hero-actions{flex-direction:column}.site-nav a{padding:9px;font-size:9px}.explore-card{display:block}.explore-card>img{height:160px;min-height:0}.game-panel{padding:18px}.section-head h2{font-size:23px}.connection{font-size:9px}.game-controls>*{width:100%}footer{gap:20px;line-height:1.8}}@media(prefers-reduced-motion:reduce){.explore-card{transition:none}}
+.game-details{margin-top:28px;border-top:1px solid var(--line);padding-top:20px;font-size:13px;line-height:1.8}.game-details summary{cursor:pointer;color:var(--gold)}.player-town{width:min(600px,100%);display:block;margin-top:20px;border-radius:6px}.score-list{line-height:1.8}.game-controls #invite-link{flex:1;min-width:200px}.game-panel label{font-size:13px}
+.rules-copy{max-width:850px;margin:0 auto 60px;line-height:1.9}.rules-copy h2{margin-top:30px;font-size:25px}.rules-copy h2:first-child{margin-top:0}.rules-copy p,.rules-copy li{font:14px/1.9 var(--sans);color:var(--muted)}.rules-copy a:not(.action){color:var(--gold);text-decoration:underline}
+/* Stół: pełne karty nad kręgiem plansz graczy. */
+body.table-active main{width:calc(100% - 32px);max-width:1700px}.table-active .home-intro,.table-active .explore-section,.table-active footer,.table-active #game-section>.section-head{display:none}.table-active .online-section{padding:20px 0;border:0}.playing-table.game-panel{padding:0;overflow:hidden;background:linear-gradient(140deg,#1e2a24ed,#111a17f5);border-color:#c7a56640}.table-status{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 26px;border-bottom:1px solid #c7a56633;background:#101714bd}.table-status .eyebrow{margin:0 0 8px}.table-status h3{margin:0;font-size:24px}.table-status-actions{display:flex;align-items:center;gap:20px;font:12px var(--sans);color:var(--muted)}.hand-zone{padding:15px 24px 25px;background:#ffffff05;border-bottom:1px solid #c7a56633}.playing-table .turn-instruction{text-align:center;margin:0 0 15px;font-size:12px;color:#bbb9ab}.table-hand{display:flex;justify-content:safe center;align-items:start;gap:10px;overflow-x:auto;padding:8px 4px 16px;max-width:1200px;margin:auto}.table-card{position:relative;flex:0 1 150px;min-width:108px;outline:none;border-radius:7px;box-shadow:0 7px 18px #0007;transition:transform .18s,box-shadow .18s}.table-card .game-card{border-radius:7px;box-shadow:none}.table-card:hover,.table-card:focus-within,.table-card.actions-open{transform:translateY(-5px);box-shadow:0 0 0 2px var(--gold),0 12px 28px #0009}.card-action-menu{position:absolute;inset:0;z-index:8;padding:10px 8px;display:flex;flex-direction:column;justify-content:center;gap:8px;background:#101714df;border-radius:7px;opacity:0;visibility:hidden;transition:opacity .15s,visibility .15s}.table-card:hover .card-action-menu,.table-card:focus-within .card-action-menu,.table-card.actions-open .card-action-menu{opacity:1;visibility:visible}.card-action-menu h4{font:16px/1.2 var(--serif);text-align:center;margin:0 0 5px;color:#f0d59f}.card-action-menu .game-action{width:100%;min-height:38px;padding:8px 5px;font-size:11px;gap:0;background:#243029;border-color:#c7a56688}.card-action-menu .game-action[data-kind=build]{background:#c7a566;color:#171817;font-weight:700}.card-action-menu .game-action:disabled{opacity:.38;filter:grayscale(1);cursor:not-allowed}.town-circle-section{position:relative;overflow-x:auto;padding:12px 0 0}.table-direction{text-align:right;padding:2px 24px;font:11px var(--mono);color:var(--muted)}.table-direction strong{font-size:23px;vertical-align:middle;color:var(--gold);margin-left:10px}.town-circle{height:var(--circle-height);position:relative;isolation:isolate;margin:0 auto;max-width:1450px}.town-circle::before{content:'';position:absolute;inset:14% 18%;border:1px solid #c7a56615;border-radius:50%;z-index:-1;background:radial-gradient(ellipse,#24423530,transparent 70%)}.circle-center{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);text-align:center;color:#b4a16a75;pointer-events:none}.circle-center>span{font-size:48px}.circle-center p{font:10px var(--mono)!important;letter-spacing:.25em;color:#b4a16a99!important}.circle-center small{font:11px var(--sans);color:#8c9e8d}.town-seat{position:absolute;left:var(--seat-x);top:var(--seat-y);transform:translate(-50%,-50%);width:29%;max-width:380px;background:#101714ef;border:1px solid #c7a56640;border-radius:7px;padding:9px;box-shadow:0 8px 24px #0005}.town-circle[style*='--seat-count:3'] .town-seat,.town-circle[style*='--seat-count:4'] .town-seat{width:34%;max-width:400px}.town-seat.own-seat{border-color:#d2b77b;box-shadow:0 0 0 1px #d2b77b44,0 10px 30px #0008}.seat-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:1px 3px 9px}.seat-heading h3{font:600 13px var(--sans);margin:0}.seat-heading h3 small{font-size:9px;color:var(--gold);margin-left:5px;text-transform:uppercase}.seat-coins{display:flex;align-items:center;gap:4px;font:14px var(--mono);color:#f0d59f}.seat-coins img{width:23px;height:23px;object-fit:contain}.seat-board{border-radius:4px;overflow:hidden}.seat-summary{display:flex;justify-content:space-between;gap:8px;padding:9px 2px 5px;font:10px var(--sans);color:#a7ad9e}.seat-cards{font:10px/1.6 var(--sans);color:#c6b787;padding:3px 2px}.seat-cards summary{cursor:pointer}.seat-cards[open]{position:relative;z-index:10}.built-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;max-height:230px;overflow:auto;background:#101714;padding-top:10px}.built-card .game-card{box-shadow:none;border-radius:3px}.stage-built{box-shadow:inset 0 0 0 .35cqw #c7a566!important}.stage-built-marker{position:absolute;top:-1cqw;right:.5cqw;z-index:5;border-radius:50%;background:#d7bd75;color:#142017;font:bold 2.4cqw var(--sans);padding:0 .5cqw}.playing-table>.game-hand,.playing-table>h3,.playing-table>p,.playing-table>.game-controls,.playing-table>.score-list{margin-left:24px;margin-right:24px}.playing-table>.game-hand{margin-bottom:24px}
+@media(max-width:800px){body.table-active main{width:calc(100% - 16px)}.table-status{padding:16px;align-items:flex-start}.table-status h3{font-size:20px}.table-status-actions{flex-direction:column;gap:8px;align-items:flex-end;font-size:10px}.table-status-actions button{font-size:10px;min-height:34px;padding:8px}.hand-zone{padding:12px 8px}.table-hand{justify-content:flex-start;gap:9px}.table-card{flex:0 0 140px}.town-circle{min-width:850px}.table-direction{position:sticky;left:0;text-align:center;width:100%;padding:6px}.seat-heading h3{font-size:12px}.card-action-menu .game-action{min-height:40px}}
+@media(prefers-reduced-motion:reduce){.table-card,.card-action-menu{transition:none}}
+
+.town-circle-section{overflow-y:hidden}
+
+.circle-center .table-direction{position:static;width:auto;padding:0 0 16px;text-align:center;white-space:nowrap}.circle-center .table-direction strong{display:block;font-size:42px;line-height:1.2;margin:5px 0 0}
+
+.circle-center .pass-direction-symbol{width:48px;height:48px;margin:8px auto 0!important}.pass-direction-symbol svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.pass-direction-symbol.reverse svg{transform:scaleX(-1)}
+
+.town-circle-section>.table-direction{position:absolute;top:16px;right:24px;left:auto;width:auto;z-index:2;display:flex;align-items:center;gap:10px;padding:0;text-align:right}.table-direction .pass-direction-symbol{display:block;width:40px;height:40px;margin:0;font-size:inherit}
+
+/* Większe plansze z zachowaniem odstępów w kręgu. */
+.town-seat{width:32%;max-width:440px}
+.town-circle[style*='--seat-count:3'] .town-seat,.town-circle[style*='--seat-count:4'] .town-seat{width:40%;max-width:500px}
+.town-circle[style*='--seat-count:5'] .town-seat,.town-circle[style*='--seat-count:6'] .town-seat{width:34%;max-width:460px}
+
+/* Karty stołu przycięte do pola gry: po 47 px z boków i 46 px w pionie. */
+.play-card-crop{display:block;position:relative;width:100%;aspect-ratio:998 / 1535;overflow:hidden;border-radius:inherit}
+.play-card-crop>.game-card{position:absolute;width:109.418838%;left:-4.709419%;top:-2.996743%;border-radius:0;box-shadow:none}
+
+/* Podgląd informacji i prosto ustawiona, powiększona karta. */
+.card-info-tooltip{position:fixed;z-index:1000;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:20px;border:1px solid #c7a56688;border-radius:8px;background:#151e19fa;color:var(--text);box-shadow:0 16px 50px #000b;pointer-events:none;overflow:hidden}
+.card-info-copy{min-width:0;overflow:hidden}.card-info-copy h3{font:23px/1.2 var(--serif);margin:0 0 8px;color:#f1d599}.card-info-copy .card-info-category{font:11px/1.6 var(--sans);color:var(--gold);margin:0 0 12px}.card-info-copy section{border-top:1px solid #c7a56633;padding-top:10px;margin-top:10px}.card-info-copy h4{font:600 11px var(--sans);margin:0 0 6px;color:#e7dec6}.card-info-copy p{font:12px/1.65 var(--sans);margin:0 0 7px}.card-info-copy .card-info-note{font-size:11px;color:#abb6a7}.card-info-copy .card-chain-name{color:#e7c580;margin-bottom:2px}.card-info-art{align-self:start;min-width:0;transform:none!important;rotate:0deg!important}.card-info-art .play-card-crop{border-radius:6px;box-shadow:0 4px 15px #0008}.card-info-tooltip .game-card{transform:none!important}
+@media(max-width:600px){.card-info-tooltip{grid-template-columns:minmax(0,1fr) 120px;gap:12px;padding:14px}.card-info-copy h3{font-size:18px}.card-info-copy p{font-size:11px}.card-info-copy section{padding-top:6px;margin-top:6px}}
+
+.card-info-tooltip{position:fixed;overflow-wrap:anywhere;min-height:0}
+
+/* Brązowe budynki: bonusy nad planszą, każdy budynek w osobnej grupie. */
+.town-brown-bonuses{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:0 2px 9px;min-height:0}.town-brown-bonuses:empty{display:none}
+.town-brown-card{display:inline-flex;align-items:center;justify-content:center;gap:3px;padding:3px 5px;min-height:36px;background:linear-gradient(140deg,#965b2c,#5b321a);border:1px solid #382316;border-radius:3px;cursor:help;outline-offset:3px}
+.town-bonus-token{display:grid;place-items:center;flex:none;width:27px;height:27px;border:1px solid #c6a268;border-radius:50%;background:radial-gradient(circle,#8f6236,#432512);box-shadow:inset 0 0 3px #0008}.town-bonus-token img{display:block;width:25px;height:25px;object-fit:contain}.bonus-choice-divider{color:#eee3bd;font:20px Georgia;margin:0 1px}
+.town-brown-card.newly-built{border-color:#f5d47e;box-shadow:0 0 0 1px #e2ba58,0 0 13px #e9bd5380;animation:new-bonus-glow 2s ease-in-out infinite alternate}
+@keyframes new-bonus-glow{to{box-shadow:0 0 0 1px #ffe4a2,0 0 20px #e9bd53aa}}
+@media(prefers-reduced-motion:reduce){.town-brown-card.newly-built{animation:none}}
+
+/* Te same tekstury, obręcze, ukośniki i skalowanie efektów co w atlasie. */
+.town-brown-card{position:relative;isolation:isolate;padding:2px;min-height:62px;background:#965b35;gap:0;border-color:#b38a64;overflow:hidden}
+.brown-card-background{position:absolute;inset:0;z-index:-1;width:100%;height:100%;object-fit:cover;pointer-events:none;border-radius:2px}
+.bonus-symbol.game-card{display:block;position:relative;height:56px;aspect-ratio:auto;background:none;box-shadow:none;overflow:hidden;flex:none}
+.bonus-symbol.game-card::after{display:none}
+
+/* Równe pole i środek w obu osiach, niezależnie od liczby symboli bonusu. */
+.town-brown-card{display:grid;place-items:center;align-content:center;justify-content:center;min-width:68px;min-height:68px;padding:5px;line-height:0}
+.town-brown-card>.bonus-symbol{align-self:center;justify-self:center;margin:0}
+
+.town-brown-card.town-grey-card{background:#8b918c;border-color:#b4b8b3}.town-brown-card.town-grey-card.newly-built{border-color:#f5d47e}
+
+/* Żółte budynki na planszy, bezpośrednio pod surowcem początkowym. */
+.town-yellow-bonuses{position:absolute;z-index:5;top:27%;left:2%;right:2%;max-height:44%;display:flex;flex-wrap:wrap;align-items:flex-start;align-content:flex-start;gap:3px;overflow:auto;padding:2px}
+.town-yellow-bonuses:empty{display:none}
+.town-yellow-bonuses .town-yellow-card{zoom:.65;min-width:68px;background:#c99c29;border-color:#8b641b;cursor:help}
+.town-yellow-bonuses .town-yellow-card.newly-built{border-color:#ffe39a}
+
+/* Miejsce na zewnętrzną poświatę obramówek w rzędzie żółtych kart. */
+.town-yellow-bonuses{padding:10px;left:calc(2% - 8px);right:calc(2% - 8px);top:calc(27% - 8px)}
+
+/* Nieco mniejsze bonusy surowców nad planszą. */
+.town-brown-bonuses>.town-brown-card{zoom:.65}
+
+/* Żółte bonusy zaczynają się dokładnie na lewej krawędzi planszy. */
+.town-yellow-bonuses{left:0;right:0;padding-left:0}
+
+/* Nauka z prawej strony planszy, punkty cywilne w rzędzie ponad nią. */
+.town-green-bonuses,.town-blue-bonuses{position:absolute;right:0;left:25%;z-index:5;display:flex;flex-wrap:wrap-reverse;justify-content:flex-end;align-items:flex-end;gap:3px;padding:10px 0 10px 10px;pointer-events:none}
+.town-green-bonuses{bottom:29%}.town-blue-bonuses{bottom:calc(29% + 48px)}
+.town-green-bonuses:empty,.town-blue-bonuses:empty{display:none}
+.town-green-bonuses>.town-brown-card,.town-blue-bonuses>.town-brown-card{zoom:.65;pointer-events:auto}
+.town-green-card{background:#50864b;border-color:#6d9c60}.town-blue-card{background:#2586a6;border-color:#68a8bf}
+
+/* Karty wojenne obok panelu surowca startowego. */
+.town-red-bonuses{position:absolute;left:24%;right:2%;top:2%;z-index:5;display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:flex-start;gap:3px;padding:8px;max-height:24%;overflow:auto;pointer-events:none}
+.town-red-bonuses:empty{display:none}
+.town-red-bonuses>.town-brown-card{zoom:.65;pointer-events:auto}
+.town-red-card{background:#a43d3d;border-color:#d46a60}
+
+/* Fioletowe bonusy przepływają bezpośrednio pod rzędem żółtych. */
+.town-left-bonuses{position:absolute;z-index:5;left:0;right:2%;top:calc(27% - 8px);max-height:46%;display:flex;flex-direction:column;align-items:flex-start;overflow:auto;padding:10px 10px 10px 0;pointer-events:none}
+.town-left-bonuses>.town-yellow-bonuses,.town-purple-bonuses{position:static;left:auto;right:auto;top:auto;display:flex;flex-wrap:wrap;align-items:flex-start;gap:3px;max-height:none;padding:0;overflow:visible;flex-shrink:0}
+.town-left-bonuses>.town-yellow-bonuses:empty,.town-purple-bonuses:empty{display:none}
+.town-purple-bonuses{margin-top:4px}
+.town-left-bonuses .town-brown-card{pointer-events:auto}
+.town-purple-bonuses>.town-brown-card{zoom:.65}
+.town-purple-card{background:#83609e;border-color:#ad83cb}
+
+/* Czerwone bonusy stykają się z górną krawędzią planszy. */
+.town-red-bonuses{top:0;padding-top:0}
+
+.payment-dialog{width:min(680px,calc(100vw - 24px));padding:24px;border-radius:8px}.payment-dialog>h3{color:#f0d59f}.payment-dialog>p{font:13px/1.7 var(--sans);color:var(--muted)}.payment-options{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.payment-option.game-action{display:flex;flex:1 1 230px;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;padding:16px}.payment-total{font:22px var(--serif);color:#f0d59f;margin-bottom:6px}.payment-confirm{border-top:1px solid #c7a56644;padding-top:10px;margin-top:6px;width:100%;color:var(--gold)}
+
+/* Stałe miejsce na produkcję, również przed zakupem pierwszej karty. */
+.town-brown-bonuses,.town-brown-bonuses:empty{display:flex;height:64px;min-height:64px;max-height:64px;flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:5px;margin:0 0 9px;padding:8px 6px;overflow-x:auto;overflow-y:hidden}
+.town-brown-bonuses>.town-brown-card{flex-shrink:0}
+
+/* Wspólne linie: żółte z niebieskimi, fioletowe z zielonymi. */
+.town-left-bonuses,.town-right-bonuses{top:calc(27% - 8px);display:grid;grid-template-rows:45px 45px;row-gap:4px;align-items:start;align-content:start}
+.town-left-bonuses>.town-yellow-bonuses{grid-row:1}.town-left-bonuses>.town-purple-bonuses{grid-row:2;margin-top:0}
+.town-right-bonuses{position:absolute;z-index:5;right:0;left:55%;max-height:46%;padding:10px 0 10px 10px;overflow:auto;pointer-events:none}
+.town-right-bonuses>.town-blue-bonuses,.town-right-bonuses>.town-green-bonuses{position:static;left:auto;right:auto;top:auto;bottom:auto;display:flex;flex-wrap:nowrap;justify-content:flex-end;align-items:flex-start;padding:0;gap:3px;overflow:visible}
+.town-right-bonuses>.town-blue-bonuses{grid-row:1}.town-right-bonuses>.town-green-bonuses{grid-row:2}
+.town-right-bonuses>.town-blue-bonuses:empty,.town-right-bonuses>.town-green-bonuses:empty{display:none}
+
+/* Bonusy bez przycinanych kontenerów i wewnętrznego przewijania. */
+.town-brown-bonuses,.town-brown-bonuses:empty{overflow:visible;gap:3px}
+.town-red-bonuses{overflow:visible;max-height:none;flex-wrap:nowrap;padding:0;left:24%;right:1%}
+.town-bonus-rows{position:absolute;z-index:5;top:27%;left:0;right:0;display:grid;grid-template-rows:45px 45px;row-gap:4px;pointer-events:none}
+.town-bonus-row{display:flex;align-items:flex-start;justify-content:space-between;min-width:0;width:100%;gap:3px;overflow:visible}
+.town-bonus-row>.town-yellow-bonuses,.town-bonus-row>.town-purple-bonuses,.town-bonus-row>.town-blue-bonuses,.town-bonus-row>.town-green-bonuses{position:static;inset:auto;display:flex;flex-wrap:nowrap;align-items:flex-start;justify-content:flex-start;width:max-content;min-width:0;max-height:none;margin:0;padding:0;gap:3px;overflow:visible;flex:0 0 auto}
+.town-bonus-row>.town-blue-bonuses,.town-bonus-row>.town-green-bonuses{justify-content:flex-end;margin-left:auto}
+.town-bonus-row>.town-yellow-bonuses:empty,.town-bonus-row>.town-purple-bonuses:empty,.town-bonus-row>.town-blue-bonuses:empty,.town-bonus-row>.town-green-bonuses:empty{display:none}
+.town-bonus-row .town-brown-card{zoom:.65;pointer-events:auto;flex-shrink:0}
+
+/* Nadmiarowe bonusy wykorzystują najpierw wolne pola innych rzędów. */
+.town-relocated-bonuses{display:flex;align-items:flex-start;gap:3px;flex:0 0 auto;min-width:0;pointer-events:none}
+.town-relocated-bonuses>.town-brown-card{pointer-events:auto;flex-shrink:0}
+.town-relocated-bonuses:empty{display:none}
+
+/* Overlay cards travel in page coordinates so scrolling keeps them on the table. */
+.hand-transfer-layer{position:absolute;inset:0;pointer-events:none;z-index:900;overflow:clip}
+.hand-transfer-card{position:absolute;left:0;top:0;transform-origin:center;will-change:transform,opacity;border-radius:7px;box-shadow:0 12px 24px #0008}
+.hand-transfer-card>.game-card{border-radius:7px;box-shadow:none}
+.table-hand.hand-in-transit{visibility:hidden;pointer-events:none}
+
+/* Większy wycinek tekstury nagłówka bez dolnego ornamentu. */
+.town-brown-card>.brown-card-background{inset:auto;left:50%;top:50%;width:max(100%,240px);height:auto;max-width:none;transform:translate(-50%,-50%);object-fit:initial}
+
+.build-morph-layer{z-index:910}
+.build-morph-frame{position:absolute;overflow:hidden;box-shadow:0 12px 30px #0008;will-change:left,top,width,height}
+.build-morph-face{position:absolute;left:0;top:0}
+.build-morph-bonus{position:absolute!important;left:0;top:0;transform-origin:top left;pointer-events:none}
+.build-morph-hidden{visibility:hidden!important}
+
+
+/* Rewersy kart wsuniętych pod ukończone etapy miasta. */
+.seat-board{position:relative;isolation:isolate;overflow:visible;margin-bottom:32px}
+.seat-board>.board-surface{position:relative;z-index:1;border-radius:4px}
+.stage-tucked-card{position:absolute;z-index:0;bottom:-28px;width:16%;height:auto;transform:translateX(-50%);border-radius:4px;border:1px solid #c7a56666;box-shadow:0 5px 10px #0008;pointer-events:none}
+
+.stage-transfer-layer{z-index:920}
+.stage-transfer-frame{position:absolute;perspective:900px;z-index:0;will-change:left,top,width,height}
+.stage-transfer-flip{position:relative;width:100%;height:100%;transform-style:preserve-3d}
+.stage-transfer-front,.stage-transfer-back{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;border-radius:5px;overflow:hidden;box-shadow:0 8px 20px #0007}
+.stage-transfer-front>.play-card-crop{height:100%}
+.stage-transfer-back{display:none;transform:none;object-fit:fill;border:1px solid #c7a56666}
+.seat-board>.stage-transfer-frame{z-index:0;pointer-events:none}
+.stage-transfer-hidden{visibility:hidden!important}
+
+.discard-hand-layout{--skip-space:130px;position:relative;width:fit-content;max-width:calc(100% - 2 * var(--skip-space));margin:0 auto;min-width:0}
+.discard-hand-layout>.table-hand{width:max-content;max-width:100%;min-width:0;margin:0}
+.discard-hand-layout>.discard-skip{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);white-space:nowrap}
+@media(max-width:600px){.discard-hand-layout{--skip-space:95px}.discard-hand-layout>.discard-skip{left:calc(100% + 8px);padding:10px 8px;font-size:11px}}
+
+/* Match the normal hand card size; scroll the discard hand instead of shrinking cards. */
+.discard-hand-layout>.table-hand>.table-card{flex:0 0 150px;width:150px}
+@media(max-width:800px){.discard-hand-layout>.table-hand>.table-card{flex-basis:140px;width:140px}}
+
+.asset-loading{text-align:center;padding:28px 16px}
+.asset-loading progress{display:block;width:min(420px,100%);height:12px;margin:20px auto 12px;accent-color:var(--gold)}
+.asset-loading-count{font:13px var(--sans);color:var(--muted)}
+
+/* Status labels sit outside the card so animation bounds keep matching its artwork. */
+.table-hand{padding-top:30px}
+.table-card-status{position:absolute;bottom:calc(100% + 3px);left:0;right:0;min-height:15px;display:grid;place-items:center;text-align:center;font:600 12px/1.25 var(--sans);pointer-events:none;text-shadow:0 1px 3px #000}
+.table-card-status.unavailable{color:#ff7770}
+.table-card-status.paid{color:#f0cf6c}
+.table-card-status.affordable{color:#8dde91}
+
+.seat-counters{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.seat-points{display:flex;align-items:center;gap:4px;font:14px var(--mono);color:#f0d59f}
+.seat-points img{width:23px;height:23px;object-fit:contain}
+
+.town-circle::before{inset:auto;left:var(--ring-left,18%);top:var(--ring-top,14%);width:var(--ring-width,64%);height:var(--ring-height,72%)}
+.war-animation-layer{position:absolute;inset:0;z-index:30;pointer-events:none}
+.war-token{position:absolute;display:flex;align-items:center;gap:7px;transform:translate(-50%,-50%);padding:9px 13px;border:1px solid #d7ab69;border-radius:28px;background:#25150ff5;box-shadow:0 4px 22px #000b;color:#fff0cf;font:bold 21px var(--serif);white-space:nowrap;will-change:left,top}
+.war-token img{width:34px;height:34px;object-fit:contain}
+.war-token-result{background:#18291bf5;border-color:#dfc375;color:#f4d879}
+.war-token-loss{color:#ff736c;border-color:#c75c50;background:#321511f5}
+.war-banner{position:absolute;left:50%;top:var(--ring-center-y,50%);transform:translate(-50%,-50%);padding:14px 20px;border:1px solid #c7a56688;border-radius:8px;background:#101714f5;color:#f0d59f;font:18px var(--serif);text-align:center}
+.war-resolving .table-hand{pointer-events:none}
+.war-resolving>.score-list{visibility:hidden}
+.seat-points{transform-origin:center;display:inline-flex}
+
+/* The card catalog and construction chains stay available beneath the table. */
+.table-atlas-section{margin:44px 0 64px}
+.table-atlas-section>.section-head{margin-bottom:20px}
+.table-atlas-link{color:var(--gold);font:13px system-ui;text-decoration:none}
+.table-atlas-panels{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px;border:1px solid #c7aa6c33;border-radius:10px;background:#0c120f}
+.table-atlas-panel{min-width:0}
+.table-atlas-panel>h3{margin:0 0 14px;color:var(--gold);font:18px var(--serif)}
+.table-atlas-frame{display:block;width:100%;height:1100px;border:0;background:#0c120f}
+@media(max-width:760px){.table-atlas-panels{grid-template-columns:1fr;padding:12px;gap:28px}.table-atlas-section>.section-head{gap:16px;flex-wrap:wrap}}
+.practice-dialog form{display:grid;gap:12px}.practice-dialog h3{color:#f0d59f}.practice-dialog label{font:14px var(--sans);color:var(--gold)}.practice-dialog select{width:100%;padding:12px;border:1px solid #c7a56677;border-radius:4px;background:#171b20;color:#f0d59f;font:16px var(--sans)}.practice-dialog p{font:13px/1.7 var(--sans);color:var(--muted)}
+
+/* Atlas below the table is available only during a game. */
+body:not(.table-active) .table-atlas-section{display:none}
+/* Końcowy ranking i punktacja. */
+.game-results{margin:24px 0 36px;max-width:980px;margin-inline:auto}.results-heading{display:flex;align-items:center;gap:20px;padding:16px 0 24px}.results-trophy{display:grid;place-items:center;flex:none;width:64px;height:64px;border:1px solid #c7a56666;border-radius:50%;background:#c7a56612;color:#ebce8d}.results-trophy svg{width:38px;height:38px}.game-results .results-heading h3{margin:4px 0 8px;font-size:clamp(24px,4vw,34px);color:#f0d59f}.game-results .results-heading p{margin:0}.results-ranking{list-style:none;margin:0;padding:0;display:grid;gap:14px}.result-card{border:1px solid #c7a56633;border-radius:10px;background:linear-gradient(120deg,#252923f5,#181d20f5);overflow:hidden}.result-card.result-winner{border-color:#c7a56699;background:linear-gradient(120deg,#403722f5,#1b2324f5);box-shadow:0 8px 28px #0003}.result-player{display:flex;align-items:center;gap:16px;padding:20px 24px}.result-place{display:grid;place-items:center;flex:none;width:42px;height:42px;border:1px solid #ffffff20;border-radius:50%;color:#bcbeb4;font:20px var(--serif)}.result-winner .result-place{background:#c7a5661a;border-color:#c7a56677;color:#ebce8d}.result-place svg{width:28px;height:28px}.result-identity{min-width:0;flex:1}.result-caption{font:10px var(--mono);text-transform:uppercase;letter-spacing:.12em;color:#b9b7ad}.result-winner .result-caption{color:#e4c47f}.result-identity h4{margin:5px 0;font:600 20px var(--sans);color:#f1ecdf;overflow-wrap:anywhere}.result-city{font:12px var(--sans);color:#b9b7ad}.result-total{flex:none;text-align:right;color:#efd398}.result-total strong{display:block;font:40px/1.1 var(--serif);font-variant-numeric:tabular-nums}.result-total span{font:11px var(--sans);color:#b9b7ad}.result-breakdown{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin:0;padding:16px 24px;gap:12px;border-top:1px solid #ffffff12;background:#0002}.result-stat{min-width:0}.result-stat dt{display:flex;align-items:center;gap:8px;font:11px/1.4 var(--sans);color:#bfbbb0}.result-icon{display:grid;place-items:center;flex:none;width:30px;height:30px;color:#be9bdf}.result-icon img,.result-icon svg{display:block;width:28px;height:28px;object-fit:contain}.result-stat dd{margin:6px 0 0 38px;font:600 20px var(--sans);font-variant-numeric:tabular-nums;color:#ece9df}.game-results .results-note{margin:16px 0 0;font:11px/1.7 var(--sans);color:#a7a69e}.war-resolving>.game-results{visibility:hidden}
+@media(max-width:640px){.results-heading{gap:12px}.results-trophy{width:48px;height:48px}.results-trophy svg{width:30px;height:30px}.result-player{padding:16px 14px;gap:10px}.result-place{width:34px;height:34px}.result-identity h4{font-size:17px}.result-total strong{font-size:32px}.result-breakdown{grid-template-columns:repeat(3,minmax(0,1fr));padding:14px;gap:16px 10px}.result-stat dt{flex-direction:column;align-items:flex-start;gap:5px}.result-stat dd{margin:6px 0 0}.game-results .results-heading p:not(.eyebrow){font-size:12px}}
