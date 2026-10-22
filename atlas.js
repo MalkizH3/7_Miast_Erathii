@@ -1,7 +1,7 @@
 /* Atlas uses the gallery renderer so previews always match the collection. */
 (() => {
  const board=document.querySelector('#atlas-board'), peek=document.querySelector('#atlas-preview');
- const descriptions=Promise.all([import('./card-description.js'),import('./cost-row.js')]).then(([descriptions,cost])=>({...descriptions,...cost}));
+ const descriptions=Promise.all([import('./card-description.js'),import('./cost-row.js'),import('./effect-description.js')]).then(([descriptions,cost,effects])=>({...descriptions,...cost,...effects}));
  peek.setAttribute('role','tooltip');
  let previewVersion=0;
  const palette={brown:'#965b35',grey:'#8b918c',gray:'#8b918c',blue:'#2586a6',yellow:'#c99c29',red:'#a43d3d',green:'#50864b',purple:'#83609e'};
@@ -42,12 +42,12 @@
   }else{
   const version=++previewVersion;
   const full=makeCard(card).querySelector('.game-card');peek.replaceChildren(full);peek.hidden=false;
-  descriptions.then(({describeCard,createCostRow})=>{
+  descriptions.then(({createEffectDescription,createCostRow})=>{
    if(version!==previewVersion||peek.hidden)return;
    const copy=document.createElement('div');copy.className='atlas-card-description';
    const add=(tag,text)=>{const node=document.createElement(tag);node.textContent=text;copy.append(node);};
    add('h3',card.name);add('p','Tydzień '+card.week+' · Liczba kart: '+card.copies.length);
-   add('p',describeCard(card));add('h4','Koszt budowy');copy.append(createCostRow(full.querySelector('.card-cost-list')));
+   copy.append(createEffectDescription(card));add('h4','Koszt budowy');copy.append(createCostRow(full.querySelector('.card-cost-list')));
    const previous=[...new Set(data.filter(c=>Number(c.week)<Number(card.week)&&(c.connections||[]).some(s=>(card.connection_cost||[]).includes(s))).map(c=>c.name))];
    const next=[...new Set(data.filter(c=>Number(c.week)>Number(card.week)&&(card.connections||[]).some(s=>(c.connection_cost||[]).includes(s))).map(c=>c.name))];
    if(previous.length){add('h4','Darmowa budowa jeśli posiadasz:');add('p',previous.join(', '));}
@@ -108,7 +108,7 @@
     }
     const count=document.createElement('span');count.className='node-count';count.textContent='×'+c.copies.length;
     button.append(name,symbol,count);button.setAttribute('aria-label',c.name+', tydzień '+week+', liczba kart: '+c.copies.length);
-    button.addEventListener('pointerenter',()=>show(c,button,edges));button.addEventListener('pointerleave',hide);button.addEventListener('focus',()=>show(c,button,edges));button.addEventListener('blur',hide);
+    button.addEventListener('pointerenter',()=>show(c,button,edges));button.addEventListener('pointerleave',()=>{if(document.activeElement!==button)hide();});button.addEventListener('focus',()=>show(c,button,edges));button.addEventListener('blur',hide);
     button.addEventListener('click',()=>{hide();mini.querySelector('.card-button').click();});column.append(button);maxHeight=Math.max(maxHeight,y+110);
    }
    board.append(column);

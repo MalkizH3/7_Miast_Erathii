@@ -1,3 +1,4 @@
+import {createEffectDescription} from './effect-description.js';
 import {createCostRow} from './cost-row.js';
 import {createResultsReveal} from './results-reveal.js';
 import {onlineTableUpdate} from './online-table-update.js';
@@ -103,7 +104,9 @@ function showCardTip(c,anchor,ownerIndex){
  const unique=[...new Map(next.map(n=>[n.name,n])).values()];
  const previous=cards.filter(n=>(n.connections||[]).some(k=>(c.connection_cost||[]).includes(k)));
  const previousNames=[...new Set(previous.map(n=>n.name))];
- cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(c.name)}</h3><p class="card-info-category">${esc(category[c.color]||'Karta')} · tydzień ${c.week}</p><section><p>${esc(describeCard(c,ownerIndex))}</p></section><section><h4>Koszt budowy</h4><div class="tooltip-cost-slot"></div>${previousNames.length?`<p class="card-info-note">Darmowa budowa jeśli posiadasz: ${previousNames.map(esc).join(', ')}.</p>`:''}</section>${unique.length?`<section><h4>Pozwala wybudować za darmo</h4>${unique.map(n=>`<p class="card-chain-name">${esc(n.name)}</p><p class="card-info-note">${esc(describeCard(n,ownerIndex))}</p>`).join('')}</section>`:''}</div><div class="card-info-art"></div>`;
+ cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(c.name)}</h3><p class="card-info-category">${esc(category[c.color]||'Karta')} · tydzień ${c.week}</p><section class="effect-description-slot"></section><section><h4>Koszt budowy</h4><div class="tooltip-cost-slot"></div>${previousNames.length?`<p class="card-info-note">Darmowa budowa jeśli posiadasz: ${previousNames.map(esc).join(', ')}.</p>`:''}</section>${unique.length?`<section><h4>Pozwala wybudować za darmo</h4>${unique.map(n=>`<p class="card-chain-name">${esc(n.name)}</p><div class="chain-effect-description" data-card-id="${esc(n.id)}"></div>`).join('')}</section>`:''}</div><div class="card-info-art"></div>`;
+ cardTip.querySelector('.effect-description-slot').append(createEffectDescription(c,describeCard(c,ownerIndex)));
+ cardTip.querySelectorAll('.chain-effect-description').forEach(slot=>{const nextCard=unique.find(card=>card.id===slot.dataset.cardId);slot.append(createEffectDescription(nextCard,describeCard(nextCard,ownerIndex)));});
  const artwork=cardSurface(c);cardTip.querySelector('.tooltip-cost-slot').append(createCostRow(artwork.querySelector('.card-cost-list')));
  cardTip.querySelector('.card-info-art').append(artwork);document.body.append(cardTip);positionCardTip();tipSizeObserver=new ResizeObserver(positionCardTip);tipSizeObserver.observe(cardTip);
 }
@@ -111,7 +114,8 @@ function showStageTip(board,index,anchor,ownerIndex,built){
  if(tipAnchor===anchor)return;hideCardTip();tipAnchor=anchor;
  const stage=board.stages[index];
  cardTip=document.createElement('aside');cardTip.id='table-card-tooltip';cardTip.className='card-info-tooltip';cardTip.setAttribute('role','tooltip');
- cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(board.name)} · etap ${index+1}</h3><p class="card-info-category">${built?'Etap wybudowany':'Rozbudowa miasta'}</p><section><p>${esc(describeCard(stage,ownerIndex))}</p></section><section><h4>Koszt budowy</h4><div class="tooltip-cost-slot"></div></section></div><div class="card-info-art stage-detail-art"></div>`;
+ cardTip.innerHTML=`<div class="card-info-copy"><h3>${esc(board.name)} · etap ${index+1}</h3><p class="card-info-category">${built?'Etap wybudowany':'Rozbudowa miasta'}</p><section class="effect-description-slot"></section><section><h4>Koszt budowy</h4><div class="tooltip-cost-slot"></div></section></div><div class="card-info-art stage-detail-art"></div>`;
+ cardTip.querySelector('.effect-description-slot').append(createEffectDescription(stage,describeCard(stage,ownerIndex)));
  cardTip.querySelector('.tooltip-cost-slot').append(createCostRow(anchor.querySelector('.board-stage-cost')));
  const art=cardTip.querySelector('.stage-detail-art'),preview=boardSurface(board);
  const boardBounds=anchor.closest('.board-surface').getBoundingClientRect(),bounds=anchor.getBoundingClientRect();

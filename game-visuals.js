@@ -463,7 +463,7 @@ export function boardSurface(board) {
 
 
 // Same layered effect renderer and bounds fitting as the atlas.
-export function cardBonusSurface(card){
+export function cardBonusSurface(card,{maxWidth=126,maxHeight=48}={}){
  const layout=effectLayout(card),symbol=document.createElement('span');
  symbol.className='bonus-symbol game-card';
  const effects=makeCard(card).querySelector('.card-effects');
@@ -472,7 +472,7 @@ export function cardBonusSurface(card){
   const width=Math.max(...layout.map(item=>item.x+item.width))-left;
   const height=Math.max(...layout.map(item=>item.y+item.height))-top;
   // Military strength changes the field width, never the size of each icon.
-  const scale=card.effect?.type==='war'?48/height:Math.min(126/width,48/height);
+  const scale=card.effect?.type==='war'?maxHeight/height:Math.min(maxWidth/width,maxHeight/height);
   const frameWidth=Math.ceil(width*scale)+8;
   symbol.style.width=frameWidth+'px';
   Object.assign(effects.style,{width:1092*scale+'px',height:1627*scale+'px',left:(frameWidth-width*scale)/2-left*scale+'px',top:(56-height*scale)/2-top*scale+'px',containerType:'inline-size'});
